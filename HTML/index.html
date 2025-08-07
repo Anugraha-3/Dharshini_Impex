@@ -1,0 +1,1146 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+
+<head>
+	
+<style>
+/* Initial states for elements */
+.page_topline,
+.page_header,
+.intro_section,
+#about,
+#contact-form,
+#testimonials,
+#section-social,
+#gallery,
+footer,
+.page_copyright {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Navbar specific animation */
+.page_header {
+    transform: translateY(-50px);
+    transition: all 0.6s ease-out;
+}
+
+/* Hero section animation */
+.intro_section {
+    transform: scale(0.98);
+    transition: all 1s ease-out;
+}
+
+/* About section elements */
+#about .col-md-6:first-child {
+    transform: translateX(-50px);
+    opacity: 0;
+    transition: all 0.8s ease-out 0.2s;
+}
+
+#about .col-md-6:last-child {
+    transform: translateX(50px);
+    opacity: 0;
+    transition: all 0.8s ease-out 0.4s;
+}
+
+/* Contact form animation */
+#contact-form .col-md-5 {
+    transform: translateX(50px);
+    opacity: 0;
+    transition: all 0.8s ease-out 0.2s;
+}
+
+#contact-form .col-md-7 {
+    transform: translateX(-50px);
+    opacity: 0;
+    transition: all 0.8s ease-out 0.4s;
+}
+
+/* Form elements individual animation */
+.contact-form .form-group {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.6s ease-out;
+}
+
+/* Gallery items animation */
+.gallery-carousel .vertical-item {
+    opacity: 0;
+    transform: scale(0.9);
+    transition: all 0.6s ease-out;
+}
+
+/* Footer sections */
+footer .col-xs-12 {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s ease-out;
+}
+
+footer .col-xs-12:nth-child(1) { transition-delay: 0.1s; }
+footer .col-xs-12:nth-child(2) { transition-delay: 0.2s; }
+footer .col-xs-12:nth-child(3) { transition-delay: 0.3s; }
+
+/* Social icons animation */
+.page_social .social-icon {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.5s ease-out;
+}
+
+.page_social .social-icon:nth-child(1) { transition-delay: 0.1s; }
+.page_social .social-icon:nth-child(2) { transition-delay: 0.2s; }
+.page_social .social-icon:nth-child(3) { transition-delay: 0.3s; }
+.page_social .social-icon:nth-child(4) { transition-delay: 0.4s; }
+.page_social .social-icon:nth-child(5) { transition-delay: 0.5s; }
+
+/* Testimonial animation */
+#testimonials blockquote {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s ease-out;
+}
+
+/* Active states when elements come into view */
+.animate-in {
+    opacity: 1 !important;
+    transform: translateY(0) translateX(0) scale(1) !important;
+}
+
+/* Navbar hover effects - simple fade */
+.mainmenu li a {
+    transition: opacity 0.3s ease;
+}
+
+.mainmenu li a:hover {
+    opacity: 0.7;
+}
+
+/* Smooth button animations */
+.theme_button {
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.theme_button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+.theme_button:hover::before {
+    left: 100%;
+}
+
+/* Form field focus animations */
+.form-control {
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.form-control:focus {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* Image hover effects */
+img {
+    transition: all 0.3s ease;
+}
+
+.vertical-item:hover img {
+    transform: scale(1.05);
+}
+
+/* Loading animation for initial page load */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Page load sequence */
+.page-loaded .page_topline { animation: fadeInUp 0.8s ease-out 0.1s both; }
+.page-loaded .page_header { animation: fadeInUp 0.8s ease-out 0.2s both; }
+.page-loaded .intro_section { animation: fadeInUp 1s ease-out 0.3s both; }
+
+/* Scroll trigger styles */
+.scroll-triggered {
+    opacity: 1;
+    transform: translateY(0) translateX(0) scale(1);
+}
+</style>
+
+<script>
+// Add this JavaScript for scroll animations and page load
+document.addEventListener('DOMContentLoaded', function() {
+    // Add page-loaded class after a short delay
+    setTimeout(() => {
+        document.body.classList.add('page-loaded');
+    }, 100);
+
+    // Intersection Observer for scroll animations
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animate-in');
+                
+                // Special handling for form elements
+                if (entry.target.id === 'contact-form') {
+                    const formGroups = entry.target.querySelectorAll('.form-group');
+                    formGroups.forEach((group, index) => {
+                        setTimeout(() => {
+                            group.style.opacity = '1';
+                            group.style.transform = 'translateY(0)';
+                        }, index * 100);
+                    });
+                }
+
+                // Special handling for gallery items
+                if (entry.target.id === 'gallery') {
+                    const galleryItems = entry.target.querySelectorAll('.vertical-item');
+                    galleryItems.forEach((item, index) => {
+                        setTimeout(() => {
+                            item.style.opacity = '1';
+                            item.style.transform = 'scale(1)';
+                        }, index * 50);
+                    });
+                }
+
+                // Special handling for social icons
+                if (entry.target.id === 'section-social') {
+                    const socialIcons = entry.target.querySelectorAll('.social-icon');
+                    socialIcons.forEach((icon, index) => {
+                        setTimeout(() => {
+                            icon.style.opacity = '1';
+                            icon.style.transform = 'translateY(0)';
+                        }, index * 100);
+                    });
+                }
+
+                // Special handling for testimonials
+                if (entry.target.id === 'testimonials') {
+                    const blockquotes = entry.target.querySelectorAll('blockquote');
+                    blockquotes.forEach((quote, index) => {
+                        setTimeout(() => {
+                            quote.style.opacity = '1';
+                            quote.style.transform = 'translateY(0)';
+                        }, index * 200);
+                    });
+                }
+            }
+        });
+    }, observerOptions);
+
+    // Observe all main sections
+    const sections = document.querySelectorAll('#about, #contact-form, #testimonials, #section-social, #gallery, footer, .page_copyright');
+    sections.forEach(section => observer.observe(section));
+
+    // Observe individual elements in about section
+    const aboutCols = document.querySelectorAll('#about .col-md-6');
+    aboutCols.forEach(col => observer.observe(col));
+
+    // Observe contact form columns
+    const contactCols = document.querySelectorAll('#contact-form .col-md-5, #contact-form .col-md-7');
+    contactCols.forEach(col => observer.observe(col));
+
+    // Observe footer columns
+    const footerCols = document.querySelectorAll('footer .col-xs-12');
+    footerCols.forEach(col => observer.observe(col));
+});
+</script>
+	<script>
+// Prevent any default form submission before DOM loads
+window.addEventListener('load', function() {
+    document.querySelectorAll('form').forEach(form => {
+        if (form.action.includes('./') || form.action === '') {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                return false;
+            });
+        }
+    });
+});
+</script>
+	<title>Dharshini Impex</title>
+	<meta charset="utf-8">
+	<!--[if IE]>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<![endif]-->
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/animations.css">
+	<link rel="stylesheet" href="css/fonts.css">
+	<link rel="stylesheet" href="css/main.css" class="color-switcher-link">
+	<link rel="stylesheet" href="css/shop.css" class="color-switcher-link">
+	<script src="js/vendor/modernizr-2.6.2.min.js"></script>
+	<!--[if lt IE 9]>
+		<script src="js/vendor/html5shiv.min.js"></script>
+		<script src="js/vendor/respond.min.js"></script>
+		<script src="js/vendor/jquery-1.12.4.min.js"></script>
+	<![endif]-->
+</head>
+
+<body>
+
+	<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Search data with keywords for scrolling
+    const searchData = [
+        // Homepage & Main Navigation
+        { title: "Home", url: "index.html", scrollText: "", content: "home homepage main page dharshini impex textile manufacturing" },
+        { title: "Company Overview", url: "overview.html", scrollText: "company overview", content: "company overview business profile about company history established 1995" },
+        { title: "About Us", url: "about.html", scrollText: "about us", content: "about company information business details history background" },
+        { title: "Contact Us", url: "contact4.html", scrollText: "contact", content: "contact phone email address coimbatore location office" },
+        { title: "Contact Information", url: "contact4.html", scrollText: "contact information", content: "phone 9894657742 email fabrics dharshiniimpex coimbatore tamil nadu" },
+
+        // Leadership & Team
+        { title: "Leadership", url: "team.html", scrollText: "leadership", content: "leadership management team executives directors board" },
+        { title: "Team", url: "team.html", scrollText: "team", content: "team leadership management executive staff" },
+        { title: "S. Dhanaraj", url: "team.html", scrollText: "dhanaraj", content: "dhanaraj founder managing director ceo leader" },
+        { title: "Founder", url: "team.html", scrollText: "founder", content: "founder dhanaraj managing director ceo leader" },
+        { title: "Managing Director", url: "team.html", scrollText: "managing director", content: "managing director dhanaraj founder ceo leader" },
+        { title: "Dharshini Dhanaraj", url: "team.html", scrollText: "Dharshini Dhanaraj", content: "dharshini dhanaraj director strategy operations" },
+        { title: "Gokul Govindarajan", url: "team.html", scrollText: "gokul", content: "gokul govindarajan director finance chartered accountant" },
+        { title: "Yamini Dhanaraj", url: "team.html", scrollText: "yamini", content: "yamini dhanaraj director social initiatives welfare" },
+
+        // Company Journey & History
+        { title: "Journey", url: "about.html", scrollText: "journey", content: "journey milestones history timeline company growth evolution" },
+        { title: "History", url: "about.html", scrollText: "history", content: "history journey company background established 1995 milestones" },
+        { title: "Milestones", url: "about.html", scrollText: "milestones", content: "milestones journey history company growth achievements timeline" },
+
+        // Vision, Mission, Values
+        { title: "Vision", url: "about.html", scrollText: "vision", content: "vision mission company goals objectives future plans" },
+        { title: "Mission", url: "about.html", scrollText: "mission", content: "mission vision company purpose goals objectives values" },
+        { title: "Values", url: "about.html", scrollText: "values", content: "values culture mission vision company principles ethics" },
+
+        // Services & Departments
+        { title: "Services", url: "services.html", scrollText: "services", content: "services core departments manufacturing operations" },
+        { title: "Core Departments", url: "services.html", scrollText: "departments", content: "core departments services manufacturing operations divisions" },
+        { title: "Manufacturing", url: "services.html", scrollText: "manufacturing", content: "manufacturing production weaving textile operations departments" },
+        { title: "Designing", url: "services.html", scrollText: "designing", content: "designing design team patterns creative development" },
+        { title: "Design Team", url: "services.html", scrollText: "design team", content: "design team designing patterns creative development 100 designs daily" },
+        { title: "Sampling", url: "services.html", scrollText: "sampling", content: "sampling samples product development testing prototypes" },
+        { title: "Production Planning", url: "services.html", scrollText: "production planning", content: "production planning manufacturing scheduling operations workflow" },
+        { title: "Quality Control", url: "services.html", scrollText: "quality control", content: "quality control check inspection testing standards" },
+        { title: "Quality Check", url: "services.html", scrollText: "quality check", content: "quality check control inspection testing standards defect free" },
+        { title: "Raw Material Planning", url: "services.html", scrollText: "raw material", content: "raw material planning sourcing yarn supply chain" },
+        { title: "Processing", url: "services.html", scrollText: "processing", content: "processing dyeing finishing textile treatment operations" },
+        { title: "Dyeing", url: "services.html", scrollText: "dyeing", content: "dyeing processing finishing color treatment textile" },
+        { title: "Finishing", url: "services.html", scrollText: "finishing", content: "finishing processing dyeing textile treatment final" },
+        { title: "Packing", url: "services.html", scrollText: "packing", content: "packing packaging inspection delivery dispatch shipping" },
+        { title: "Marketing", url: "services.html", scrollText: "marketing", content: "marketing sales business development client relationships" },
+        { title: "Sales", url: "services.html", scrollText: "sales", content: "sales marketing business development client relationships" },
+        { title: "Accounts", url: "services.html", scrollText: "accounts", content: "accounts finance billing payroll compliance financial" },
+
+        // Technologies & Equipment
+        { title: "Technologies", url: "equipment.html", scrollText: "technologies", content: "technologies equipment machinery looms weaving systems" },
+        { title: "Equipment", url: "equipment.html", scrollText: "equipment", content: "equipment technologies machinery looms weaving systems" },
+        { title: "Looms", url: "equipment.html", scrollText: "looms", content: "looms machinery weaving equipment technologies manufacturing" },
+        { title: "Vamatex", url: "equipment.html", scrollText: "vamatex", content: "vamatex rapier looms machinery equipment weaving jacquard" },
+        { title: "Sulzer", url: "equipment.html", scrollText: "sulzer", content: "sulzer projectile looms machinery equipment weaving heavy duty" },
+        { title: "Toyota", url: "equipment.html", scrollText: "toyota", content: "toyota airjet looms machinery equipment weaving lightweight" },
+        { title: "Staubli", url: "equipment.html", scrollText: "staubli", content: "staubli jacquard systems digital control weaving patterns" },
+        { title: "Rapier Looms", url: "equipment.html", scrollText: "rapier looms", content: "rapier looms vamatex machinery weaving jacquard dobby" },
+        { title: "Projectile Looms", url: "equipment.html", scrollText: "projectile looms", content: "projectile looms sulzer machinery weaving heavy duty structured" },
+        { title: "Airjet Looms", url: "equipment.html", scrollText: "airjet looms", content: "airjet looms toyota machinery weaving lightweight speed efficiency" },
+        { title: "Jacquard Systems", url: "equipment.html", scrollText: "jacquard systems", content: "jacquard systems staubli digital control complex patterns weaving" },
+
+        // Fabric Types & Products
+        { title: "Categories", url: "classifications.html", scrollText: "categories", content: "categories fabric types classifications products varieties" },
+        { title: "Classifications", url: "classifications.html", scrollText: "classifications", content: "classifications categories fabric types products varieties" },
+        { title: "Fabric Types", url: "classifications.html", scrollText: "fabric types", content: "fabric types categories classifications products varieties" },
+        { title: "Jacquard Fabrics", url: "classifications.html", scrollText: "jacquard fabrics", content: "jacquard fabrics weaving patterns textile premium quality intricate" },
+        { title: "Dobby Fabrics", url: "classifications.html", scrollText: "dobby fabrics", content: "dobby fabrics weaving patterns textile structured geometric" },
+        { title: "Cotton Fabrics", url: "classifications.html", scrollText: "cotton fabrics", content: "cotton fabrics natural fiber textile breathable durable" },
+        { title: "Viscose Fabrics", url: "classifications.html", scrollText: "viscose fabrics", content: "viscose fabrics synthetic fiber textile soft elegant drape" },
+        { title: "Apparel Fabrics", url: "classifications.html", scrollText: "apparel fabrics", content: "apparel fabrics clothing textile garment fashion wear" },
+        { title: "Ethnic Wear", url: "classifications.html", scrollText: "ethnic wear", content: "ethnic wear traditional clothing fabrics cultural garments" },
+        { title: "Formal Wear", url: "classifications.html", scrollText: "formal wear", content: "formal wear business clothing fabrics professional attire" },
+        { title: "Home Textiles", url: "classifications.html", scrollText: "home textiles", content: "home textiles furnishing fabrics household interior decor" },
+        { title: "Bed Linen", url: "classifications.html", scrollText: "bed linen", content: "bed linen home textiles bedroom fabrics sheets bedding" },
+        { title: "Satin Jacquards", url: "classifications.html", scrollText: "satin jacquards", content: "satin jacquards glossy finish smooth premium fashion luxury" },
+        { title: "Self Jacquards", url: "classifications.html", scrollText: "self jacquards", content: "self jacquards tone on tone texture subtle elegant designs" },
+        { title: "Butta Jacquards", url: "classifications.html", scrollText: "butta jacquards", content: "butta jacquards motif patterns traditional festive ornamental" },
+        { title: "Pattern Dyed", url: "classifications.html", scrollText: "pattern dyed", content: "pattern dyed fabrics colored designs vibrant detailed patterning" },
+        { title: "Textured Jacquards", url: "classifications.html", scrollText: "textured jacquards", content: "textured jacquards depth feel tactile surface modern twist" },
+        { title: "3D Effect", url: "classifications.html", scrollText: "3d effect", content: "3D effect jacquards raised tactile dimensional surface aesthetics" },
+        { title: "Slub Cotton", url: "classifications.html", scrollText: "slub cotton", content: "slub cotton jacquards rustic textured handloom inspired natural" },
+        { title: "Linen Look", url: "classifications.html", scrollText: "linen look", content: "linen look jacquards natural appearance durable soft cotton" },
+        { title: "Double Cloth", url: "classifications.html", scrollText: "double cloth", content: "double cloth fabrics reversible two layer dual surface design" },
+        { title: "Mock Leno", url: "classifications.html", scrollText: "mock leno", content: "mock leno fabrics airy weave breathable strength jacquard" },
+        { title: "Cotton Flax", url: "classifications.html", scrollText: "cotton flax", content: "cotton flax jacquards eco friendly natural luster sustainable" },
+
+        // B2B & Business
+        { title: "B2B", url: "b2b.html", scrollText: "b2b", content: "b2b business buyers wholesale corporate clients manufacturers" },
+        { title: "Business Buyers", url: "b2b.html", scrollText: "business buyers", content: "business buyers b2b wholesale corporate clients manufacturers" },
+        { title: "Wholesale", url: "b2b.html", scrollText: "wholesale", content: "wholesale bulk business buyers b2b manufacturing large orders" },
+        { title: "Garment Manufacturers", url: "b2b.html", scrollText: "garment manufacturers", content: "garment manufacturers fashion labels clothing brands textile buyers" },
+        { title: "Fashion Labels", url: "b2b.html", scrollText: "fashion labels", content: "fashion labels brands garment manufacturers clothing textile" },
+        { title: "Distributors", url: "b2b.html", scrollText: "distributors", content: "distributors wholesale business partners fabric suppliers" },
+
+        // Production & Capacity
+        { title: "Production", url: "overview.html", scrollText: "production", content: "production manufacturing capacity 2 lakh meters monthly output" },
+        { title: "Production Capacity", url: "overview.html", scrollText: "production capacity", content: "production capacity 2 lakh meters monthly manufacturing output scale" },
+        { title: "2 Lakh Meters", url: "overview.html", scrollText: "2 lakh meters", content: "2 lakh meters monthly production capacity manufacturing output" },
+        { title: "100 Designs Daily", url: "overview.html", scrollText: "100 designs", content: "100 designs daily creative team patterns innovation variety" },
+
+        // Location & Contact
+        { title: "Coimbatore", url: "contact4.html", scrollText: "coimbatore", content: "coimbatore location address tamil nadu india office" },
+        { title: "Location", url: "contact4.html", scrollText: "location", content: "location address coimbatore tamil nadu office contact" },
+        { title: "Phone", url: "contact4.html", scrollText: "9894657742", content: "phone contact 9894657742 call telephone mobile" },
+        { title: "Email", url: "contact4.html", scrollText: "fabrics@dharshiniimpex", content: "email contact fabrics dharshiniimpex.in mail address" }
+    ];
+
+    // Handle search forms
+    const searchForms = document.querySelectorAll('.searchform, form[action="./"], form');
+    
+    searchForms.forEach(form => {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const searchInput = this.querySelector('input[name="search"], input[type="search"], input[type="text"]');
+            const query = searchInput ? searchInput.value.trim().toLowerCase() : '';
+            
+            if (query) {
+                performSearch(query);
+            }
+            return false;
+        });
+    });
+
+    // Handle search buttons and any submit buttons
+    const allButtons = document.querySelectorAll('button, input[type="submit"]');
+    allButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            const form = this.closest('form');
+            if (form) {
+                e.preventDefault();
+                const searchInput = form.querySelector('input[name="search"], input[type="search"], input[type="text"]');
+                const query = searchInput ? searchInput.value.trim().toLowerCase() : '';
+                
+                if (query) {
+                    performSearch(query);
+                }
+                return false;
+            }
+        });
+    });
+
+    // Also handle direct input enter key
+    const allInputs = document.querySelectorAll('input[name="search"], input[type="search"], input[type="text"]');
+    allInputs.forEach(input => {
+        input.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                const query = this.value.trim().toLowerCase();
+                if (query) {
+                    performSearch(query);
+                }
+            }
+        });
+    });
+
+    function performSearch(query) {
+        console.log('Searching for:', query);
+        
+        // First try to find in search data
+        const results = searchData.filter(item => 
+            item.title.toLowerCase().includes(query) || 
+            item.content.toLowerCase().includes(query)
+        );
+
+        if (results.length > 0) {
+            const result = results[0];
+            console.log('Found in search data:', result);
+            
+            // Check if we're already on the target page
+            const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+            const targetPage = result.url;
+            
+            if (currentPage === targetPage && result.scrollText) {
+                // Same page - just scroll
+                scrollToText(result.scrollText);
+            } else if (result.scrollText) {
+                // Different page - navigate with hash
+                window.location.href = result.url + '#search-' + encodeURIComponent(result.scrollText);
+            } else {
+                window.location.href = result.url;
+            }
+        } else {
+            // If not found in search data, try to scroll to it on current page
+            console.log('Not in search data, trying to scroll on current page');
+            scrollToText(query);
+        }
+    }
+
+    // Check for scroll parameter or hash on page load
+    function checkForScrollParameter() {
+        let scrollText = null;
+
+        // Check for 'scrollTo' parameter in URL
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has('scrollTo')) {
+            scrollText = urlParams.get('scrollTo');
+            // Clean up URL by removing 'scrollTo' parameter
+            urlParams.delete('scrollTo');
+            const newUrl = window.location.pathname + '?' + urlParams.toString();
+            window.history.replaceState({}, document.title, newUrl);
+        }
+
+        // If no 'scrollTo' parameter, check for hash
+        if (!scrollText && window.location.hash) {
+            const hash = window.location.hash.substring(1);
+            if (hash.startsWith('search-')) {
+                scrollText = decodeURIComponent(hash.replace('search-', ''));
+            }
+        }
+
+        if (scrollText) {
+            console.log('Found scroll parameter:', scrollText);
+            // Wait for page to fully load then scroll
+            setTimeout(() => {
+                scrollToText(scrollText);
+            }, 100);
+        }
+    }
+	 checkForScrollParameter();
+
+    // Clean scroll function with expand animation
+    function scrollToText(searchText) {
+        console.log('Starting scroll search for:', searchText);
+        const searchLower = searchText.toLowerCase();
+        let targetElements = [];
+
+        // Get ALL elements on the page
+        const allElements = Array.from(document.querySelectorAll('*'));
+        
+        // Search through ALL elements
+        allElements.forEach(element => {
+            // Skip script, style, and hidden elements
+            if (element.tagName === 'SCRIPT' || 
+                element.tagName === 'STYLE' || 
+                element.style.display === 'none' ||
+                element.style.visibility === 'hidden') {
+                return;
+            }
+            
+            const elementText = (element.textContent || element.innerText || '').toLowerCase();
+            const elementHTML = element.innerHTML.toLowerCase();
+            const elementId = (element.id || '').toLowerCase();
+            const elementClass = (element.className || '').toLowerCase();
+            
+            // Check for matches in text, HTML, ID, or class
+            if (elementText.includes(searchLower) || 
+                elementHTML.includes(searchLower) ||
+                elementId.includes(searchLower) ||
+                elementClass.includes(searchLower)) {
+                
+                targetElements.push({
+                    element: element,
+                    textLength: elementText.length,
+                    matchType: elementText.includes(searchLower) ? 'text' : 
+                              elementId.includes(searchLower) ? 'id' : 
+                              elementClass.includes(searchLower) ? 'class' : 'html'
+                });
+            }
+        });
+
+        console.log('Found potential elements:', targetElements.length);
+
+        if (targetElements.length > 0) {
+            // Sort by preference: text matches first, then shortest text (most specific)
+            targetElements.sort((a, b) => {
+                if (a.matchType === 'text' && b.matchType !== 'text') return -1;
+                if (b.matchType === 'text' && a.matchType !== 'text') return 1;
+                return a.textLength - b.textLength;
+            });
+
+            const targetElement = targetElements[0].element;
+            console.log('Selected element for scrolling:', targetElement);
+
+            // Apply subtle expand animation
+            applyExpandAnimation(targetElement);
+
+            // Scroll to element
+            targetElement.scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'center',
+                inline: 'center'
+            });
+
+            // Backup scroll method
+            setTimeout(() => {
+                const rect = targetElement.getBoundingClientRect();
+                const scrollTop = window.pageYOffset + rect.top - (window.innerHeight / 2);
+                window.scrollTo({
+                    top: scrollTop,
+                    behavior: 'smooth'
+                });
+            }, 100);
+
+            console.log('Successfully scrolled to:', searchText);
+            return true;
+        } else {
+            console.log('Could not find any matching elements for:', searchText);
+            return false;
+        }
+    }
+
+    // Clean expand animation function
+    function applyExpandAnimation(element) {
+        // Store original transform
+        const originalTransform = element.style.transform || '';
+        const originalTransition = element.style.transition || '';
+        
+        // Apply smooth transition
+        element.style.transition = 'transform 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+        
+        // Start with slightly smaller scale
+        element.style.transform = originalTransform + ' scale(0.95)';
+        
+        // Expand up animation
+        setTimeout(() => {
+            element.style.transform = originalTransform + ' scale(1.05)';
+        }, 50);
+        
+        // Return to normal with a slight bounce
+        setTimeout(() => {
+            element.style.transform = originalTransform + ' scale(1)';
+        }, 300);
+        
+        // Clean up styles after animation
+        setTimeout(() => {
+            element.style.transition = originalTransition;
+            element.style.transform = originalTransform;
+        }, 900);
+    }
+
+    // Add a manual search function that can be called from console
+    window.manualSearch = function(text) {
+        console.log('Manual search triggered for:', text);
+        return scrollToText(text);
+    };
+
+    // Initialize scroll checking
+    checkForScrollParameter();
+
+    // Add some debug logging
+    console.log('Search script loaded and ready!');
+    console.log('Available search data entries:', searchData.length);
+    console.log('To manually test scrolling, use: manualSearch("your text here")');
+});
+</script>
+	<!--[if lt IE 9]>
+		<div class="bg-danger text-center">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/" class="highlight">upgrade your browser</a> to improve your experience.</div>
+	<![endif]-->
+	<div class="preloader">
+		<div class="preloader_image"></div>
+	</div>
+	<!-- search modal -->
+	<div class="modal" tabindex="-1" role="dialog" aria-labelledby="search_modal" id="search_modal"> <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		<span aria-hidden="true">
+			<i class="rt-icon2-cross2"></i>
+		</span>
+	</button>
+		<div class="widget widget_search">
+			<form method="get" class="searchform search-form form-inline" action="./">
+				<div class="form-group bottommargin_0"> <input type="text" value="" name="search" class="form-control" placeholder="Search keyword" id="modal-search-input"> </div> <button type="submit" class="theme_button color1 no_bg_button">Search</button> </form>
+		</div>
+	</div>
+	<!-- Unyson messages modal -->
+	<div class="modal fade" tabindex="-1" role="dialog" id="messages_modal">
+		<div class="fw-messages-wrap ls with_padding">
+			<!-- Uncomment this UL with LI to show messages in modal popup to your user: -->
+			<!--
+		<ul class="list-unstyled">
+			<li>Message To User</li>
+		</ul>
+		-->
+		</div>
+	</div>
+	<!-- eof .modal -->
+	<!-- wrappers for visual page editor and boxed version of template -->
+	<div id="canvas">
+		<div id="box_wrapper">
+			<!-- template sections -->
+			<section class="page_topline ds background_cover">
+				<div class="container-fluid">
+					<div class="row flex-wrap v-center">
+						<div class="col-xs-12 col-md-8 text-center text-md-left">
+							<div class="inline-content big-spacing"> <span>
+						<i class="qtyler-phone rightpadding_5"></i>
+						(+91) 9894657742
+					</span> <span>
+						<i class="qtyler-envelope rightpadding_5"></i>
+						fabrics@dharshiniimpex.in
+					</span> <span>
+						<i class="qtyler-map-marker rightpadding_5"></i>
+						Coimbatore - 641062
+					</span> </div>
+						</div>
+						<div class="col-xs-12 col-md-4 text-center text-md-right ">
+							
+							<div class="dropdown search-dropdown"> <a id="search" data-target="#" href="./" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false" class="theme_button small_button round_button bg_button margin_0">
+						<i class="qtyler-search" aria-hidden="true"></i>
+					</a>
+								<div class="dropdown-menu ls" role="menu" aria-labelledby="search">
+									<div class="widget_search">
+										<form method="get" class="searchform form-inline" action="./">
+											<div class="form-group-wrap">
+												<div class="form-group with_button margin_0"> <label class="sr-only" for="topline-search">Search for:</label> <input id="topline-search" type="text" value="" name="search" class="form-control" placeholder="Search Keyword"> <button type="submit" class="theme_button">Search</button> </div>
+											</div>
+										</form>
+									</div> <i class="qtyler-close dropdown-close" aria-hidden="true"></i> </div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			<header class="page_header header_white header_v1 toggler_xxs_right">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-sm-12 display-flex v-center">
+							<div class="header_left_logo"> <a href="index.html" class="logo">
+                        <img src="images/logo.png" alt="">
+                    </a> </div>
+							<div class="header_mainmenu text-center">
+								<!-- main nav start -->
+								<nav class="mainmenu_wrapper">
+									<ul class="mainmenu nav sf-menu">
+										<li class="active"> <a href="index.html">Home</a>
+											
+										</li>
+										<li> <a href="#">Company</a>
+											<ul>
+												<li><a href="overview.html">Overview</a></li>
+												<li><a href="about.html">About Us</a></li>
+												<li><a href="team.html">Leadership</a></li>
+												<li><a href="#">Journey</a></li>
+											</ul>	
+
+										</li>
+										<li> <a href="#">Departments</a>
+											<ul>
+												<li><a href="services.html">Core Departments</a></li>
+												<li><a href="equipment.html">Technologies</a></li>
+												
+											</ul>
+											
+										<li> <a href="#">Business</a>
+											<ul>
+												<li><a href="classifications.html">Categories</a></li>
+												<li><a href="b2b.html">Buyers B2B</a></li>
+												
+											</ul>
+										<li> <a href="contact4.html">Contact</a>
+											
+										<!-- eof contacts -->
+									</ul>
+								</nav>
+								<!-- eof main nav -->
+								<!-- header toggler --><span class="toggle_menu"><span></span></span>
+							</div>
+							<div class="header_right_buttons text-right">
+								<ul class="inline-dropdown inline-block">
+									
+									
+									<li class="dropdown social-dropdown"> <a id="social" data-target="#" href="./" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false" class="theme_button small_button round_button bg_button margin_0">
+                                <i class="qtyler-share" aria-hidden="true"></i>
+                            </a>
+<div class="dropdown-menu"> 
+    <a class="social-icon socicon-facebook dark-icon" href="https://www.facebook.com/sharer/sharer.php?u=https://dharshiniimpex.in" target="_blank" title="Facebook"></a> 
+    <a class="social-icon socicon-googleplus dark-icon" href="https://plus.google.com/share?url=https://dharshiniimpex.in" target="_blank" title="Google Plus"></a> 
+    <a class="social-icon socicon-linkedin dark-icon" href="https://www.linkedin.com/sharing/share-offsite/?url=https://dharshiniimpex.in" target="_blank" title="Linkedin"></a>
+    <a class="social-icon socicon-twitter dark-icon" href="https://twitter.com/intent/tweet?url=https://dharshiniimpex.in&text=Check%20out%20Dharshini%20Impex%20-%20Premium%20Textile%20Manufacturing" target="_blank" title="Twitter"></a> 
+    <a class="social-icon socicon-instagram dark-icon" href="https://www.instagram.com/" target="_blank" title="Instagram"></a> 
+</div>									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</header>
+			<section class="intro_section page_mainslider cs all-scr-cover">
+				<div class="flexslider" data-dots="false" data-nav="true">
+					<ul class="slides">
+						<li>
+							<div class="slide-image-wrap"> <img src="images/slide01.jpg" alt="" /> </div>
+							<div class="container">
+								<div class="row">
+									<div class="col-xs-12">
+										<div class="slide_description_wrapper">
+											<div class="slide_description">
+												<div class="intro-layer to_animate" data-animation="fadeInUp">
+													<p> <span class="light_bg_color small-text">women's textile</span> </p>
+												</div>
+												<div class="intro-layer to_animate" data-animation="fadeInUp">
+													<p> <span class="hero-text">Thread<i>Maison</i></span> </p>
+												</div>
+												<div class="intro-layer to_animate" data-animation="fadeInUp">
+													<p> <span class="small-text big-spacing">Refined Threads</span> </p>
+												</div>
+												<div class="intro-layer to_animate" data-animation="fadeInUp">
+													<div class="slide_buttons"> <a href="shop.html" class="theme_button min_width_button">go to shop</a> </div>
+												</div>
+											</div>
+											<!-- eof .slide_description -->
+										</div>
+										<!-- eof .slide_description_wrapper -->
+									</div>
+									<!-- eof .col-* -->
+								</div>
+								<!-- eof .row -->
+							</div>
+							<!-- eof .container -->
+						</li>
+						<li>
+							<div class="slide-image-wrap"> <img src="images/slide02.jpg" alt="" /> </div>
+							<div class="container">
+								<div class="row">
+									<div class="col-xs-12">
+										<div class="slide_description_wrapper">
+											<div class="slide_description">
+												<div class="intro-layer to_animate" data-animation="fadeInUp">
+													<p> <span class="light_bg_color small-text">men's textile</span> </p>
+												</div>
+												<div class="intro-layer to_animate" data-animation="fadeInUp">
+													<p> <span class="hero-text">Thread<i>Maison</i></span> </p>
+												</div>
+												<div class="intro-layer to_animate" data-animation="fadeInUp">
+													<p> <span class="small-text big-spacing">Refined Threads</span> </p>
+												</div>
+												<div class="intro-layer to_animate" data-animation="fadeInUp">
+													<div class="slide_buttons"> <a href="shop.html" class="theme_button min_width_button">go to shop</a> </div>
+												</div>
+											</div>
+											<!-- eof .slide_description -->
+										</div>
+										<!-- eof .slide_description_wrapper -->
+									</div>
+									<!-- eof .col-* -->
+								</div>
+								<!-- eof .row -->
+							</div>
+							<!-- eof .container -->
+						</li>
+						<li>
+							<div class="slide-image-wrap"> <img src="images/slide03.jpg" alt="" /> </div>
+							<div class="container">
+								<div class="row">
+									<div class="col-xs-12">
+										<div class="slide_description_wrapper">
+											<div class="slide_description">
+												<div class="intro-layer to_animate" data-animation="fadeInUp">
+													<p> <span class="light_bg_color small-text">children's textile</span> </p>
+												</div>
+												<div class="intro-layer to_animate" data-animation="fadeInUp">
+													<p> <span class="hero-text">Thread<i>Maison</i></span> </p>
+												</div>
+												<div class="intro-layer to_animate" data-animation="fadeInUp">
+													<p> <span class="small-text big-spacing">Refined Threads</span> </p>
+												</div>
+												<div class="intro-layer to_animate" data-animation="fadeInUp">
+													<div class="slide_buttons"> <a href="shop.html" class="theme_button min_width_button">go to shop</a> </div>
+												</div>
+											</div>
+											<!-- eof .slide_description -->
+										</div>
+										<!-- eof .slide_description_wrapper -->
+									</div>
+									<!-- eof .col-* -->
+								</div>
+								<!-- eof .row -->
+							</div>
+							<!-- eof .container -->
+						</li>
+					</ul>
+				</div>
+				<!-- eof flexslider -->
+			</section>
+			<section id="about" class="ls section_padding_top_150 section_padding_bottom_150">
+				<div class="container">
+					<div class="row flex-wrap v-center">
+						<div class="col-md-6"> <img src="images/about.png" alt="" class="about-cover"> </div>
+						<div class="col-md-6">
+							<h2 class="section_header">Our Vision</h2>
+							<p class="small-text grey">Leading the Future of Textile Excellence</p>
+							<p>To become a global leader in jacquard fabric manufacturing, consistently exceeding customer expectations through innovative designs, uncompromising quality, and sustainable practices — all while fostering a culture of excellence, creativity, and responsibility.</p>
+							<div class="toppadding_40 visible-lg"></div>
+							<div class="content-justify v-center v-spacing"> <img src="images/stamps.png" alt=""> <img src="images/signature.png" alt=""> </div>
+						</div>
+					</div>
+				</div>
+			</section>
+			
+			<!-- Replace the existing Custom Tailoring section with this -->
+<section id="contact-form" class="ls section_padding_top_100 section_padding_bottom_100">
+    <div class="container">
+        <div class="row flex-wrap v-center">
+            <div class="col-xs-12 col-md-5 col-md-push-6"> 
+                <img src="images/tailoring.jpg" alt="" class="contact-form-cover"> 
+            </div>
+            <div class="col-xs-12 col-md-7 col-md-pull-5">
+                <h2 class="section_header">Custom Fabric Orders</h2>
+                <p class="small-text grey">Tailored to Your Business Needs</p>
+                <p>Get custom jacquard fabrics designed specifically for your requirements. From unique patterns to bulk orders, we deliver quality fabrics at competitive prices.</p>
+                <div class="toppadding_5"></div>
+                <form class="contact-form row columns_padding_10" method="post" action="./">
+                    <div class="col-xs-12 col-sm-6">
+                        <div class="form-group"> 
+                            <input type="text" aria-required="true" size="30" value="" name="name" id="name" class="form-control with_icon" placeholder="Your Name"> 
+                            <i class="qtyler-user grey"></i> 
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6">
+                        <div class="form-group"> 
+                            <input type="email" aria-required="true" size="30" value="" name="email" id="email" class="form-control with_icon" placeholder="Email Address"> 
+                            <i class="qtyler-envelope grey"></i> 
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6">
+                        <div class="form-group"> 
+                            <input type="tel" size="30" value="" name="phone" id="phone" class="form-control with_icon" placeholder="Phone Number"> 
+                            <i class="qtyler-phone grey"></i> 
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6">
+                        <div class="form-group"> 
+                            <input type="text" size="30" value="" name="quantity" id="quantity" class="form-control with_icon" placeholder="Required Quantity"> 
+                            <i class="qtyler-shopping-cart grey"></i> 
+                        </div>
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="form-group"> 
+                            <textarea aria-required="true" rows="3" cols="45" name="message" id="message" class="form-control with_icon" placeholder="Fabric specifications, patterns, or special requirements"></textarea> 
+                            <i class="qtyler-comment grey"></i> 
+                        </div>
+                    </div>
+                    <div class="col-xs-12 bottommargin_0">
+                        <div class="contact-form-submit"> 
+                            <button type="submit" id="contact_form_submit" name="contact_submit" class="theme_button min_width_button margin_0">Request Quote</button> 
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+			<section id="testimonials" class="ls ms parallax overlay_color section_padding_top_150 section_padding_bottom_150">
+				<div class="container">
+					<div class="row">
+						<div class="col-xs-12 text-center">
+							<div class="owl-carousel" data-responsive-lg="1" data-responsive-md="1" data-responsive-sm="1" data-dots="true" data-nav="true">
+								<blockquote>
+									<div class="avatar"> <img src="images/faces/01.jpg" alt=""> </div>
+									<p>Thanks so much!! I have received my order on time as promised! I love the shirt - it's perfect! I look forward to ordering more shirts from your company!</p> <cite>Elaine Allen</cite> </blockquote>
+								<blockquote>
+									<div class="avatar"> <img src="images/faces/02.jpg" alt=""> </div>
+									<p>Thank you very much for making the process easy. I will remember the good treatment when I have a need for services such as yours. Thank You!</p> <cite>Adam Farnsworth</cite> </blockquote>
+								<blockquote>
+									<div class="avatar"> <img src="images/faces/03.jpg" alt=""> </div>
+									<p>Got the suit on yesterday and I love it! Please tell everyone that worked on it that I am very pleased and will order again.</p> <cite>Patricia Diaz</cite> </blockquote>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			<div style="height: 100px;"></div>
+
+			<section id="section-social" class="ls with_top_border columns_margin_0">
+				<div class="container">
+					<div class="row">
+						<div class="col-xs-12 text-center">
+<div class="page_social"> 
+    <a class="social-icon socicon-facebook dark-icon" href="https://www.facebook.com/sharer/sharer.php?u=https://dharshiniimpex.in" target="_blank" title="Facebook"></a> 
+    <a class="social-icon socicon-googleplus dark-icon" href="https://plus.google.com/share?url=https://dharshiniimpex.in" target="_blank" title="Google Plus"></a> 
+    <a class="social-icon socicon-linkedin dark-icon" href="https://www.linkedin.com/sharing/share-offsite/?url=https://dharshiniimpex.in" target="_blank" title="Linkedin"></a>
+    <a class="social-icon socicon-twitter dark-icon" href="https://twitter.com/intent/tweet?url=https://dharshiniimpex.in&text=Check%20out%20Dharshini%20Impex%20-%20Premium%20Textile%20Manufacturing" target="_blank" title="Twitter"></a> 
+    <a class="social-icon socicon-instagram dark-icon" href="https://www.instagram.com/" target="_blank" title="Instagram"></a> 
+</div>						</div>
+					</div>
+				</div>
+			</section>
+			<div style="height: 100px;"></div>
+
+			<section id="gallery" class="ls fluid_padding_0 columns_padding_0">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-xs-12">
+							<div class="owl-carousel gallery-carousel framed" data-responsive-xlg="6" data-responsive-lg="5" data-responsive-md="4" data-responsive-sm="3" data-responsive-xs="3" data-responsive-xxs="2" data-loop="true" data-margin="0" data-nav="true">
+								<div class="vertical-item">
+									<div class="item-media"> <img src="images/gallery-square/01.jpg" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery/01.jpg">
+							</a> </div>
+								</div>
+								<div class="vertical-item">
+									<div class="item-media"> <a class="p-view prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery/02.jpg">
+								<img src="images/gallery-square/02.jpg" alt="">
+							</a> </div>
+								</div>
+								<div class="vertical-item">
+									<div class="item-media"> <img src="images/gallery-square/03.jpg" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery/03.jpg">
+							</a> </div>
+								</div>
+								<div class="vertical-item">
+									<div class="item-media"> <img src="images/gallery-square/04.jpg" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery/04.jpg">
+							</a> </div>
+								</div>
+								<div class="vertical-item">
+									<div class="item-media"> <img src="images/gallery-square/05.jpg" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery/05.jpg">
+							</a> </div>
+								</div>
+								<div class="vertical-item">
+									<div class="item-media"> <img src="images/gallery-square/06.jpg" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery/06.jpg">
+							</a> </div>
+								</div>
+								<div class="vertical-item">
+									<div class="item-media"> <img src="images/gallery-square/07.jpg" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery/07.jpg">
+							</a> </div>
+								</div>
+								<div class="vertical-item">
+									<div class="item-media"> <img src="images/gallery-square/08.jpg" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery/08.jpg">
+							</a> </div>
+								</div>
+								<div class="vertical-item">
+									<div class="item-media"> <img src="images/gallery-square/09.jpg" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery/09.jpg">
+							</a> </div>
+								</div>
+								<div class="vertical-item">
+									<div class="item-media"> <img src="images/gallery-square/10.jpg" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery/10.jpg">
+							</a> </div>
+								</div>
+								<div class="vertical-item">
+									<div class="item-media"> <img src="images/gallery-square/11.jpg" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery/11.jpg">
+							</a> </div>
+								</div>
+								<div class="vertical-item">
+									<div class="item-media"> <img src="images/gallery-square/12.jpg" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery/12.jpg">
+							</a> </div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			<!-- <section id="footer-fullwidth" class="ls columns_margin_0 fluid_padding_0 columns_padding_0">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="widget widget_instagram">
+					<div class="instafeed">
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+ -->
+			<footer class="page_footer ls section_padding_top_150 section_padding_bottom_140 columns_margin_bottom_30">
+				<div class="container">
+					<div class="row">
+						<div class="col-xs-12 col-md-4 text-center text-md-left">
+							<div class="widget widget_text">
+								<div class="logo"> <img src="images/logo.png" alt=""> </div>
+								<ul class="list-unstyled greylinks">
+									<li>
+										<div class="media small-media">
+											<div class="media-left"> <i class="qtyler-phone"></i> </div>
+											<div class="media-body"> (+91) 9894657742 </div>
+										</div>
+									</li>
+									<li>
+										<div class="media small-media">
+											<div class="media-left"> <i class="qtyler-envelope"></i> </div>
+											<div class="media-body"> <a href="mailto:#">fabrics@dharshiniimpex.in</a> </div>
+										</div>
+									</li>
+									<li>
+										<div class="media small-media">
+											<div class="media-left"> <i class="qtyler-map-marker"></i> </div>
+											<div class="media-body"> Coimbatore - 641062 </div>
+										</div>
+									</li>
+								</ul>
+							</div>
+						</div>
+						<div class="col-xs-12 col-sm-6 col-md-4 text-center text-md-left">
+							<div class="widget widget_text">
+								<h3 class="widget-title">Hours</h3>
+								<ul class="feature-list">
+									<li> <span>Weekdays</span> <span>10:00 - 18:00</span> </li>
+									<li> <span>Saturday</span> <span>10:00 - 18:00</span> </li>
+									<li> <span>Sunday</span> <span>Closed</span> </li>
+									
+								</ul>
+							</div>
+						</div>
+						<div class="col-xs-12 col-sm-6 col-md-4 text-center text-md-left">
+							<div class="widget widget_text">
+								<h3 class="widget-title">Our Capabilities</h3>
+<ul class="list-unstyled greylinks">
+    <li>
+        <div class="media small-media">
+            <div class="media-left"> <i class="qtyler-delivery"></i> </div>
+            <div class="media-body"> Monthly Production: 2 Lakh Meters </div>
+        </div>
+    </li>
+    <li>
+        <div class="media small-media">
+            <div class="media-left"> <i class="qtyler-headphones"></i> </div>
+            <div class="media-body"> 100+ Unique Designs Created Daily </div>
+        </div>
+    </li>
+    <li>
+        <div class="media small-media">
+            <div class="media-left"> <i class="qtyler-money"></i> </div>
+            <div class="media-body"> Complete In-House Production Ecosystem </div>
+        </div>
+    </li>
+</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</footer>
+			<section class="page_copyright ds background_cover section_padding_top_10 section_padding_bottom_10">
+				<div class="container">
+					<div class="row">
+						<div class="col-xs-12 text-center"> &copy; Copyright 2025 All Rights Reserved </div>
+					</div>
+				</div>
+			</section>
+		</div>
+		<!-- eof #box_wrapper -->
+	</div>
+	<!-- eof #canvas -->
+	<script src="js/compressed.js"></script>
+	<script src="js/selectize.min.js"></script>
+	<script src="js/main.js"></script>
+</body>
+
+</html>
