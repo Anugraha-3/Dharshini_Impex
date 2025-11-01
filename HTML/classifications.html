@@ -187,6 +187,140 @@ footer.animate {
 html {
     scroll-behavior: smooth;
 }
+
+/* Custom styles for improved layout */
+.fabric-category {
+    margin-bottom: 60px;
+    padding: 30px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.fabric-category:last-child {
+    border-bottom: none;
+}
+
+.fabric-subcategory {
+    display: flex;
+    align-items: center;
+    margin: 40px 0;
+    padding: 25px;
+    background: #fafafa;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.fabric-subcategory:hover {
+    background: #f5f5f5;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.fabric-subcategory:nth-child(odd) {
+    flex-direction: row;
+}
+
+.fabric-subcategory:nth-child(even) {
+    flex-direction: row-reverse;
+}
+
+.fabric-image-container {
+    flex: 0 0 200px;
+    margin: 0 30px;
+}
+
+.fabric-image-container img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+}
+
+.fabric-content {
+    flex: 1;
+    padding: 0 20px;
+}
+
+.fabric-content h5 {
+    margin: 0 0 15px 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+}
+
+.fabric-content p {
+    margin: 0;
+    line-height: 1.6;
+    color: #666;
+    text-align: justify;
+}
+
+.main-category-header {
+    display: flex;
+    align-items: center;
+    margin: 40px 0;
+}
+
+.main-category-image {
+    flex: 0 0 250px;
+    margin-right: 40px;
+}
+
+.main-category-image img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+}
+
+.main-category-text {
+    flex: 1;
+}
+
+.main-category-text h4 {
+    margin: 0 0 15px 0;
+    font-size: 24px;
+    color: #333;
+}
+
+.main-category-text p {
+    margin: 0;
+    line-height: 1.6;
+    color: #666;
+    text-align: justify;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .fabric-subcategory,
+    .fabric-subcategory:nth-child(even) {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .fabric-image-container {
+        margin: 0 0 20px 0;
+    }
+    
+    .main-category-header {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .main-category-image {
+        margin: 0 0 20px 0;
+    }
+}
+
+.neat-text {
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 2px !important;
+    line-height: 1.4;
+    margin: 0;
+}
 </style>
 
 <script>
@@ -247,23 +381,11 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
 
-        // Animate list items with stagger
-        const listItems = document.querySelectorAll('.list2 li:not(.animate)');
-        listItems.forEach((item, index) => {
+        // Animate fabric subcategories
+        const subcategories = document.querySelectorAll('.fabric-subcategory:not(.animate)');
+        subcategories.forEach(item => {
             if (isElementPartiallyInViewport(item)) {
-                setTimeout(() => {
-                    item.classList.add('animate');
-                }, index * 100);
-            }
-        });
-
-        // Animate gallery items
-        const galleryItems = document.querySelectorAll('.gallery-carousel .vertical-item:not(.animate)');
-        galleryItems.forEach((item, index) => {
-            if (isElementPartiallyInViewport(item)) {
-                setTimeout(() => {
-                    item.classList.add('animate');
-                }, index * 50);
+                item.classList.add('animate');
             }
         });
 
@@ -336,353 +458,6 @@ window.addEventListener('load', function() {
 </head>
 
 <body>
-    <script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Search data with keywords for scrolling
-    const searchData = [
-        // Homepage & Main Navigation
-        { title: "Home", url: "index.html", scrollText: "", content: "home homepage main page dharshini impex textile manufacturing" },
-        { title: "Company Overview", url: "overview.html", scrollText: "company overview", content: "company overview business profile about company history established 1995" },
-        { title: "About Us", url: "about.html", scrollText: "about us", content: "about company information business details history background" },
-        { title: "Contact Us", url: "contact4.html", scrollText: "contact", content: "contact phone email address coimbatore location office" },
-        { title: "Contact Information", url: "contact4.html", scrollText: "contact information", content: "phone 9894657742 email fabrics dharshiniimpex coimbatore tamil nadu" },
-
-        // Leadership & Team
-        { title: "Leadership", url: "team.html", scrollText: "leadership", content: "leadership management team executives directors board" },
-        { title: "Team", url: "team.html", scrollText: "team", content: "team leadership management executive staff" },
-        { title: "S. Dhanaraj", url: "team.html", scrollText: "dhanaraj", content: "dhanaraj founder managing director ceo leader" },
-        { title: "Founder", url: "team.html", scrollText: "founder", content: "founder dhanaraj managing director ceo leader" },
-        { title: "Managing Director", url: "team.html", scrollText: "managing director", content: "managing director dhanaraj founder ceo leader" },
-        { title: "Dharshini Dhanaraj", url: "team.html", scrollText: "Dharshini Dhanaraj", content: "dharshini dhanaraj director strategy operations" },
-        { title: "Gokul Govindarajan", url: "team.html", scrollText: "gokul", content: "gokul govindarajan director finance chartered accountant" },
-        { title: "Yamini Dhanaraj", url: "team.html", scrollText: "yamini", content: "yamini dhanaraj director social initiatives welfare" },
-
-        // Company Journey & History
-        { title: "Journey", url: "about.html", scrollText: "journey", content: "journey milestones history timeline company growth evolution" },
-        { title: "History", url: "about.html", scrollText: "history", content: "history journey company background established 1995 milestones" },
-        { title: "Milestones", url: "about.html", scrollText: "milestones", content: "milestones journey history company growth achievements timeline" },
-
-        // Vision, Mission, Values
-        { title: "Vision", url: "about.html", scrollText: "vision", content: "vision mission company goals objectives future plans" },
-        { title: "Mission", url: "about.html", scrollText: "mission", content: "mission vision company purpose goals objectives values" },
-        { title: "Values", url: "about.html", scrollText: "values", content: "values culture mission vision company principles ethics" },
-
-        // Services & Departments
-        { title: "Services", url: "services.html", scrollText: "services", content: "services core departments manufacturing operations" },
-        { title: "Core Departments", url: "services.html", scrollText: "departments", content: "core departments services manufacturing operations divisions" },
-        { title: "Manufacturing", url: "services.html", scrollText: "manufacturing", content: "manufacturing production weaving textile operations departments" },
-        { title: "Designing", url: "services.html", scrollText: "designing", content: "designing design team patterns creative development" },
-        { title: "Design Team", url: "services.html", scrollText: "design team", content: "design team designing patterns creative development 100 designs daily" },
-        { title: "Sampling", url: "services.html", scrollText: "sampling", content: "sampling samples product development testing prototypes" },
-        { title: "Production Planning", url: "services.html", scrollText: "production planning", content: "production planning manufacturing scheduling operations workflow" },
-        { title: "Quality Control", url: "services.html", scrollText: "quality control", content: "quality control check inspection testing standards" },
-        { title: "Quality Check", url: "services.html", scrollText: "quality check", content: "quality check control inspection testing standards defect free" },
-        { title: "Raw Material Planning", url: "services.html", scrollText: "raw material", content: "raw material planning sourcing yarn supply chain" },
-        { title: "Processing", url: "services.html", scrollText: "processing", content: "processing dyeing finishing textile treatment operations" },
-        { title: "Dyeing", url: "services.html", scrollText: "dyeing", content: "dyeing processing finishing color treatment textile" },
-        { title: "Finishing", url: "services.html", scrollText: "finishing", content: "finishing processing dyeing textile treatment final" },
-        { title: "Packing", url: "services.html", scrollText: "packing", content: "packing packaging inspection delivery dispatch shipping" },
-        { title: "Marketing", url: "services.html", scrollText: "marketing", content: "marketing sales business development client relationships" },
-        { title: "Sales", url: "services.html", scrollText: "sales", content: "sales marketing business development client relationships" },
-        { title: "Accounts", url: "services.html", scrollText: "accounts", content: "accounts finance billing payroll compliance financial" },
-
-        // Technologies & Equipment
-        { title: "Technologies", url: "equipment.html", scrollText: "technologies", content: "technologies equipment machinery looms weaving systems" },
-        { title: "Equipment", url: "equipment.html", scrollText: "equipment", content: "equipment technologies machinery looms weaving systems" },
-        { title: "Looms", url: "equipment.html", scrollText: "looms", content: "looms machinery weaving equipment technologies manufacturing" },
-        { title: "Vamatex", url: "equipment.html", scrollText: "vamatex", content: "vamatex rapier looms machinery equipment weaving jacquard" },
-        { title: "Sulzer", url: "equipment.html", scrollText: "sulzer", content: "sulzer projectile looms machinery equipment weaving heavy duty" },
-        { title: "Toyota", url: "equipment.html", scrollText: "toyota", content: "toyota airjet looms machinery equipment weaving lightweight" },
-        { title: "Staubli", url: "equipment.html", scrollText: "staubli", content: "staubli jacquard systems digital control weaving patterns" },
-        { title: "Rapier Looms", url: "equipment.html", scrollText: "rapier looms", content: "rapier looms vamatex machinery weaving jacquard dobby" },
-        { title: "Projectile Looms", url: "equipment.html", scrollText: "projectile looms", content: "projectile looms sulzer machinery weaving heavy duty structured" },
-        { title: "Airjet Looms", url: "equipment.html", scrollText: "airjet looms", content: "airjet looms toyota machinery weaving lightweight speed efficiency" },
-        { title: "Jacquard Systems", url: "equipment.html", scrollText: "jacquard systems", content: "jacquard systems staubli digital control complex patterns weaving" },
-
-        // Fabric Types & Products
-        { title: "Categories", url: "classifications.html", scrollText: "categories", content: "categories fabric types classifications products varieties" },
-        { title: "Classifications", url: "classifications.html", scrollText: "classifications", content: "classifications categories fabric types products varieties" },
-        { title: "Fabric Types", url: "classifications.html", scrollText: "fabric types", content: "fabric types categories classifications products varieties" },
-        { title: "Jacquard Fabrics", url: "classifications.html", scrollText: "jacquard fabrics", content: "jacquard fabrics weaving patterns textile premium quality intricate" },
-        { title: "Dobby Fabrics", url: "classifications.html", scrollText: "dobby fabrics", content: "dobby fabrics weaving patterns textile structured geometric" },
-        { title: "Cotton Fabrics", url: "classifications.html", scrollText: "cotton fabrics", content: "cotton fabrics natural fiber textile breathable durable" },
-        { title: "Viscose Fabrics", url: "classifications.html", scrollText: "viscose fabrics", content: "viscose fabrics synthetic fiber textile soft elegant drape" },
-        { title: "Apparel Fabrics", url: "classifications.html", scrollText: "apparel fabrics", content: "apparel fabrics clothing textile garment fashion wear" },
-        { title: "Ethnic Wear", url: "classifications.html", scrollText: "ethnic wear", content: "ethnic wear traditional clothing fabrics cultural garments" },
-        { title: "Formal Wear", url: "classifications.html", scrollText: "formal wear", content: "formal wear business clothing fabrics professional attire" },
-        { title: "Home Textiles", url: "classifications.html", scrollText: "home textiles", content: "home textiles furnishing fabrics household interior decor" },
-        { title: "Bed Linen", url: "classifications.html", scrollText: "bed linen", content: "bed linen home textiles bedroom fabrics sheets bedding" },
-        { title: "Satin Jacquards", url: "classifications.html", scrollText: "satin jacquards", content: "satin jacquards glossy finish smooth premium fashion luxury" },
-        { title: "Self Jacquards", url: "classifications.html", scrollText: "self jacquards", content: "self jacquards tone on tone texture subtle elegant designs" },
-        { title: "Butta Jacquards", url: "classifications.html", scrollText: "butta jacquards", content: "butta jacquards motif patterns traditional festive ornamental" },
-        { title: "Pattern Dyed", url: "classifications.html", scrollText: "pattern dyed", content: "pattern dyed fabrics colored designs vibrant detailed patterning" },
-        { title: "Textured Jacquards", url: "classifications.html", scrollText: "textured jacquards", content: "textured jacquards depth feel tactile surface modern twist" },
-        { title: "3D Effect", url: "classifications.html", scrollText: "3d effect", content: "3D effect jacquards raised tactile dimensional surface aesthetics" },
-        { title: "Slub Cotton", url: "classifications.html", scrollText: "slub cotton", content: "slub cotton jacquards rustic textured handloom inspired natural" },
-        { title: "Linen Look", url: "classifications.html", scrollText: "linen look", content: "linen look jacquards natural appearance durable soft cotton" },
-        { title: "Double Cloth", url: "classifications.html", scrollText: "double cloth", content: "double cloth fabrics reversible two layer dual surface design" },
-        { title: "Mock Leno", url: "classifications.html", scrollText: "mock leno", content: "mock leno fabrics airy weave breathable strength jacquard" },
-        { title: "Cotton Flax", url: "classifications.html", scrollText: "cotton flax", content: "cotton flax jacquards eco friendly natural luster sustainable" },
-
-        // B2B & Business
-        { title: "B2B", url: "b2b.html", scrollText: "b2b", content: "b2b business buyers wholesale corporate clients manufacturers" },
-        { title: "Business Buyers", url: "b2b.html", scrollText: "business buyers", content: "business buyers b2b wholesale corporate clients manufacturers" },
-        { title: "Wholesale", url: "b2b.html", scrollText: "wholesale", content: "wholesale bulk business buyers b2b manufacturing large orders" },
-        { title: "Garment Manufacturers", url: "b2b.html", scrollText: "garment manufacturers", content: "garment manufacturers fashion labels clothing brands textile buyers" },
-        { title: "Fashion Labels", url: "b2b.html", scrollText: "fashion labels", content: "fashion labels brands garment manufacturers clothing textile" },
-        { title: "Distributors", url: "b2b.html", scrollText: "distributors", content: "distributors wholesale business partners fabric suppliers" },
-
-        // Production & Capacity
-        { title: "Production", url: "overview.html", scrollText: "production", content: "production manufacturing capacity 2 lakh meters monthly output" },
-        { title: "Production Capacity", url: "overview.html", scrollText: "production capacity", content: "production capacity 2 lakh meters monthly manufacturing output scale" },
-        { title: "2 Lakh Meters", url: "overview.html", scrollText: "2 lakh meters", content: "2 lakh meters monthly production capacity manufacturing output" },
-        { title: "100 Designs Daily", url: "overview.html", scrollText: "100 designs", content: "100 designs daily creative team patterns innovation variety" },
-
-        // Location & Contact
-        { title: "Coimbatore", url: "contact4.html", scrollText: "coimbatore", content: "coimbatore location address tamil nadu india office" },
-        { title: "Location", url: "contact4.html", scrollText: "location", content: "location address coimbatore tamil nadu office contact" },
-        { title: "Phone", url: "contact4.html", scrollText: "9894657742", content: "phone contact 9894657742 call telephone mobile" },
-        { title: "Email", url: "contact4.html", scrollText: "fabrics@dharshiniimpex", content: "email contact fabrics dharshiniimpex.in mail address" }
-    ];
-
-    // Handle search forms
-    const searchForms = document.querySelectorAll('.searchform, form[action="./"], form');
-    
-    searchForms.forEach(form => {
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-            const searchInput = this.querySelector('input[name="search"], input[type="search"], input[type="text"]');
-            const query = searchInput ? searchInput.value.trim().toLowerCase() : '';
-            
-            if (query) {
-                performSearch(query);
-            }
-            return false;
-        });
-    });
-
-    // Handle search buttons and any submit buttons
-    const allButtons = document.querySelectorAll('button, input[type="submit"]');
-    allButtons.forEach(button => {
-        button.addEventListener('click', function(e) {
-            const form = this.closest('form');
-            if (form) {
-                e.preventDefault();
-                const searchInput = form.querySelector('input[name="search"], input[type="search"], input[type="text"]');
-                const query = searchInput ? searchInput.value.trim().toLowerCase() : '';
-                
-                if (query) {
-                    performSearch(query);
-                }
-                return false;
-            }
-        });
-    });
-
-    // Also handle direct input enter key
-    const allInputs = document.querySelectorAll('input[name="search"], input[type="search"], input[type="text"]');
-    allInputs.forEach(input => {
-        input.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                const query = this.value.trim().toLowerCase();
-                if (query) {
-                    performSearch(query);
-                }
-            }
-        });
-    });
-
-    function performSearch(query) {
-        console.log('Searching for:', query);
-        
-        // First try to find in search data
-        const results = searchData.filter(item => 
-            item.title.toLowerCase().includes(query) || 
-            item.content.toLowerCase().includes(query)
-        );
-
-        if (results.length > 0) {
-            const result = results[0];
-            console.log('Found in search data:', result);
-            
-            // Check if we're already on the target page
-            const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-            const targetPage = result.url;
-            
-            if (currentPage === targetPage && result.scrollText) {
-                // Same page - just scroll
-                scrollToText(result.scrollText);
-            } else if (result.scrollText) {
-                // Different page - navigate with hash
-                window.location.href = result.url + '#search-' + encodeURIComponent(result.scrollText);
-            } else {
-                window.location.href = result.url;
-            }
-        } else {
-            // If not found in search data, try to scroll to it on current page
-            console.log('Not in search data, trying to scroll on current page');
-            scrollToText(query);
-        }
-    }
-
-    // Check for scroll parameter or hash on page load
-    function checkForScrollParameter() {
-        let scrollText = null;
-
-        // Check for 'scrollTo' parameter in URL
-        const urlParams = new URLSearchParams(window.location.search);
-        if (urlParams.has('scrollTo')) {
-            scrollText = urlParams.get('scrollTo');
-            // Clean up URL by removing 'scrollTo' parameter
-            urlParams.delete('scrollTo');
-            const newUrl = window.location.pathname + '?' + urlParams.toString();
-            window.history.replaceState({}, document.title, newUrl);
-        }
-
-        // If no 'scrollTo' parameter, check for hash
-        if (!scrollText && window.location.hash) {
-            const hash = window.location.hash.substring(1);
-            if (hash.startsWith('search-')) {
-                scrollText = decodeURIComponent(hash.replace('search-', ''));
-            }
-        }
-
-        if (scrollText) {
-            console.log('Found scroll parameter:', scrollText);
-            // Wait for page to fully load then scroll
-            setTimeout(() => {
-                scrollToText(scrollText);
-            }, 100);
-        }
-    }
-	 checkForScrollParameter();
-
-    // Clean scroll function with expand animation
-    function scrollToText(searchText) {
-        console.log('Starting scroll search for:', searchText);
-        const searchLower = searchText.toLowerCase();
-        let targetElements = [];
-
-        // Get ALL elements on the page
-        const allElements = Array.from(document.querySelectorAll('*'));
-        
-        // Search through ALL elements
-        allElements.forEach(element => {
-            // Skip script, style, and hidden elements
-            if (element.tagName === 'SCRIPT' || 
-                element.tagName === 'STYLE' || 
-                element.style.display === 'none' ||
-                element.style.visibility === 'hidden') {
-                return;
-            }
-            
-            const elementText = (element.textContent || element.innerText || '').toLowerCase();
-            const elementHTML = element.innerHTML.toLowerCase();
-            const elementId = (element.id || '').toLowerCase();
-            const elementClass = (element.className || '').toLowerCase();
-            
-            // Check for matches in text, HTML, ID, or class
-            if (elementText.includes(searchLower) || 
-                elementHTML.includes(searchLower) ||
-                elementId.includes(searchLower) ||
-                elementClass.includes(searchLower)) {
-                
-                targetElements.push({
-                    element: element,
-                    textLength: elementText.length,
-                    matchType: elementText.includes(searchLower) ? 'text' : 
-                              elementId.includes(searchLower) ? 'id' : 
-                              elementClass.includes(searchLower) ? 'class' : 'html'
-                });
-            }
-        });
-
-        console.log('Found potential elements:', targetElements.length);
-
-        if (targetElements.length > 0) {
-            // Sort by preference: text matches first, then shortest text (most specific)
-            targetElements.sort((a, b) => {
-                if (a.matchType === 'text' && b.matchType !== 'text') return -1;
-                if (b.matchType === 'text' && a.matchType !== 'text') return 1;
-                return a.textLength - b.textLength;
-            });
-
-            const targetElement = targetElements[0].element;
-            console.log('Selected element for scrolling:', targetElement);
-
-            // Apply subtle expand animation
-            applyExpandAnimation(targetElement);
-
-            // Scroll to element
-            targetElement.scrollIntoView({ 
-                behavior: 'smooth', 
-                block: 'center',
-                inline: 'center'
-            });
-
-            // Backup scroll method
-            setTimeout(() => {
-                const rect = targetElement.getBoundingClientRect();
-                const scrollTop = window.pageYOffset + rect.top - (window.innerHeight / 2);
-                window.scrollTo({
-                    top: scrollTop,
-                    behavior: 'smooth'
-                });
-            }, 100);
-
-            console.log('Successfully scrolled to:', searchText);
-            return true;
-        } else {
-            console.log('Could not find any matching elements for:', searchText);
-            return false;
-        }
-    }
-
-    // Clean expand animation function
-    function applyExpandAnimation(element) {
-        // Store original transform
-        const originalTransform = element.style.transform || '';
-        const originalTransition = element.style.transition || '';
-        
-        // Apply smooth transition
-        element.style.transition = 'transform 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
-        
-        // Start with slightly smaller scale
-        element.style.transform = originalTransform + ' scale(0.95)';
-        
-        // Expand up animation
-        setTimeout(() => {
-            element.style.transform = originalTransform + ' scale(1.05)';
-        }, 50);
-        
-        // Return to normal with a slight bounce
-        setTimeout(() => {
-            element.style.transform = originalTransform + ' scale(1)';
-        }, 300);
-        
-        // Clean up styles after animation
-        setTimeout(() => {
-            element.style.transition = originalTransition;
-            element.style.transform = originalTransform;
-        }, 900);
-    }
-
-    // Add a manual search function that can be called from console
-    window.manualSearch = function(text) {
-        console.log('Manual search triggered for:', text);
-        return scrollToText(text);
-    };
-
-    // Initialize scroll checking
-    checkForScrollParameter();
-
-    // Add some debug logging
-    console.log('Search script loaded and ready!');
-    console.log('Available search data entries:', searchData.length);
-    console.log('To manually test scrolling, use: manualSearch("your text here")');
-});
-</script>
 	<!--[if lt IE 9]>
 		<div class="bg-danger text-center">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/" class="highlight">upgrade your browser</a> to improve your experience.</div>
 	<![endif]-->
@@ -733,17 +508,6 @@ fabrics@dharshiniimpex.in
 					</span> </div>
 						</div>
 						<div class="col-xs-12 col-md-4 text-center text-md-right ">
-							<!-- 					<div class="widget_search">
-	                    <form method="get" class="searchform form-inline" action="./">
-	                        <div class="form-group-wrap">
-	                            <div class="form-group with_button margin_0">
-	                                <label class="sr-only" for="topline-search">Search for:</label>
-	                                <input id="topline-search" type="text" value="" name="search" class="form-control" placeholder="Search Keyword">
-	                            	<button type="submit" class="theme_button">Search</button>
-	                            </div>
-	                        </div>
-	                    </form>
-					</div> -->
 							<div class="dropdown search-dropdown"> <a id="search" data-target="#" href="./" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false" class="theme_button small_button round_button bg_button margin_0">
 						<i class="qtyler-search" aria-hidden="true"></i>
 					</a>
@@ -781,235 +545,20 @@ fabrics@dharshiniimpex.in
 												<li><a href="team.html">Leadership</a></li>
 												<li><a href="#">Journey</a></li>
 											</ul>	
-
-											<!--
-											<ul>
-												<li> <a href="about.html">About</a> </li>
-												<li> <a href="team.html">Management</a> </li>
-												<li> <a href="services.html">Services</a> </li>
-												<li> <a href="equipment.html">Equipment</a> </li>
-												<li> <a href="partnership.html">Partnership</a> </li>
-											</ul>-->
 										</li>
 										<li> <a href="#">Departments</a>
 											<ul>
-												<li><a href="services.html">Core Departments</a></li>
+												<li><a href="services.html">Departments</a></li>
 												<li><a href="equipment.html">Technologies</a></li>
-												
-											</ul>
-											<!--
-											<ul>
-												
-												<li> <a href="shortcodes_teasers.html">Shortcodes &amp; Widgets</a>
-													<ul>
-														<li> <a href="shortcodes_typography.html">Typography</a> </li>
-														<li> <a href="shortcodes_buttons.html">Buttons</a> </li>
-														<li> <a href="shortcodes_teasers.html">Teasers</a> </li>
-														<li> <a href="shortcodes_progress.html">Progress</a> </li>
-														<li> <a href="shortcodes_tabs.html">Tabs &amp; Collapse</a> </li>
-														<li> <a href="shortcodes_bootstrap.html">Bootstrap Elements</a> </li>
-														<li> <a href="shortcodes_widgets.html">Widgets</a> </li>
-														<li> <a href="shortcodes_animation.html">Animation</a> </li>
-														<li> <a href="shortcodes_icons.html">Template Icons</a> </li>
-														<li> <a href="shortcodes_socialicons.html">Social Icons</a> </li>
-													</ul>
-												</li>
-												
-												<li> <a href="gallery-regular.html">Gallery</a>
-													<ul>
-														
-														<li> <a href="gallery-regular.html">Gallery Regular</a>
-															<ul>
-																<li> <a href="gallery-regular.html">1 column</a> </li>
-																<li> <a href="gallery-regular-2-cols.html">2 columns</a> </li>
-																<li> <a href="gallery-regular-3-cols.html">3 columns</a> </li>
-															</ul>
-														</li>
-														
-														<li> <a href="gallery-fullwidth.html">Gallery Full Width</a>
-															<ul>
-																<li> <a href="gallery-fullwidth.html">2 column</a> </li>
-																<li> <a href="gallery-fullwidth-3-cols.html">3 columns</a> </li>
-																<li> <a href="gallery-fullwidth-4-cols.html">4 columns</a> </li>
-															</ul>
-														</li>
-														
-														<li> <a href="gallery-extended.html">Gallery Extended</a>
-															<ul>
-																<li> <a href="gallery-extended.html">1 column</a> </li>
-																<li> <a href="gallery-extended-2-cols.html">2 columns</a> </li>
-																<li> <a href="gallery-extended-3-cols.html">3 columns</a> </li>
-															</ul>
-														</li>
-														
-														<li> <a href="gallery-carousel.html">Gallery Carousel</a>
-															<ul>
-																<li> <a href="gallery-carousel.html">1 column</a> </li>
-																<li> <a href="gallery-carousel-2-cols.html">2 columns</a> </li>
-																<li> <a href="gallery-carousel-3-cols.html">3 columns</a> </li>
-															</ul>
-														</li>
-														
-														<li> <a href="gallery-tile.html">Gallery Tile</a> </li>
-														
-																												
-														<li> <a href="gallery-side-media.html">Gallery Side Media</a> </li>
-														
-														<li> <a href="gallery-single.html">Gallery Item</a>
-															<ul>
-																<li> <a href="gallery-single.html">Style 1</a> </li>
-																<li> <a href="gallery-single2.html">Style 2</a> </li>
-																<li> <a href="gallery-single3.html">Style 3</a> </li>
-																<li> <a href="gallery-single4.html">Style 4</a> </li>
-															</ul>
-														</li>
-														
-													</ul>
-												</li>
-												
-												<li> <a href="timetable.html">Timetable</a> </li>
-												
-												<li> <a href="events-left.html">Events</a>
-													<ul>
-														<li> <a href="events-left.html">Left Sidebar</a> </li>
-														<li> <a href="events-right.html">Right Sidebar</a> </li>
-														<li> <a href="events-full.html">Full Width</a> </li>
-														<li> <a href="event-single-left.html">Single Event</a>
-															<ul>
-																<li> <a href="event-single-left.html">Left Sidebar</a> </li>
-																<li> <a href="event-single-right.html">Right Sidebar</a> </li>
-																<li> <a href="event-single-full.html">Full Width</a> </li>
-															</ul>
-														</li>
-													</ul>
-												</li>
-												
-												<li> <a href="comingsoon1.html">Comingsoon</a>
-													<ul>
-														<li> <a href="comingsoon1.html">Comingsoon</a> </li>
-														<li> <a href="comingsoon2.html">Comingsoon 2</a> </li>
-													</ul>
-												</li>
-												<li> <a href="faq.html">FAQ</a>
-													<ul>
-														<li> <a href="faq.html">FAQ</a> </li>
-														<li> <a href="faq2.html">FAQ 2</a> </li>
-													</ul>
-												</li>
-												<li> <a href="404.html">404</a>
-													<ul>
-														<li> <a href="404.html">404</a> </li>
-														<li> <a href="4042.html">404 2</a> </li>
-													</ul>
-												</li>
 											</ul>
 										</li>
-										-->
-										<!-- eof pages -->
 										<li> <a href="#">Business</a>
 											<ul>
 												<li><a href="classifications.html">Categories</a></li>
 												<li><a href="b2b.html">Buyers B2B</a></li>
-												
-											</ul><!--
-											<div class="mega-menu">
-												<ul class="mega-menu-row">
-													<li class="mega-menu-col"> <a href="#">Headers</a>
-														<ul>
-															<li> <a href="header1.html">Header Type 1</a> </li>
-															<li> <a href="header2.html">Header Type 2</a> </li>
-															<li> <a href="header3.html">Header Type 3</a> </li>
-															<li> <a href="header4.html">Header Type 4</a> </li>
-															<li> <a href="header5.html">Header Type 5</a> </li>
-															<li> <a href="header6.html">Header Type 6</a> </li>
-														</ul>
-													</li>
-													<li class="mega-menu-col"> <a href="#">Side Menus</a>
-														<ul>
-															<li> <a href="header_side1.html">Slide Left Light</a> </li>
-															<li> <a href="header_side2.html">Slide Right Light</a> </li>
-															<li> <a href="header_side3.html">Push Left Light</a> </li>
-															<li> <a href="header_side4.html">Push Right Light</a> </li>
-															<li> <a href="header_side5.html">Slide Left Dark</a> </li>
-															<li> <a href="header_side6.html">Slide Right Dark</a> </li>
-															<li> <a href="header_side7.html">Push Left Dark</a> </li>
-															<li> <a href="header_side8.html">Push Right Dark</a> </li>
-															<li> <a href="header_side_superfish.html">Superfish Menu</a> </li>
-															<li> <a href="header_side_sticked.html">Sticked Menu</a> </li>
-														</ul>
-													</li>
-													<li class="mega-menu-col"> <a href="breadcrumbs1.html">Breadcrumbs</a>
-														<ul>
-															<li> <a href="breadcrumbs1.html">Breadcrumbs 1</a> </li>
-															<li> <a href="breadcrumbs2.html">Breadcrumbs 2</a> </li>
-															<li> <a href="breadcrumbs3.html">Breadcrumbs 3</a> </li>
-															<li> <a href="breadcrumbs4.html">Breadcrumbs 4</a> </li>
-															<li> <a href="breadcrumbs5.html">Breadcrumbs 5</a> </li>
-															<li> <a href="breadcrumbs6.html">Breadcrumbs 6</a> </li>
-														</ul>
-													</li>
-													<li class="mega-menu-col"> <a href="footer1.html">Footers</a>
-														<ul>
-															<li> <a href="footer1.html">Footer Type 1</a> </li>
-															<li> <a href="footer2.html">Footer Type 2</a> </li>
-															<li> <a href="footer3.html">Footer Type 3</a> </li>
-															<li> <a href="footer4.html">Footer Type 4</a> </li>
-															<li> <a href="footer5.html">Footer Type 5</a> </li>
-														</ul>
-													</li>
-													<li class="mega-menu-col"> <a href="copyright1.html">Copyrights</a>
-														<ul>
-															<li> <a href="copyright1.html">Copyrights 1</a> </li>
-															<li> <a href="copyright2.html">Copyrights 2</a> </li>
-															<li> <a href="copyright3.html">Copyrights 3</a> </li>
-															<li> <a href="copyright4.html">Copyrights 4</a> </li>
-															<li> <a href="copyright5.html">Copyrights 5</a> </li>
-														</ul>
-													</li>
-												</ul>
-											</div>-->
-											<!-- eof mega menu -->
+											</ul>
 										</li>
-										<!-- eof features -->
-										<!-- shop --><!--
-										<li> <a href="shop.html">Shop</a>
-											<ul>
-												<li> <a href="shop.html">Shop</a> </li>
-												<li> <a href="shop-product.html">Single Product</a> </li>
-												<li> <a href="shop-cart.html">Shopping Cart</a> </li>
-												<li> <a href="shop-checkout.html">Checkout</a> </li>
-												<li> <a href="shop-register.html">Registration</a> </li>
-											</ul>
-										</li>-->
-										<!-- eof shop -->
-										<!-- blog --><!--
-										<li> <a href="blog-right.html">Blog</a>
-											<ul>
-												<li> <a href="blog-right.html">Right Sidebar</a> </li>
-												<li> <a href="blog-left.html">Left Sidebar</a> </li>
-												<li> <a href="blog-full.html">No Sidebar</a> </li>
-												<li> <a href="blog-mosaic.html">Blog Grid</a> </li>
-												<li> <a href="blog-single-right.html">Post</a>
-													<ul>
-														<li> <a href="blog-single-right.html">Right Sidebar</a> </li>
-														<li> <a href="blog-single-left.html">Left Sidebar</a> </li>
-														<li> <a href="blog-single-full.html">No Sidebar</a> </li>
-													</ul>
-												</li>
-												<li> <a href="blog-single-video-right.html">Video Post</a>
-													<ul>
-														<li> <a href="blog-single-video-right.html">Right Sidebar</a> </li>
-														<li> <a href="blog-single-video-left.html">Left Sidebar</a> </li>
-														<li> <a href="blog-single-video-full.html">No Sidebar</a> </li>
-													</ul>
-												</li>
-											</ul>
-										</li>-->
-										<!-- eof blog -->
-										<!-- contacts -->
 										<li> <a href="contact4.html">Contact</a>
-										
-										<!-- eof contacts -->
 									</ul>
 								</nav>
 								<!-- eof main nav -->
@@ -1017,7 +566,6 @@ fabrics@dharshiniimpex.in
 							</div>
 							<div class="header_right_buttons text-right">
 								<ul class="inline-dropdown inline-block">
-									
 									<li class="dropdown social-dropdown"> <a id="social" data-target="#" href="./" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false" class="theme_button small_button round_button bg_button margin_0">
                                 <i class="qtyler-share" aria-hidden="true"></i>
                             </a>
@@ -1053,57 +601,282 @@ fabrics@dharshiniimpex.in
 			<section class="ls section_padding_top_150 section_padding_bottom_150">
 				<div class="container">
 					<div class="row">
-						<div class="col-xs-12"> <img src="images/about.jpg" class="alignright" alt="">
-<h2 class="section_header topmargin_0">Welcome to Dharshini Impex</h2>							<p class="small-text grey">Premium Jacquard & Dobby Fabric Manufacturers</p>
-							<p>At <strong>Dharshini Impex</strong>, we design and manufacture a wide variety of <strong>jacquard and dobby fabrics</strong> tailored for <strong>apparel</strong> and <strong>home textiles</strong>. Our advanced weaving capabilities and design expertise allow us to meet evolving fashion and furnishing needs with consistent quality and creativity.</p>
+						<div class="col-xs-12">
+							<div style="text-align: center; margin-bottom: 50px;">
+								<img src="images/about.jpg" style="width: 300px; height: 200px; object-fit: cover; border-radius: 10px; box-shadow: 0 5px 20px rgba(0,0,0,0.15);" alt="">
+								<h2 class="section_header topmargin_30">Welcome to Dharshini Impex</h2>
+								<p class="small-text grey neat-text">Premium Jacquard & Dobby Fabric Manufacturers</p>
+							</div>
 
-<h3><strong>Apparel Fabrics</strong></h3>
-<p>We specialize in fabrics for <strong>ethnic, formal, and contemporary wear</strong>, offering superior drape, texture, and finish.</p>
+							<p style="text-align: justify; font-size: 16px; line-height: 1.6; margin-bottom: 40px;">At <strong>Dharshini Impex</strong>, we design and manufacture a wide variety of <strong>jacquard and dobby fabrics</strong> tailored for <strong>apparel</strong> and <strong>home textiles</strong>. Our advanced weaving capabilities and design expertise allow us to meet evolving fashion and furnishing needs with consistent quality and creativity.</p>
 
-<h4><strong>1. Dobby Weaves</strong></h4>
-<img src="images/dobby.png" class="fabric-image alignleft" alt="Dobby Weave Fabrics">
-<ul class="list2 grey">
-    <div style="height: 50px;"></div>
-    <li><strong>Ethnic Wear Viscose Dobby</strong> - We create soft, elegant viscose dobby fabrics ideal for ethnic wear like kurtis, salwars, and dupattas.</li>
-    <li><strong>Formal Wear Cotton Dobby</strong> - We produce structured and breathable cotton dobby fabrics perfect for shirts and semi-formal apparel.</li>
-</ul>
-			<div style="height: 100px;"></div>
+							<h3 style="font-size: 28px; margin: 50px 0 30px 0; text-align: center; color: #333;"><strong>Apparel Fabrics</strong></h3>
+							<p style="text-align: center; font-size: 16px; margin-bottom: 40px; color: #666;">We specialize in fabrics for <strong>ethnic, formal, and contemporary wear</strong>, offering superior drape, texture, and finish.</p>
 
+							<div class="fabric-category">
+								<div class="main-category-header">
+									<div class="main-category-image">
+										<img src="images/dobby.png" alt="Dobby Weave Fabrics">
+									</div>
+									<div class="main-category-text">
+										<h4><strong>1. Dobby Weaves</strong></h4>
+										<p>Our dobby weaves combine structured geometric patterns with exceptional comfort and durability. These fabrics feature small, repetitive motifs created through dobby loom technology, offering versatility for both traditional and contemporary fashion applications.</p>
+									</div>
+								</div>
 
-<h4><strong>2. Jacquard Weaves</strong></h4>
+								<div class="fabric-subcategory">
+									<div class="fabric-image-container">
+										<img src="images/ethnic-viscose-dobby.jpg" alt="Ethnic Wear Viscose Dobby">
+									</div>
+									<div class="fabric-content">
+										<h5><strong>Ethnic Wear Viscose Dobby</strong></h5>
+										<p>We create soft, elegant viscose dobby fabrics ideal for ethnic wear like kurtis, salwars, and dupattas. These fabrics offer excellent drape and comfort while maintaining traditional aesthetic appeal.</p>
+									</div>
+								</div>
 
-<h5><strong>a) Viscose-Based Jacquards</strong></h5>
-<img src="images/viscose.jpg" class="fabric-image alignright" alt="Viscose Jacquard Fabrics">
-<ul class="list2 grey">
-    <li><strong>Satin Jacquards</strong> - We develop rich satin jacquard fabrics that offer a smooth, glossy finish ideal for premium fashion.</li>
-    <li><strong>Plain Self Jacquards</strong> - We weave subtle, textured self-designs that bring understated elegance to apparel.</li>
-    <li><strong>Butta (Motif) Jacquards</strong> - We offer ornamental butta jacquards with intricate woven motifs for traditional and festive wear.</li>
-    <li><strong>Two-Tone Cotton Viscose Fabrics</strong> - We engineer dual-tone fabrics blending cotton and viscose for a rich, dimensional look.</li>
-    <li><strong>Pattern-Dyed Viscose Poly Fabrics</strong> - We create patterned viscose-poly blends with a soft hand feel and vibrant design detailing.</li>
-    <li><strong>Textured Self Jacquards</strong> - We specialize in creating depth and feel with textured jacquard designs for a modern twist.</li>
-</ul>
-<div class="clear-both"></div>
+								<div class="fabric-subcategory">
+									<div class="fabric-image-container">
+										<img src="images/formal-cotton-dobby.jpg" alt="Formal Wear Cotton Dobby">
+									</div>
+									<div class="fabric-content">
+										<h5><strong>Formal Wear Cotton Dobby</strong></h5>
+										<p>We produce structured and breathable cotton dobby fabrics perfect for shirts and semi-formal apparel. These fabrics combine professional appearance with all-day comfort and easy maintenance.</p>
+									</div>
+								</div>
+							</div>
 
-<h5><strong>b) Cotton-Based Jacquards</strong></h5>
-<img src="images/cotton.jpg" class="fabric-image alignleft" alt="Cotton Jacquard Fabrics">
-<ul class="list2 grey">
-    <li><strong>Self Jacquards</strong> - We craft woven designs using single-color threads for a tone-on-tone texture effect.</li>
-    <li><strong>Butta Jacquards</strong> - We produce cotton jacquards with motif placement ideal for festive and ethnic fashion.</li>
-    <li><strong>Pattern-Dyed Poly Cotton Fabrics</strong> - We blend poly and cotton to deliver easy-care fabrics with detailed patterning.</li>
-    <li><strong>3D Effect Jacquards</strong> - We manufacture fabrics that give a raised, tactile 3D effect for unique surface aesthetics.</li>
-    <li><strong>Slub Cotton Jacquards</strong> - We create rustic, textured cotton jacquards with intentional yarn slubs for a handloom-inspired feel.</li>
-    <li><strong>Linen-Look Jacquards</strong> - We simulate the look of linen with durable, soft cotton-based jacquards.</li>
-    <li><strong>Craft Butta Jacquards</strong> - We design fine craft-inspired motifs woven seamlessly into the fabric.</li>
-    <li><strong>Brazzo Effect Jacquards</strong> - We innovate textures and sheens that replicate the luxurious Brazzo finish.</li>
-    <li><strong>Double Cloth Fabrics</strong> - We engineer reversible, double-layered jacquards that offer two design surfaces in one.</li>
-    <li><strong>Mock Leno Fabrics</strong> - We imitate the airy leno weave using jacquard looms for strength and breathability.</li>
-    <li><strong>Cotton Flax Jacquards</strong> - We incorporate flax blends for eco-friendly fabrics with natural luster.</li>
-    <li><strong>Full Textured Jacquards</strong> - We offer richly textured jacquards that enhance both visual and tactile experience.</li>
-</ul>
+							<div class="fabric-category">
+								<div class="main-category-header">
+									<div class="main-category-image">
+										<img src="images/jacquard-main.jpg" alt="Jacquard Weave Fabrics">
+									</div>
+									<div class="main-category-text">
+										<h4><strong>2. Jacquard Weaves</strong></h4>
+										<p>Our jacquard fabrics showcase intricate patterns woven directly into the fabric structure. Using advanced jacquard technology, we create complex designs with exceptional detail and dimensional texture for premium fashion applications.</p>
+									</div>
+								</div>
+
+								<h5 style="font-size: 22px; margin: 40px 0 20px 0; color: #444;"><strong>a) Viscose-Based Jacquards</strong></h5>
+
+								<div class="fabric-subcategory">
+									<div class="fabric-image-container">
+										<img src="images/satin-jacquard.jpg" alt="Satin Jacquards">
+									</div>
+									<div class="fabric-content">
+										<h5><strong>Satin Jacquards</strong></h5>
+										<p>We develop rich satin jacquard fabrics that offer a smooth, glossy finish ideal for premium fashion. These luxurious fabrics provide elegant drape and sophisticated appearance for special occasion wear.</p>
+									</div>
+								</div>
+
+								<div class="fabric-subcategory">
+									<div class="fabric-image-container">
+										<img src="images/self-jacquard.jpg" alt="Plain Self Jacquards">
+									</div>
+									<div class="fabric-content">
+										<h5><strong>Plain Self Jacquards</strong></h5>
+										<p>We weave subtle, textured self-designs that bring understated elegance to apparel. These tone-on-tone fabrics offer sophisticated texture without overwhelming patterns, perfect for contemporary fashion.</p>
+									</div>
+								</div>
+
+								<div class="fabric-subcategory">
+									<div class="fabric-image-container">
+										<img src="images/butta-jacquard.jpg" alt="Butta Jacquards">
+									</div>
+									<div class="fabric-content">
+										<h5><strong>Butta (Motif) Jacquards</strong></h5>
+										<p>We offer ornamental butta jacquards with intricate woven motifs for traditional and festive wear. These decorative fabrics feature beautiful cultural patterns that celebrate heritage craftsmanship.</p>
+									</div>
+								</div>
+
+								<div class="fabric-subcategory">
+									<div class="fabric-image-container">
+										<img src="images/two-tone-cotton-viscose.jpg" alt="Two-Tone Cotton Viscose">
+									</div>
+									<div class="fabric-content">
+										<h5><strong>Two-Tone Cotton Viscose Fabrics</strong></h5>
+										<p>We engineer dual-tone fabrics blending cotton and viscose for a rich, dimensional look. These innovative fabrics combine the best properties of both fibers for enhanced comfort and visual appeal.</p>
+									</div>
+								</div>
+
+								<div class="fabric-subcategory">
+									<div class="fabric-image-container">
+										<img src="images/pattern-dyed-viscose.jpg" alt="Pattern Dyed Viscose">
+									</div>
+									<div class="fabric-content">
+										<h5><strong>Pattern-Dyed Viscose Poly Fabrics</strong></h5>
+										<p>We create patterned viscose-poly blends with a soft hand feel and vibrant design detailing. These versatile fabrics offer excellent color retention and comfortable wear for everyday fashion.</p>
+									</div>
+								</div>
+
+								<div class="fabric-subcategory">
+									<div class="fabric-image-container">
+										<img src="images/textured-jacquard.jpg" alt="Textured Self Jacquards">
+									</div>
+									<div class="fabric-content">
+										<h5><strong>Textured Self Jacquards</strong></h5>
+										<p>We specialize in creating depth and feel with textured jacquard designs for a modern twist. These contemporary fabrics add tactile interest while maintaining sophisticated aesthetic appeal.</p>
+									</div>
+								</div>
+
+								<h5 style="font-size: 22px; margin: 40px 0 20px 0; color: #444;"><strong>b) Cotton-Based Jacquards</strong></h5>
+
+								<div class="fabric-subcategory">
+									<div class="fabric-image-container">
+										<img src="images/cotton-self-jacquard.jpg" alt="Cotton Self Jacquards">
+									</div>
+									<div class="fabric-content">
+										<h5><strong>Self Jacquards</strong></h5>
+										<p>We craft woven designs using single-color threads for a tone-on-tone texture effect. These elegant fabrics provide subtle sophistication perfect for both casual and formal cotton garments.</p>
+									</div>
+								</div>
+
+								<div class="fabric-subcategory">
+									<div class="fabric-image-container">
+										<img src="images/cotton-butta-jacquard.jpg" alt="Cotton Butta Jacquards">
+									</div>
+									<div class="fabric-content">
+										<h5><strong>Butta Jacquards</strong></h5>
+										<p>We produce cotton jacquards with motif placement ideal for festive and ethnic fashion. These traditional designs celebrate cultural heritage while offering modern comfort and durability.</p>
+									</div>
+								</div>
+
+								<div class="fabric-subcategory">
+									<div class="fabric-image-container">
+										<img src="images/pattern-dyed-poly-cotton.jpg" alt="Pattern-Dyed Poly Cotton">
+									</div>
+									<div class="fabric-content">
+										<h5><strong>Pattern-Dyed Poly Cotton Fabrics</strong></h5>
+										<p>We blend poly and cotton to deliver easy-care fabrics with detailed patterning. These practical fabrics combine wrinkle resistance with beautiful design elements for everyday wear.</p>
+									</div>
+								</div>
+
+								<div class="fabric-subcategory">
+									<div class="fabric-image-container">
+										<img src="images/3d-effect-jacquard.jpg" alt="3D Effect Jacquards">
+									</div>
+									<div class="fabric-content">
+										<h5><strong>3D Effect Jacquards</strong></h5>
+										<p>We manufacture fabrics that give a raised, tactile 3D effect for unique surface aesthetics. These innovative designs create visual depth and textural interest that sets garments apart.</p>
+									</div>
+								</div>
+
+								<div class="fabric-subcategory">
+									<div class="fabric-image-container">
+										<img src="images/slub-cotton-jacquard.jpg" alt="Slub Cotton Jacquards">
+									</div>
+									<div class="fabric-content">
+										<h5><strong>Slub Cotton Jacquards</strong></h5>
+										<p>We create rustic, textured cotton jacquards with intentional yarn slubs for a handloom-inspired feel. These artisanal-style fabrics bring natural charm and authentic texture to modern fashion.</p>
+									</div>
+								</div>
+
+								<div class="fabric-subcategory">
+									<div class="fabric-image-container">
+										<img src="images/linen-look-jacquard.jpg" alt="Linen-Look Jacquards">
+									</div>
+									<div class="fabric-content">
+										<h5><strong>Linen-Look Jacquards</strong></h5>
+										<p>We simulate the look of linen with durable, soft cotton-based jacquards. These fabrics offer the aesthetic appeal of linen with improved care properties and consistent quality.</p>
+									</div>
+								</div>
+
+								<div class="fabric-subcategory">
+									<div class="fabric-image-container">
+										<img src="images/craft-butta-jacquard.jpg" alt="Craft Butta Jacquards">
+									</div>
+									<div class="fabric-content">
+										<h5><strong>Craft Butta Jacquards</strong></h5>
+										<p>We design fine craft-inspired motifs woven seamlessly into the fabric. These artistic designs showcase traditional craftsmanship techniques in contemporary textile applications.</p>
+									</div>
+								</div>
+
+								<div class="fabric-subcategory">
+									<div class="fabric-image-container">
+										<img src="images/brazzo-effect-jacquard.jpg" alt="Brazzo Effect Jacquards">
+									</div>
+									<div class="fabric-content">
+										<h5><strong>Brazzo Effect Jacquards</strong></h5>
+										<p>We innovate textures and sheens that replicate the luxurious Brazzo finish. These premium fabrics offer sophisticated surface effects for high-end fashion applications.</p>
+									</div>
+								</div>
+
+								<div class="fabric-subcategory">
+									<div class="fabric-image-container">
+										<img src="images/double-cloth.jpg" alt="Double Cloth Fabrics">
+									</div>
+									<div class="fabric-content">
+										<h5><strong>Double Cloth Fabrics</strong></h5>
+										<p>We engineer reversible, double-layered jacquards that offer two design surfaces in one. These versatile fabrics provide excellent value and styling flexibility for creative fashion design.</p>
+									</div>
+								</div>
+
+								<div class="fabric-subcategory">
+									<div class="fabric-image-container">
+										<img src="images/mock-leno.jpg" alt="Mock Leno Fabrics">
+									</div>
+									<div class="fabric-content">
+										<h5><strong>Mock Leno Fabrics</strong></h5>
+										<p>We imitate the airy leno weave using jacquard looms for strength and breathability. These fabrics combine the open structure of leno with the design capabilities of jacquard weaving.</p>
+									</div>
+								</div>
+
+								<div class="fabric-subcategory">
+									<div class="fabric-image-container">
+										<img src="images/cotton-flax-jacquard.jpg" alt="Cotton Flax Jacquards">
+									</div>
+									<div class="fabric-content">
+										<h5><strong>Cotton Flax Jacquards</strong></h5>
+										<p>We incorporate flax blends for eco-friendly fabrics with natural luster. These sustainable fabrics appeal to environmentally conscious consumers while maintaining excellent performance.</p>
+									</div>
+								</div>
+
+								<div class="fabric-subcategory">
+									<div class="fabric-image-container">
+										<img src="images/full-textured-jacquard.jpg" alt="Full Textured Jacquards">
+									</div>
+									<div class="fabric-content">
+										<h5><strong>Full Textured Jacquards</strong></h5>
+										<p>We offer richly textured jacquards that enhance both visual and tactile experience. These premium fabrics create multi-dimensional surfaces that engage multiple senses for exceptional fashion appeal.</p>
+									</div>
+								</div>
+							</div>
+
+							<div style="text-align: center; margin: 60px 0 40px 0; padding: 40px; background: #f8f9fa; border-radius: 10px;">
+								<h3 style="color: #333; margin-bottom: 20px;"><strong>Home Textiles</strong></h3>
+								<div class="main-category-header" style="justify-content: center;">
+									<div class="main-category-image" style="margin-right: 30px;">
+										<img src="images/home-textiles.jpg" alt="Home Textiles">
+									</div>
+									<div class="main-category-text" style="text-align: left;">
+										<p>Our home textile fabrics bring luxury and comfort to living spaces. We create premium fabrics for bed linens, curtains, upholstery, and decorative applications, combining durability with aesthetic appeal for modern homes.</p>
+									</div>
+								</div>
+
+								<div class="fabric-subcategory" style="margin-top: 30px;">
+									<div class="fabric-image-container">
+										<img src="images/bed-linen-jacquard.jpg" alt="Bed Linen Jacquards">
+									</div>
+									<div class="fabric-content">
+										<h5><strong>Bed Linen Jacquards</strong></h5>
+										<p>We manufacture premium bed linen fabrics with intricate jacquard patterns for luxury bedding. These fabrics offer comfort, durability, and elegant designs that transform bedroom aesthetics.</p>
+									</div>
+								</div>
+
+								<div class="fabric-subcategory">
+									<div class="fabric-image-container">
+										<img src="images/furnishing-jacquard.jpg" alt="Furnishing Jacquards">
+									</div>
+									<div class="fabric-content">
+										<h5><strong>Furnishing Jacquards</strong></h5>
+										<p>We create sophisticated furnishing fabrics for upholstery and drapery applications. These heavy-duty jacquards combine aesthetic beauty with the strength required for home furnishing use.</p>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
 			</section>
+			
 			<section id="testimonials" class="ls ms parallax overlay_color section_padding_top_150 section_padding_bottom_150">
 				<div class="container">
 					<div class="row">
@@ -1123,13 +896,14 @@ fabrics@dharshiniimpex.in
 					</div>
 				</div>
 			</section>
+			
 			<section id="about" class="ls section_padding_top_150 section_padding_bottom_150">
 				<div class="container">
 					<div class="row flex-wrap v-center">
 						<div class="col-md-6"> <img src="images/about.png" alt="" class="about-cover"> </div>
 						<div class="col-md-6">
 							<h2 class="section_header">Premium Fabric Manufacturing</h2>
-							<p class="small-text grey">Quality & Innovation</p>
+							<p class="small-text grey neat-text">Quality & Innovation</p>
 							<p>At Dharshini Impex, we combine traditional weaving expertise with modern technology to create exceptional jacquard and dobby fabrics. Our state-of-the-art manufacturing facility ensures consistent quality, innovative designs, and timely delivery for our clients worldwide. We are committed to sustainable practices while delivering fabrics that meet the highest standards of the fashion and textile industry.</p>
 							<div class="toppadding_40 visible-lg"></div>
 							<div class="content-justify v-center v-spacing"> <img src="images/stamps.png" alt=""> <img src="images/signature.png" alt=""> </div>
@@ -1137,6 +911,7 @@ fabrics@dharshiniimpex.in
 					</div>
 				</div>
 			</section>
+			
 			<section id="gallery" class="ls fluid_padding_0 columns_padding_0">
 				<div class="container-fluid">
 					<div class="row">
@@ -1176,7 +951,7 @@ fabrics@dharshiniimpex.in
 							</a> </div>
 								</div>
 								<div class="vertical-item">
-									<div class="item-media"> <img src="images/gallery-square/09.jpg" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery/09.jpg">
+									<div class="item-media"> <img src="images/gallery-square/09.jpg" alt=""> <a class="abs-link prettyQuery" data-gal="prettyPhoto[gal]" title="" href="images/gallery/09.jpg">
 							</a> </div>
 								</div>
 								<div class="vertical-item">
@@ -1196,20 +971,7 @@ fabrics@dharshiniimpex.in
 					</div>
 				</div>
 			</section>
-			<!-- <section id="footer-fullwidth" class="ls columns_margin_0 fluid_padding_0 columns_padding_0">
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-xs-12">
-				<div class="widget widget_instagram">
-					<div class="instafeed">
-						
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</section>
- -->
+			
 			<footer class="page_footer ls section_padding_top_150 section_padding_bottom_140 columns_margin_bottom_30">
 				<div class="container">
 					<div class="row">
@@ -1243,8 +1005,8 @@ fabrics@dharshiniimpex.in</a> </div>
 							<div class="widget widget_text">
 								<h3 class="widget-title">Hours</h3>
 								<ul class="feature-list">
-									<li> <span>Weekdays</span> <span>10:00 - 18:00</span> </li>
-									<li> <span>Saturday</span> <span>10:00 - 18:00</span> </li>
+									<li> <span>Weekdays</span> <span>09:00 - 19:00</span> </li>
+									<li> <span>Saturday</span> <span>09:00 - 19:00</span> </li>
 									<li> <span>Sunday</span> <span>Closed</span> </li>
 								</ul>
 							</div>
@@ -1256,7 +1018,7 @@ fabrics@dharshiniimpex.in</a> </div>
 									<li>
 										<div class="media small-media">
 											<div class="media-left"> <i class="qtyler-delivery"></i> </div>
-											<div class="media-body"> Monthly Production: 2 Lakh Meters </div>
+											<div class="media-body"> Monthly Production: Over 2 Lakh Meters </div>
 										</div>
 									</li>
 									<li>
@@ -1277,6 +1039,7 @@ fabrics@dharshiniimpex.in</a> </div>
 					</div>
 				</div>
 			</footer>
+			
 			<section class="page_copyright ds background_cover section_padding_top_10 section_padding_bottom_10">
 				<div class="container">
 					<div class="row">

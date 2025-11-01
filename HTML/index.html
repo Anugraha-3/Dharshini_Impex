@@ -187,6 +187,8 @@ img {
     opacity: 1;
     transform: translateY(0) translateX(0) scale(1);
 }
+
+/* Keep original button styling */
 </style>
 
 <script>
@@ -272,11 +274,97 @@ document.addEventListener('DOMContentLoaded', function() {
     footerCols.forEach(col => observer.observe(col));
 });
 </script>
-	<script>
-// Prevent any default form submission before DOM loads
-window.addEventListener('load', function() {
+
+<script>
+// WhatsApp Integration Script
+document.addEventListener('DOMContentLoaded', function() {
+    // Handle WhatsApp form submission
+    const whatsappForm = document.getElementById('whatsapp-quote-form');
+    if (whatsappForm) {
+        whatsappForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(this);
+            const name = formData.get('name') || 'Not provided';
+            const email = formData.get('email') || 'Not provided';
+            const phone = formData.get('phone') || 'Not provided';
+            const quantity = formData.get('quantity') || 'Not specified';
+            const message = formData.get('message') || 'No additional details';
+            
+            // Create a very simple, short message for new contacts
+            const shortMessage = `Hi, I need a fabric quote.
+Name: ${name}
+Email: ${email}
+Quantity: ${quantity}
+Details: ${message}`;
+
+            // WhatsApp number
+            const whatsappNumber = '919894657742'; // Replace with your WhatsApp number
+            
+            // For new contacts, use minimal encoding and shorter text
+            const cleanMessage = shortMessage
+                .substring(0, 1000) // Limit to 1000 characters
+                .replace(/[^\w\s\-\.\@\:\,]/g, '') // Keep only basic characters
+                .trim();
+            
+            // Use double encoding for better compatibility with new contacts
+            const doubleEncodedMessage = encodeURIComponent(encodeURIComponent(cleanMessage));
+            const singleEncodedMessage = encodeURIComponent(cleanMessage);
+            
+            // Try the most compatible URL format for new contacts
+            const primaryURL = `https://wa.me/${whatsappNumber}?text=${singleEncodedMessage}`;
+            
+            // Alternative with different encoding
+            const alternativeURL = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${doubleEncodedMessage}`;
+            
+            // Fallback with minimal message
+            const minimalMessage = `Fabric Quote Request from ${name}`;
+            const fallbackURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(minimalMessage)}`;
+            
+            // First, try to detect if this might be a new contact and use appropriate method
+            console.log('Attempting WhatsApp integration for potentially new contact');
+            
+            // Method 1: Try primary URL
+            setTimeout(() => {
+                console.log('Trying primary URL:', primaryURL);
+                window.open(primaryURL, '_blank');
+            }, 100);
+            
+            // If user reports it didn't work, they can try the alternative
+            // Show instructions to user
+            setTimeout(() => {
+                const userConfirm = confirm(
+                    'WhatsApp should have opened with your message. ' +
+                    'If the message is not prefilled, click OK to try an alternative method.'
+                );
+                
+                if (userConfirm) {
+                    console.log('Trying alternative URL:', alternativeURL);
+                    window.open(alternativeURL, '_blank');
+                }
+            }, 3000);
+            
+            // Copy message to clipboard as backup
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(cleanMessage).then(() => {
+                    console.log('Message copied to clipboard as backup');
+                }).catch(err => {
+                    console.log('Could not copy to clipboard:', err);
+                });
+            }
+            
+            // Optional: Clear the form after sending
+            this.reset();
+            
+            // Optional: Show success message
+            alert('Redirecting to WhatsApp... Your quote request will be sent!');
+        });
+    }
+
+    // Prevent any other form submissions
     document.querySelectorAll('form').forEach(form => {
-        if (form.action.includes('./') || form.action === '') {
+        if (form.id !== 'whatsapp-quote-form' && (form.action.includes('./') || form.action === '')) {
             form.addEventListener('submit', function(e) {
                 e.preventDefault();
                 return false;
@@ -285,28 +373,6 @@ window.addEventListener('load', function() {
     });
 });
 </script>
-	<title>Dharshini Impex</title>
-	<meta charset="utf-8">
-	<!--[if IE]>
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<![endif]-->
-	<meta name="description" content="">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-	<link rel="stylesheet" href="css/bootstrap.min.css">
-	<link rel="stylesheet" href="css/animations.css">
-	<link rel="stylesheet" href="css/fonts.css">
-	<link rel="stylesheet" href="css/main.css" class="color-switcher-link">
-	<link rel="stylesheet" href="css/shop.css" class="color-switcher-link">
-	<script src="js/vendor/modernizr-2.6.2.min.js"></script>
-	<!--[if lt IE 9]>
-		<script src="js/vendor/html5shiv.min.js"></script>
-		<script src="js/vendor/respond.min.js"></script>
-		<script src="js/vendor/jquery-1.12.4.min.js"></script>
-	<![endif]-->
-</head>
-
-<body>
 
 	<script>
 document.addEventListener('DOMContentLoaded', function() {
@@ -341,7 +407,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Services & Departments
         { title: "Services", url: "services.html", scrollText: "services", content: "services core departments manufacturing operations" },
-        { title: "Core Departments", url: "services.html", scrollText: "departments", content: "core departments services manufacturing operations divisions" },
+        { title: "Departments", url: "services.html", scrollText: "departments", content: "core departments services manufacturing operations divisions" },
         { title: "Manufacturing", url: "services.html", scrollText: "manufacturing", content: "manufacturing production weaving textile operations departments" },
         { title: "Designing", url: "services.html", scrollText: "designing", content: "designing design team patterns creative development" },
         { title: "Design Team", url: "services.html", scrollText: "design team", content: "design team designing patterns creative development 100 designs daily" },
@@ -421,48 +487,54 @@ document.addEventListener('DOMContentLoaded', function() {
     const searchForms = document.querySelectorAll('.searchform, form[action="./"], form');
     
     searchForms.forEach(form => {
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-            const searchInput = this.querySelector('input[name="search"], input[type="search"], input[type="text"]');
-            const query = searchInput ? searchInput.value.trim().toLowerCase() : '';
-            
-            if (query) {
-                performSearch(query);
-            }
-            return false;
-        });
-    });
-
-    // Handle search buttons and any submit buttons
-    const allButtons = document.querySelectorAll('button, input[type="submit"]');
-    allButtons.forEach(button => {
-        button.addEventListener('click', function(e) {
-            const form = this.closest('form');
-            if (form) {
+        if (form.id !== 'whatsapp-quote-form') {
+            form.addEventListener('submit', function(e) {
                 e.preventDefault();
-                const searchInput = form.querySelector('input[name="search"], input[type="search"], input[type="text"]');
+                const searchInput = this.querySelector('input[name="search"], input[type="search"], input[type="text"]');
                 const query = searchInput ? searchInput.value.trim().toLowerCase() : '';
                 
                 if (query) {
                     performSearch(query);
                 }
                 return false;
-            }
-        });
+            });
+        }
+    });
+
+    // Handle search buttons and any submit buttons
+    const allButtons = document.querySelectorAll('button, input[type="submit"]');
+    allButtons.forEach(button => {
+        if (button.id !== 'contact_form_submit') {
+            button.addEventListener('click', function(e) {
+                const form = this.closest('form');
+                if (form && form.id !== 'whatsapp-quote-form') {
+                    e.preventDefault();
+                    const searchInput = form.querySelector('input[name="search"], input[type="search"], input[type="text"]');
+                    const query = searchInput ? searchInput.value.trim().toLowerCase() : '';
+                    
+                    if (query) {
+                        performSearch(query);
+                    }
+                    return false;
+                }
+            });
+        }
     });
 
     // Also handle direct input enter key
     const allInputs = document.querySelectorAll('input[name="search"], input[type="search"], input[type="text"]');
     allInputs.forEach(input => {
-        input.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                const query = this.value.trim().toLowerCase();
-                if (query) {
-                    performSearch(query);
+        if (!input.closest('#whatsapp-quote-form')) {
+            input.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    const query = this.value.trim().toLowerCase();
+                    if (query) {
+                        performSearch(query);
+                    }
                 }
-            }
-        });
+            });
+        }
     });
 
     function performSearch(query) {
@@ -655,6 +727,29 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log('To manually test scrolling, use: manualSearch("your text here")');
 });
 </script>
+	<title>Dharshini Impex</title>
+	<meta charset="utf-8">
+	<!--[if IE]>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<![endif]-->
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/animations.css">
+	<link rel="stylesheet" href="css/fonts.css">
+	<link rel="stylesheet" href="css/main.css" class="color-switcher-link">
+	<link rel="stylesheet" href="css/shop.css" class="color-switcher-link">
+	<script src="js/vendor/modernizr-2.6.2.min.js"></script>
+	<!--[if lt IE 9]>
+		<script src="js/vendor/html5shiv.min.js"></script>
+		<script src="js/vendor/respond.min.js"></script>
+		<script src="js/vendor/jquery-1.12.4.min.js"></script>
+	<![endif]-->
+</head>
+
+<body>
+
 	<!--[if lt IE 9]>
 		<div class="bg-danger text-center">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/" class="highlight">upgrade your browser</a> to improve your experience.</div>
 	<![endif]-->
@@ -746,7 +841,7 @@ document.addEventListener('DOMContentLoaded', function() {
 										</li>
 										<li> <a href="#">Departments</a>
 											<ul>
-												<li><a href="services.html">Core Departments</a></li>
+												<li><a href="services.html">Departments</a></li>
 												<li><a href="equipment.html">Technologies</a></li>
 												
 											</ul>
@@ -883,42 +978,79 @@ document.addEventListener('DOMContentLoaded', function() {
 				<!-- eof flexslider -->
 			</section>
 			<section id="about" class="ls section_padding_top_150 section_padding_bottom_150">
-				<div class="container">
-					<div class="row flex-wrap v-center">
-						<div class="col-md-6"> <img src="images/about.png" alt="" class="about-cover"> </div>
-						<div class="col-md-6">
-							<h2 class="section_header">Our Vision</h2>
-							<p class="small-text grey">Leading the Future of Textile Excellence</p>
-							<p>To become a global leader in jacquard fabric manufacturing, consistently exceeding customer expectations through innovative designs, uncompromising quality, and sustainable practices — all while fostering a culture of excellence, creativity, and responsibility.</p>
-							<div class="toppadding_40 visible-lg"></div>
-							<div class="content-justify v-center v-spacing"> <img src="images/stamps.png" alt=""> <img src="images/signature.png" alt=""> </div>
-						</div>
-					</div>
-				</div>
-			</section>
+    <div class="container">
+        <div class="row flex-wrap v-center">
+            <div class="col-md-6"> <img src="images/di1.jpg" alt="" class="about-cover"> </div>
+            <div class="col-md-6">
+                <h2 class="section_header">Our Vision</h2>
+                <p class="small-text grey neat-text">Leading the Future of Textile Excellence</p>
+
+<style>
+/* Import a clean Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap');
+
+.neat-text {
+  font-family: 'Poppins', sans-serif;   /* modern, neat font */
+  font-size: 16px;                      /* adjust size */
+  font-weight: 500;                     /* medium weight */
+  letter-spacing: 2px !important;       /* reduce extra space between letters */
+  line-height: 1.4;                     /* nice vertical spacing */
+  margin: 0;                            /* remove unnecessary margin */
+}
+
+/* Justify vision text */
+.vision-text {
+  text-align: justify;
+}
+</style>
+
+                <p class="vision-text">
+                    To become a global leader in jacquard fabric manufacturing, consistently exceeding customer expectations through innovative designs, uncompromised quality, and sustainable practices — all while fostering a culture of excellence, creativity, and responsibility.
+                </p>
+                <div class="toppadding_40 visible-lg"></div>
+                <div class="content-justify v-center v-spacing"> <img src="images/stamps.png" alt="">  </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 			
 			<!-- Replace the existing Custom Tailoring section with this -->
 <section id="contact-form" class="ls section_padding_top_100 section_padding_bottom_100">
     <div class="container">
         <div class="row flex-wrap v-center">
             <div class="col-xs-12 col-md-5 col-md-push-6"> 
-                <img src="images/tailoring.jpg" alt="" class="contact-form-cover"> 
+                <img src="images/di3.jpg" alt="" class="contact-form-cover"> 
             </div>
             <div class="col-xs-12 col-md-7 col-md-pull-5">
                 <h2 class="section_header">Custom Fabric Orders</h2>
-                <p class="small-text grey">Tailored to Your Business Needs</p>
+                <p class="small-text grey neat-text">Tailored to Your Business Needs</p>
+                <style>
+/* Import a clean Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap');
+
+.neat-text {
+  font-family: 'Poppins', sans-serif;   /* modern, neat font */
+  font-size: 16px;                      /* adjust size */
+  font-weight: 500;                     /* medium weight */
+  letter-spacing: 2px !important;     /* reduce extra space between letters */
+  line-height: 1.4;                     /* nice vertical spacing */
+  margin: 0;                            /* remove unnecessary margin */
+}
+</style>
+
                 <p>Get custom jacquard fabrics designed specifically for your requirements. From unique patterns to bulk orders, we deliver quality fabrics at competitive prices.</p>
                 <div class="toppadding_5"></div>
-                <form class="contact-form row columns_padding_10" method="post" action="./">
+                <form class="contact-form row columns_padding_10" method="post" id="whatsapp-quote-form">
                     <div class="col-xs-12 col-sm-6">
                         <div class="form-group"> 
-                            <input type="text" aria-required="true" size="30" value="" name="name" id="name" class="form-control with_icon" placeholder="Your Name"> 
+                            <input type="text" aria-required="true" size="30" value="" name="name" id="name" class="form-control with_icon" placeholder="Your Name" required> 
                             <i class="qtyler-user grey"></i> 
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-6">
                         <div class="form-group"> 
-                            <input type="email" aria-required="true" size="30" value="" name="email" id="email" class="form-control with_icon" placeholder="Email Address"> 
+                            <input type="email" aria-required="true" size="30" value="" name="email" id="email" class="form-control with_icon" placeholder="Email Address" required> 
                             <i class="qtyler-envelope grey"></i> 
                         </div>
                     </div>
@@ -936,13 +1068,16 @@ document.addEventListener('DOMContentLoaded', function() {
                     </div>
                     <div class="col-xs-12">
                         <div class="form-group"> 
-                            <textarea aria-required="true" rows="3" cols="45" name="message" id="message" class="form-control with_icon" placeholder="Fabric specifications, patterns, or special requirements"></textarea> 
+                            <textarea aria-required="true" rows="3" cols="45" name="message" id="message" class="form-control with_icon" placeholder="Fabric specifications, patterns, or special requirements" required></textarea> 
                             <i class="qtyler-comment grey"></i> 
                         </div>
                     </div>
                     <div class="col-xs-12 bottommargin_0">
                         <div class="contact-form-submit"> 
-                            <button type="submit" id="contact_form_submit" name="contact_submit" class="theme_button min_width_button margin_0">Request Quote</button> 
+                            <button type="submit" id="contact_form_submit" name="contact_submit" class="theme_button min_width_button margin_0">
+                                <i class="qtyler-whatsapp" style="margin-right: 8px;"></i>
+                                Request Quote via WhatsApp
+                            </button> 
                         </div>
                     </div>
                 </form>
@@ -1002,7 +1137,7 @@ document.addEventListener('DOMContentLoaded', function() {
 							</a> </div>
 								</div>
 								<div class="vertical-item">
-									<div class="item-media"> <img src="images/gallery-square/03.jpg" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery/03.jpg">
+									<div class="item-media"> <img src="images/di4.jpg" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery/03.jpg">
 							</a> </div>
 								</div>
 								<div class="vertical-item">
@@ -1092,8 +1227,8 @@ document.addEventListener('DOMContentLoaded', function() {
 							<div class="widget widget_text">
 								<h3 class="widget-title">Hours</h3>
 								<ul class="feature-list">
-									<li> <span>Weekdays</span> <span>10:00 - 18:00</span> </li>
-									<li> <span>Saturday</span> <span>10:00 - 18:00</span> </li>
+									<li> <span>Weekdays</span> <span>09:00 - 19:00</span> </li>
+									<li> <span>Saturday</span> <span>09:00 - 19:00</span> </li>
 									<li> <span>Sunday</span> <span>Closed</span> </li>
 									
 								</ul>
@@ -1106,7 +1241,7 @@ document.addEventListener('DOMContentLoaded', function() {
     <li>
         <div class="media small-media">
             <div class="media-left"> <i class="qtyler-delivery"></i> </div>
-            <div class="media-body"> Monthly Production: 2 Lakh Meters </div>
+            <div class="media-body"> Monthly Production: Over 2 Lakh Meters </div>
         </div>
     </li>
     <li>
