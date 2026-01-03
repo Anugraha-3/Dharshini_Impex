@@ -224,13 +224,13 @@ html {
 }
 
 .fabric-image-container {
-    flex: 0 0 200px;
+    flex: 0 0 300px;
     margin: 0 30px;
 }
 
 .fabric-image-container img {
     width: 100%;
-    height: 150px;
+    height: 220px;
     object-fit: cover;
     border-radius: 8px;
     box-shadow: 0 3px 10px rgba(0,0,0,0.15);
@@ -321,6 +321,53 @@ html {
     line-height: 1.4;
     margin: 0;
 }
+
+/* Slideshow styles */
+.fabric-slideshow {
+    position: relative;
+    width: 100%;
+    height: 220px;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+}
+
+.fabric-slideshow img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+
+.fabric-slideshow img.active {
+    opacity: 1;
+}
+
+.slideshow-dots {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 5px;
+}
+
+.slideshow-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.5);
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.slideshow-dot.active {
+    background: rgba(255,255,255,0.9);
+}
 </style>
 
 <script>
@@ -397,6 +444,14 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
 
+        // Animate gallery items
+        const galleryItems = document.querySelectorAll('.gallery-carousel .vertical-item:not(.animate)');
+        galleryItems.forEach(item => {
+            if (isElementPartiallyInViewport(item)) {
+                item.classList.add('animate');
+            }
+        });
+
         // Animate footer
         const footer = document.querySelector('footer:not(.animate)');
         if (footer && isElementPartiallyInViewport(footer)) {
@@ -421,7 +476,57 @@ document.addEventListener('DOMContentLoaded', function() {
 
     window.addEventListener('scroll', requestTick);
     window.addEventListener('resize', animateOnScroll);
+
+    // Initialize slideshows
+    initializeSlideshows();
 });
+
+// Slideshow functionality
+function initializeSlideshows() {
+    const slideshows = document.querySelectorAll('.fabric-slideshow');
+    
+    slideshows.forEach((slideshow, index) => {
+        const images = slideshow.querySelectorAll('img');
+        const dotsContainer = slideshow.querySelector('.slideshow-dots');
+        
+        // Show first image (always, even for single-image slideshows)
+        if (images.length > 0) {
+            images[0].classList.add('active');
+        }
+        
+        // Only setup interactive carousel for multiple images
+        if (images.length <= 1) return;
+        
+        let currentSlide = 0;
+        
+        // Create dots
+        images.forEach((_, i) => {
+            const dot = document.createElement('div');
+            dot.className = 'slideshow-dot';
+            if (i === 0) dot.classList.add('active');
+            dot.addEventListener('click', () => goToSlide(i));
+            dotsContainer.appendChild(dot);
+        });
+        
+        function goToSlide(slideIndex) {
+            images[currentSlide].classList.remove('active');
+            dotsContainer.children[currentSlide].classList.remove('active');
+            
+            currentSlide = slideIndex;
+            
+            images[currentSlide].classList.add('active');
+            dotsContainer.children[currentSlide].classList.add('active');
+        }
+        
+        function nextSlide() {
+            const nextIndex = (currentSlide + 1) % images.length;
+            goToSlide(nextIndex);
+        }
+        
+        // Auto-advance slides every 4 seconds
+        setInterval(nextSlide, 4000);
+    });
+}
 </script>
     <script>
 // Prevent any default form submission before DOM loads
@@ -501,7 +606,7 @@ window.addEventListener('load', function() {
 					</span> <span>
 						<i class="qtyler-envelope rightpadding_5"></i>
 						
-fabrics@dharshiniimpex.in
+support@dharshiniimpex.in
 					</span> <span>
 						<i class="qtyler-map-marker rightpadding_5"></i>
 						Coimbatore - 641062
@@ -603,44 +708,166 @@ fabrics@dharshiniimpex.in
 					<div class="row">
 						<div class="col-xs-12">
 							<div style="text-align: center; margin-bottom: 50px;">
-								<img src="images/about.jpg" style="width: 300px; height: 200px; object-fit: cover; border-radius: 10px; box-shadow: 0 5px 20px rgba(0,0,0,0.15);" alt="">
-								<h2 class="section_header topmargin_30">Welcome to Dharshini Impex</h2>
-								<p class="small-text grey neat-text">Premium Jacquard & Dobby Fabric Manufacturers</p>
+								
+								<h2 class="section_header topmargin_30">DHARSHINI IMPEX PVT. LTD.</h2>
+								<p class="small-text grey neat-text">Manufacturers of Premium Cotton and Blend Jacquard & Dobby Fabrics</p>
 							</div>
 
 							<p style="text-align: justify; font-size: 16px; line-height: 1.6; margin-bottom: 40px;">At <strong>Dharshini Impex</strong>, we design and manufacture a wide variety of <strong>jacquard and dobby fabrics</strong> tailored for <strong>apparel</strong> and <strong>home textiles</strong>. Our advanced weaving capabilities and design expertise allow us to meet evolving fashion and furnishing needs with consistent quality and creativity.</p>
 
-							<h3 style="font-size: 28px; margin: 50px 0 30px 0; text-align: center; color: #333;"><strong>Apparel Fabrics</strong></h3>
-							<p style="text-align: center; font-size: 16px; margin-bottom: 40px; color: #666;">We specialize in fabrics for <strong>ethnic, formal, and contemporary wear</strong>, offering superior drape, texture, and finish.</p>
-
 							<div class="fabric-category">
 								<div class="main-category-header">
 									<div class="main-category-image">
-										<img src="images/dobby.png" alt="Dobby Weave Fabrics">
+										<img src="images/category/cotton jacquards.jpg" alt="Cotton Jacquards">
 									</div>
 									<div class="main-category-text">
-										<h4><strong>1. Dobby Weaves</strong></h4>
-										<p>Our dobby weaves combine structured geometric patterns with exceptional comfort and durability. These fabrics feature small, repetitive motifs created through dobby loom technology, offering versatility for both traditional and contemporary fashion applications.</p>
+										<h4><strong>Cotton Jacquards</strong></h4>
+										<p>Premium woven jacquard fabrics crafted with 100% cotton.</p>
 									</div>
 								</div>
 
 								<div class="fabric-subcategory">
 									<div class="fabric-image-container">
-										<img src="images/ethnic-viscose-dobby.jpg" alt="Ethnic Wear Viscose Dobby">
+										<div class="fabric-slideshow">
+											<img src="images/category/cotton yarn dyed jacquard/cotton yarn dyed jacquard 1.jpg" alt="Cotton Yarn Dyed Jacquard">
+											<img src="images/category/cotton yarn dyed jacquard/cotton yarn dyed jacquard 2.jpg" alt="Cotton Yarn Dyed Jacquard">
+											<img src="images/category/cotton yarn dyed jacquard/cotton yarn dyed jacquard 3.jpg" alt="Cotton Yarn Dyed Jacquard">
+											<img src="images/category/cotton yarn dyed jacquard/cotton yarn dyed jacquard 4.jpg" alt="Cotton Yarn Dyed Jacquard">
+											<div class="slideshow-dots"></div>
+										</div>
 									</div>
 									<div class="fabric-content">
-										<h5><strong>Ethnic Wear Viscose Dobby</strong></h5>
-										<p>We create soft, elegant viscose dobby fabrics ideal for ethnic wear like kurtis, salwars, and dupattas. These fabrics offer excellent drape and comfort while maintaining traditional aesthetic appeal.</p>
+										<h5><strong>Cotton Yarn Dyed Jacquard</strong></h5>
+										<p>Premium cotton jacquard fabrics featuring vibrant, colorfast patterns created through yarn-dyeing process. These fabrics offer exceptional color retention and intricate geometric designs. Perfect for ethnic wear, formal shirts, and contemporary fashion garments with superior durability and rich texture.</p>
 									</div>
 								</div>
 
 								<div class="fabric-subcategory">
 									<div class="fabric-image-container">
-										<img src="images/formal-cotton-dobby.jpg" alt="Formal Wear Cotton Dobby">
+										<div class="fabric-slideshow">
+											<img src="images/category/reversible craft butta jacquard/reversible craft butta jacquard 1.jpg" alt="Reversible Craft Butta Jacquard">
+											<img src="images/category/reversible craft butta jacquard/reversible craft butta jacquard 2.jpg" alt="Reversible Craft Butta Jacquard">
+											<div class="slideshow-dots"></div>
+										</div>
 									</div>
 									<div class="fabric-content">
-										<h5><strong>Formal Wear Cotton Dobby</strong></h5>
-										<p>We produce structured and breathable cotton dobby fabrics perfect for shirts and semi-formal apparel. These fabrics combine professional appearance with all-day comfort and easy maintenance.</p>
+										<h5><strong>Reversible Craft Butta Jacquard</strong></h5>
+										<p>Innovative double-sided jacquard fabric featuring traditional butta motifs on both sides with contrasting colors. Offers versatility in garment construction with two distinct looks in one fabric. Ideal for reversible jackets, scarves, and premium ethnic wear with exceptional craftsmanship and design flexibility.</p>
+									</div>
+								</div>
+
+								<div class="fabric-subcategory">
+									<div class="fabric-image-container">
+										<img src="images/category/3d effect fabrics.jpg" alt="3D Effect Fabrics">
+									</div>
+									<div class="fabric-content">
+										<h5><strong>3D Effect Fabrics</strong></h5>
+										<p>Advanced weaving technology creates stunning three-dimensional textures and raised patterns that add depth and visual interest. These fabrics feature tactile surfaces with embossed effects and shadow play. Perfect for luxury upholstery, designer clothing, and statement pieces requiring sophisticated texture and modern appeal.</p>
+									</div>
+								</div>
+
+								<div class="fabric-subcategory">
+									<div class="fabric-image-container">
+										<div class="fabric-slideshow">
+											<img src="images/category/cotton textured fabrics/cotton textured fabrics 1.jpg" alt="Cotton Textured Fabric">
+											<img src="images/category/cotton textured fabrics/cotton textured fabrics 2.jpg" alt="Cotton Textured Fabric">
+											<img src="images/category/cotton textured fabrics/cotton textured fabrics 3.jpg" alt="Cotton Textured Fabric">
+											<img src="images/category/cotton textured fabrics/cotton textured fabrics 4.jpg" alt="Cotton Textured Fabric">
+											<div class="slideshow-dots"></div>
+										</div>
+									</div>
+									<div class="fabric-content">
+										<h5><strong>Cotton Textured Fabric</strong></h5>
+										<p>Pure cotton fabrics with diverse textural variations ranging from subtle weaves to bold surface patterns. Combines natural cotton comfort with innovative texture techniques for enhanced visual appeal. Suitable for casual wear, home textiles, and contemporary fashion with excellent breathability and easy care properties.</p>
+									</div>
+								</div>
+
+								<div class="fabric-subcategory">
+									<div class="fabric-image-container">
+										<div class="fabric-slideshow">
+											<img src="images/category/cotton polyester pattern jacquard/cotton polyster pattern jacquard 1.jpg" alt="Cotton Polyester Pattern Jacquard">
+											<img src="images/category/cotton polyester pattern jacquard/cotton polyster pattern jacquard 2.jpg" alt="Cotton Polyester Pattern Jacquard">
+											<img src="images/category/cotton polyester pattern jacquard/cotton polyster pattern jacquard 3.jpg" alt="Cotton Polyester Pattern Jacquard">
+											<img src="images/category/cotton polyester pattern jacquard/cotton polyster pattern jacquard 4.jpg" alt="Cotton Polyester Pattern Jacquard">
+											<div class="slideshow-dots"></div>
+										</div>
+									</div>
+									<div class="fabric-content">
+										<h5><strong>Cotton Polyester Pattern Jacquard</strong></h5>
+										<p>Durable blend of cotton and polyester creating intricate jacquard patterns with enhanced strength and wrinkle resistance. Offers the comfort of cotton with polyester's longevity and easy maintenance. Ideal for workwear, uniforms, and everyday clothing requiring both style and practicality with excellent color fastness.</p>
+									</div>
+								</div>
+
+								<div class="fabric-subcategory">
+									<div class="fabric-image-container">
+										<div class="fabric-slideshow">
+											<img src="images/category/cotton satin butta jacquard/cotton satin butta jacquard 3.jpg" alt="Cotton Satin Butta Jacquard">
+											<img src="images/category/cotton satin butta jacquard/cotton satin butta jacquard 4.jpg" alt="Cotton Satin Butta Jacquard">
+											<img src="images/category/cotton satin butta jacquard/cotton satin butta jacquard 7.jpg" alt="Cotton Satin Butta Jacquard">
+											<img src="images/category/cotton satin butta jacquard/cotton satin butta jacquard 9.jpg" alt="Cotton Satin Butta Jacquard">
+											<img src="images/category/cotton satin butta jacquard/cotton satin butta jacquard 10.jpg" alt="Cotton Satin Butta Jacquard">
+											<img src="images/category/cotton satin butta jacquard/cotton satin butta jacquard 11.jpg" alt="Cotton Satin Butta Jacquard">
+											<img src="images/category/cotton satin butta jacquard/cotton satin butta jacquard 13.jpg" alt="Cotton Satin Butta Jacquard">
+											<img src="images/category/cotton satin butta jacquard/cotton satin butta jacquard 14.jpg" alt="Cotton Satin Butta Jacquard">
+											<div class="slideshow-dots"></div>
+										</div>
+									</div>
+									<div class="fabric-content">
+										<h5><strong>Cotton Satin Butta Jacquard</strong></h5>
+										<p>Luxurious cotton fabric with satin weave finish featuring elegant butta motifs that create a lustrous surface with sophisticated sheen. Combines the breathability of cotton with the elegance of satin texture for premium appeal. Perfect for formal wear, ethnic garments, and special occasion clothing requiring refined aesthetics and comfort.</p>
+									</div>
+								</div>
+
+								<div class="fabric-subcategory">
+									<div class="fabric-image-container">
+										<div class="fabric-slideshow">
+											<img src="images/category/cotton warp craft butta fabrics/cotton warp craft butta fabric 1.jpg" alt="Cotton Warp Craft Butta Fabric">
+											<img src="images/category/cotton warp craft butta fabrics/cotton warp craft butta fabric 2.jpg" alt="Cotton Warp Craft Butta Fabric">
+											<img src="images/category/cotton warp craft butta fabrics/cotton warp craft butta fabric 3.jpg" alt="Cotton Warp Craft Butta Fabric">
+											<img src="images/category/cotton warp craft butta fabrics/cotton warp craft butta fabric 4.jpg" alt="Cotton Warp Craft Butta Fabric">
+											<img src="images/category/cotton warp craft butta fabrics/cotton warp craft butta fabric 5.jpg" alt="Cotton Warp Craft Butta Fabric">
+											<img src="images/category/cotton warp craft butta fabrics/cotton warp craft butta fabric 6.jpg" alt="Cotton Warp Craft Butta Fabric">
+											<img src="images/category/cotton warp craft butta fabrics/cotton warp craft butta fabric 7.jpg" alt="Cotton Warp Craft Butta Fabric">
+											<div class="slideshow-dots"></div>
+										</div>
+									</div>
+									<div class="fabric-content">
+										<h5><strong>Cotton Warp Craft Butta Fabric</strong></h5>
+										<p>Artisanal cotton fabric featuring traditional butta patterns created through specialized warp-based weaving techniques. Showcases heritage craftsmanship with intricate motifs that reflect cultural textile traditions. Ideal for ethnic wear, traditional garments, and cultural fashion pieces requiring authentic handcrafted appeal and timeless elegance.</p>
+									</div>
+								</div>
+
+								<div class="fabric-subcategory">
+									<div class="fabric-image-container">
+										<img src="images/category/cotton craft cut butta jacquard.jpg" alt="Cotton Craft Cut Butta Jacquard">
+									</div>
+									<div class="fabric-content">
+										<h5><strong>Cotton Craft Cut Butta Jacquard</strong></h5>
+										<p>Sophisticated cotton jacquard featuring precision-cut butta patterns that create dimensional surface effects with sharp, defined edges. Advanced cutting techniques combined with traditional motifs produce contemporary textile art. Excellent for designer clothing, luxury accessories, and high-end fashion requiring distinctive texture and modern craftsmanship.</p>
+									</div>
+								</div>
+
+								<div class="fabric-subcategory">
+									<div class="fabric-image-container">
+										<div class="fabric-slideshow">
+											<img src="images/category/cotton slub jacquard/1.jpg" alt="Cotton Slub Jacquard">
+											<img src="images/category/cotton slub jacquard/2.jpg" alt="Cotton Slub Jacquard">
+											<img src="images/category/cotton slub jacquard/3.jpg" alt="Cotton Slub Jacquard">
+											<img src="images/category/cotton slub jacquard/4.jpg" alt="Cotton Slub Jacquard">
+											<img src="images/category/cotton slub jacquard/5.jpg" alt="Cotton Slub Jacquard">
+											<img src="images/category/cotton slub jacquard/6.jpg" alt="Cotton Slub Jacquard">
+											<img src="images/category/cotton slub jacquard/7.jpg" alt="Cotton Slub Jacquard">
+											<img src="images/category/cotton slub jacquard/8.jpg" alt="Cotton Slub Jacquard">
+											<img src="images/category/cotton slub jacquard/9.jpg" alt="Cotton Slub Jacquard">
+											<img src="images/category/cotton slub jacquard/10.jpg" alt="Cotton Slub Jacquard">
+											<img src="images/category/cotton slub jacquard/11.jpg" alt="Cotton Slub Jacquard">
+											<img src="images/category/cotton slub jacquard/12.jpg" alt="Cotton Slub Jacquard">
+											<div class="slideshow-dots"></div>
+										</div>
+									</div>
+									<div class="fabric-content">
+										<h5><strong>Cotton Slub Jacquard</strong></h5>
+										<p>Unique cotton fabric combining natural slub texture with sophisticated jacquard weaving for distinctive surface interest. Features irregular yarn thickness creating organic texture variations with decorative patterns. Perfect for casual shirts, kurtas, and contemporary ethnic wear offering natural comfort with artistic appeal.</p>
 									</div>
 								</div>
 							</div>
@@ -648,269 +875,469 @@ fabrics@dharshiniimpex.in
 							<div class="fabric-category">
 								<div class="main-category-header">
 									<div class="main-category-image">
-										<img src="images/jacquard-main.jpg" alt="Jacquard Weave Fabrics">
+										<div class="fabric-slideshow">
+											<img src="images/category/2 piece suit sets/28.jpg" alt="Suiting Fabrics">
+											<div class="slideshow-dots"></div>
+										</div>
 									</div>
 									<div class="main-category-text">
-										<h4><strong>2. Jacquard Weaves</strong></h4>
-										<p>Our jacquard fabrics showcase intricate patterns woven directly into the fabric structure. Using advanced jacquard technology, we create complex designs with exceptional detail and dimensional texture for premium fashion applications.</p>
-									</div>
-								</div>
-
-								<h5 style="font-size: 22px; margin: 40px 0 20px 0; color: #444;"><strong>a) Viscose-Based Jacquards</strong></h5>
-
-								<div class="fabric-subcategory">
-									<div class="fabric-image-container">
-										<img src="images/satin-jacquard.jpg" alt="Satin Jacquards">
-									</div>
-									<div class="fabric-content">
-										<h5><strong>Satin Jacquards</strong></h5>
-										<p>We develop rich satin jacquard fabrics that offer a smooth, glossy finish ideal for premium fashion. These luxurious fabrics provide elegant drape and sophisticated appearance for special occasion wear.</p>
+										<h4><strong>Suiting Fabrics</strong></h4>
+										<p>Co-ordinated cotton suit sets for apparel design.</p>
 									</div>
 								</div>
 
 								<div class="fabric-subcategory">
 									<div class="fabric-image-container">
-										<img src="images/self-jacquard.jpg" alt="Plain Self Jacquards">
+										<div class="fabric-slideshow">
+											<img src="images/category/2 piece suit sets/3.jpg" alt="Cotton Two-Piece Suit Sets">
+											<img src="images/category/2 piece suit sets/7.jpg" alt="Cotton Two-Piece Suit Sets">
+											<img src="images/category/2 piece suit sets/12.jpg" alt="Cotton Two-Piece Suit Sets">
+											<img src="images/category/2 piece suit sets/18.jpg" alt="Cotton Two-Piece Suit Sets">
+											<img src="images/category/2 piece suit sets/5.jpg" alt="Cotton Two-Piece Suit Sets">
+											<img src="images/category/2 piece suit sets/21.jpg" alt="Cotton Two-Piece Suit Sets">
+											<img src="images/category/2 piece suit sets/9.jpg" alt="Cotton Two-Piece Suit Sets">
+											<img src="images/category/2 piece suit sets/15.jpg" alt="Cotton Two-Piece Suit Sets">
+											<img src="images/category/2 piece suit sets/24.jpg" alt="Cotton Two-Piece Suit Sets">
+											<img src="images/category/2 piece suit sets/11.jpg" alt="Cotton Two-Piece Suit Sets">
+											<img src="images/category/2 piece suit sets/19.jpg" alt="Cotton Two-Piece Suit Sets">
+											<img src="images/category/2 piece suit sets/26.jpg" alt="Cotton Two-Piece Suit Sets">
+											<div class="slideshow-dots"></div>
+										</div>
 									</div>
 									<div class="fabric-content">
-										<h5><strong>Plain Self Jacquards</strong></h5>
-										<p>We weave subtle, textured self-designs that bring understated elegance to apparel. These tone-on-tone fabrics offer sophisticated texture without overwhelming patterns, perfect for contemporary fashion.</p>
+										<h5><strong>Cotton Two-Piece Suit Sets</strong></h5>
+										<p>Perfectly coordinated cotton fabric sets designed for complete suit construction with matching patterns and complementary textures. Features harmonious color schemes and consistent quality across both pieces for professional tailoring. Ideal for business suits, formal wear, and coordinated ethnic outfits requiring precise matching and superior finish.</p>
 									</div>
 								</div>
 
 								<div class="fabric-subcategory">
 									<div class="fabric-image-container">
-										<img src="images/butta-jacquard.jpg" alt="Butta Jacquards">
+										<div class="fabric-slideshow">
+											<img src="images/category/2 piece suit sets/34.jpg" alt="Cotton Two-Piece Suit Sets – Colour Customization">
+											<img src="images/category/2 piece suit sets/35.jpg" alt="Cotton Two-Piece Suit Sets – Colour Customization">
+											<img src="images/category/2 piece suit sets/36.jpg" alt="Cotton Two-Piece Suit Sets – Colour Customization">
+											<img src="images/category/2 piece suit sets/37.jpg" alt="Cotton Two-Piece Suit Sets – Colour Customization">
+											<img src="images/category/2 piece suit sets/38.jpg" alt="Cotton Two-Piece Suit Sets – Colour Customization">
+											<img src="images/category/2 piece suit sets/39.jpg" alt="Cotton Two-Piece Suit Sets – Colour Customization">
+											<img src="images/category/2 piece suit sets/40.jpg" alt="Cotton Two-Piece Suit Sets – Colour Customization">
+											<img src="images/category/2 piece suit sets/41.jpg" alt="Cotton Two-Piece Suit Sets – Colour Customization">
+											<img src="images/category/2 piece suit sets/42.jpg" alt="Cotton Two-Piece Suit Sets – Colour Customization">
+											<img src="images/category/2 piece suit sets/43.jpg" alt="Cotton Two-Piece Suit Sets – Colour Customization">
+											<img src="images/category/2 piece suit sets/44.jpg" alt="Cotton Two-Piece Suit Sets – Colour Customization">
+											<div class="slideshow-dots"></div>
+										</div>
 									</div>
 									<div class="fabric-content">
-										<h5><strong>Butta (Motif) Jacquards</strong></h5>
-										<p>We offer ornamental butta jacquards with intricate woven motifs for traditional and festive wear. These decorative fabrics feature beautiful cultural patterns that celebrate heritage craftsmanship.</p>
+										<h5><strong>Cotton Two-Piece Suit Sets – Colour Customization</strong></h5>
+										<p>Bespoke cotton suit sets with complete color customization services to match specific design requirements and brand preferences. Professional color matching technology ensures perfect coordination across all fabric pieces. Perfect for corporate uniforms, designer collections, and custom fashion lines requiring precise color specifications and brand consistency.</p>
+									</div>
+								</div>
+							</div>
+
+							<div class="fabric-category">
+								<div class="main-category-header">
+									<div class="main-category-image">
+										<div class="fabric-slideshow">
+											<img src="images/category/viscose jacquard.jpg" alt="Mock Slub Jacquard">
+											<div class="slideshow-dots"></div>
+										</div>
+									</div>
+									<div class="main-category-text">
+										<h4><strong>Specialized Jacquards</strong></h4>
+										<p>Unique and innovative jacquard designs with specialized weaving techniques.</p>
 									</div>
 								</div>
 
 								<div class="fabric-subcategory">
 									<div class="fabric-image-container">
-										<img src="images/two-tone-cotton-viscose.jpg" alt="Two-Tone Cotton Viscose">
+										<div class="fabric-slideshow">
+											<img src="images/category/mock yarn dyed effect fabrics/1.jpg" alt="Mock Slub Jacquard">
+											<img src="images/category/mock yarn dyed effect fabrics/3.jpg" alt="Mock Slub Jacquard">
+											<img src="images/category/mock yarn dyed effect fabrics/5.jpg" alt="Mock Slub Jacquard">
+											<img src="images/category/mock yarn dyed effect fabrics/7.jpg" alt="Mock Slub Jacquard">
+											<img src="images/category/mock yarn dyed effect fabrics/9.jpg" alt="Mock Slub Jacquard">
+											<img src="images/category/mock yarn dyed effect fabrics/11.jpg" alt="Mock Slub Jacquard">
+											<img src="images/category/mock yarn dyed effect fabrics/13.jpg" alt="Mock Slub Jacquard">
+											<img src="images/category/mock yarn dyed effect fabrics/15.jpg" alt="Mock Slub Jacquard">
+											<img src="images/category/mock yarn dyed effect fabrics/17.jpg" alt="Mock Slub Jacquard">
+											<img src="images/category/mock yarn dyed effect fabrics/19.jpg" alt="Mock Slub Jacquard">
+											<img src="images/category/mock yarn dyed effect fabrics/2.jpg" alt="Mock Slub Jacquard">
+											<img src="images/category/mock yarn dyed effect fabrics/4.jpg" alt="Mock Slub Jacquard">
+											<div class="slideshow-dots"></div>
+										</div>
 									</div>
 									<div class="fabric-content">
-										<h5><strong>Two-Tone Cotton Viscose Fabrics</strong></h5>
-										<p>We engineer dual-tone fabrics blending cotton and viscose for a rich, dimensional look. These innovative fabrics combine the best properties of both fibers for enhanced comfort and visual appeal.</p>
+										<h5><strong>Mock Slub Jacquard</strong></h5>
+										<p>Innovative weaving technique that mimics natural slub texture while maintaining consistent quality and pattern precision. Combines the aesthetic appeal of irregular slub with controlled manufacturing for reliable results. Excellent for fashion garments requiring textural interest with predictable performance and enhanced durability.</p>
 									</div>
 								</div>
 
 								<div class="fabric-subcategory">
 									<div class="fabric-image-container">
-										<img src="images/pattern-dyed-viscose.jpg" alt="Pattern Dyed Viscose">
+										<div class="fabric-slideshow">
+											<img src="images/category/missing dent cotton jacuqrd/edit 1.jpg" alt="Miss Dent Cotton Jacquard Fabrics">
+											<img src="images/category/missing dent cotton jacuqrd/edit 2.jpg" alt="Miss Dent Cotton Jacquard Fabrics">
+											<img src="images/category/missing dent cotton jacuqrd/edit 3.jpg" alt="Miss Dent Cotton Jacquard Fabrics">
+											<img src="images/category/missing dent cotton jacuqrd/edit 4.jpg" alt="Miss Dent Cotton Jacquard Fabrics">
+											<img src="images/category/missing dent cotton jacuqrd/edit 5.jpg" alt="Miss Dent Cotton Jacquard Fabrics">
+											<img src="images/category/missing dent cotton jacuqrd/edit 6.jpg" alt="Miss Dent Cotton Jacquard Fabrics">
+											<img src="images/category/missing dent cotton jacuqrd/edit 7.jpg" alt="Miss Dent Cotton Jacquard Fabrics">
+											<img src="images/category/missing dent cotton jacuqrd/edit 9.jpg" alt="Miss Dent Cotton Jacquard Fabrics">
+											<img src="images/category/missing dent cotton jacuqrd/edit 10.jpg" alt="Miss Dent Cotton Jacquard Fabrics">
+											<div class="slideshow-dots"></div>
+										</div>
 									</div>
 									<div class="fabric-content">
-										<h5><strong>Pattern-Dyed Viscose Poly Fabrics</strong></h5>
-										<p>We create patterned viscose-poly blends with a soft hand feel and vibrant design detailing. These versatile fabrics offer excellent color retention and comfortable wear for everyday fashion.</p>
+										<h5><strong>Miss Dent Cotton Jacquard Fabrics</strong></h5>
+										<p>Specialized jacquard technique creating distinctive dent patterns with varying thread tensions for unique surface effects. Features controlled irregularities that add character and depth to the fabric structure. Ideal for designer clothing, artistic textiles, and premium fashion applications requiring distinctive texture and visual impact.</p>
+									</div>
+								</div>
+							</div>
+
+							<div class="fabric-category">
+								<div class="main-category-header">
+									<div class="main-category-image">
+										<div class="fabric-slideshow">
+											<img src="images/category/viscose.jpg" alt="Miss Dent Cotton Jacquard Fabrics">
+											<div class="slideshow-dots"></div>
+										</div>
+									</div>
+									<div class="main-category-text">
+										<h4><strong>Viscose Collections</strong></h4>
+										<p>Soft, flowy viscose fabrics with elegant jacquard designs.</p>
 									</div>
 								</div>
 
 								<div class="fabric-subcategory">
 									<div class="fabric-image-container">
-										<img src="images/textured-jacquard.jpg" alt="Textured Self Jacquards">
+										<div class="fabric-slideshow">
+											<img src="images/category/viscose jacquard.jpg" alt="Miss Dent Cotton Jacquard Fabrics">
+											<div class="slideshow-dots"></div>
+										</div>
 									</div>
 									<div class="fabric-content">
-										<h5><strong>Textured Self Jacquards</strong></h5>
-										<p>We specialize in creating depth and feel with textured jacquard designs for a modern twist. These contemporary fabrics add tactile interest while maintaining sophisticated aesthetic appeal.</p>
-									</div>
-								</div>
-
-								<h5 style="font-size: 22px; margin: 40px 0 20px 0; color: #444;"><strong>b) Cotton-Based Jacquards</strong></h5>
-
-								<div class="fabric-subcategory">
-									<div class="fabric-image-container">
-										<img src="images/cotton-self-jacquard.jpg" alt="Cotton Self Jacquards">
-									</div>
-									<div class="fabric-content">
-										<h5><strong>Self Jacquards</strong></h5>
-										<p>We craft woven designs using single-color threads for a tone-on-tone texture effect. These elegant fabrics provide subtle sophistication perfect for both casual and formal cotton garments.</p>
+										<h5><strong>Viscose Jacquard Fabrics</strong></h5>
+										<p>Luxurious viscose fabrics featuring elegant jacquard patterns with exceptional drape and silky smooth texture. Offers superior comfort with natural breathability and moisture absorption properties. Ideal for flowing dresses, blouses, and sophisticated garments requiring graceful movement, rich colors, and premium feel with easy care maintenance.</p>
 									</div>
 								</div>
 
 								<div class="fabric-subcategory">
 									<div class="fabric-image-container">
-										<img src="images/cotton-butta-jacquard.jpg" alt="Cotton Butta Jacquards">
+										<div class="fabric-slideshow">
+											<img src="images/category/viscose jacquard mens/1.jpg" alt="Viscose Jacquard Fabrics for Men">
+											<img src="images/category/viscose jacquard mens/3.jpg" alt="Viscose Jacquard Fabrics for Men">
+											<img src="images/category/viscose jacquard mens/5.jpg" alt="Viscose Jacquard Fabrics for Men">
+											<img src="images/category/viscose jacquard mens/7.jpg" alt="Viscose Jacquard Fabrics for Men">
+											<img src="images/category/viscose jacquard mens/9.jpg" alt="Viscose Jacquard Fabrics for Men">
+											<img src="images/category/viscose jacquard mens/11.jpg" alt="Viscose Jacquard Fabrics for Men">
+											<img src="images/category/viscose jacquard mens/13.jpg" alt="Viscose Jacquard Fabrics for Men">
+											<img src="images/category/viscose jacquard mens/15.jpg" alt="Viscose Jacquard Fabrics for Men">
+											<div class="slideshow-dots"></div>
+										</div>
 									</div>
 									<div class="fabric-content">
-										<h5><strong>Butta Jacquards</strong></h5>
-										<p>We produce cotton jacquards with motif placement ideal for festive and ethnic fashion. These traditional designs celebrate cultural heritage while offering modern comfort and durability.</p>
+										<h5><strong>Viscose Jacquard Fabrics for Men</strong></h5>
+										<p>Specially designed viscose jacquard fabrics with masculine patterns and structured weaves suitable for men's formal and casual wear. Features sophisticated geometric designs and subtle textures that complement menswear aesthetics. Perfect for shirts, kurtas, and contemporary ethnic wear offering comfort, style, and professional appearance with refined elegance.</p>
 									</div>
 								</div>
 
 								<div class="fabric-subcategory">
 									<div class="fabric-image-container">
-										<img src="images/pattern-dyed-poly-cotton.jpg" alt="Pattern-Dyed Poly Cotton">
+										<div class="fabric-slideshow">
+											<img src="images/category/viscose jacquard womens/rayon greige 2.jpg" alt="Viscose Jacquard Fabrics for Women">
+											<img src="images/category/viscose jacquard womens/rayon greige 5.jpg" alt="Viscose Jacquard Fabrics for Women">
+											<img src="images/category/viscose jacquard womens/rayon greige 8.jpg" alt="Viscose Jacquard Fabrics for Women">
+											<img src="images/category/viscose jacquard womens/rayon greige 11.jpg" alt="Viscose Jacquard Fabrics for Women">
+											<img src="images/category/viscose jacquard womens/rayon greige 14.jpg" alt="Viscose Jacquard Fabrics for Women">
+											<img src="images/category/viscose jacquard womens/rayon greige 17.jpg" alt="Viscose Jacquard Fabrics for Women">
+											<img src="images/category/viscose jacquard womens/rayon greige 19.jpg" alt="Viscose Jacquard Fabrics for Women">
+											<img src="images/category/viscose jacquard womens/rayon greige 20.jpg" alt="Viscose Jacquard Fabrics for Women">
+											<div class="slideshow-dots"></div>
+										</div>
 									</div>
 									<div class="fabric-content">
-										<h5><strong>Pattern-Dyed Poly Cotton Fabrics</strong></h5>
-										<p>We blend poly and cotton to deliver easy-care fabrics with detailed patterning. These practical fabrics combine wrinkle resistance with beautiful design elements for everyday wear.</p>
+										<h5><strong>Viscose Jacquard Fabrics for Women</strong></h5>
+										<p>Exquisite viscose jacquard fabrics featuring feminine patterns, delicate motifs, and graceful designs specifically created for women's fashion. Combines luxurious feel with flattering drape and vibrant color options. Excellent for dresses, tops, ethnic wear, and formal garments requiring elegance, comfort, and sophisticated style with timeless appeal.</p>
 									</div>
 								</div>
 
 								<div class="fabric-subcategory">
 									<div class="fabric-image-container">
-										<img src="images/3d-effect-jacquard.jpg" alt="3D Effect Jacquards">
+										<div class="fabric-slideshow">
+											<img src="images/category/viscose butta jacquard.jpg" alt="Miss Dent Cotton Jacquard Fabrics">
+											<div class="slideshow-dots"></div>
+										</div>
 									</div>
 									<div class="fabric-content">
-										<h5><strong>3D Effect Jacquards</strong></h5>
-										<p>We manufacture fabrics that give a raised, tactile 3D effect for unique surface aesthetics. These innovative designs create visual depth and textural interest that sets garments apart.</p>
+										<h5><strong>Viscose Jacquard Butta Fabric</strong></h5>
+										<p>Elegant viscose fabric showcasing traditional butta patterns with exceptional drape and fluid movement characteristics. Features intricate motifs woven with precision for cultural authenticity and modern appeal. Ideal for sarees, ethnic dresses, and traditional garments requiring graceful flow, rich heritage designs, and luxurious comfort with contemporary styling.</p>
 									</div>
 								</div>
 
 								<div class="fabric-subcategory">
 									<div class="fabric-image-container">
-										<img src="images/slub-cotton-jacquard.jpg" alt="Slub Cotton Jacquards">
+										<div class="fabric-slideshow">
+											<img src="images/category/cotton viscose jacquard/cotton viscose jacquard.jpg" alt="Cotton Viscose Jacquard Fabrics">
+											<img src="images/category/cotton viscose jacquard/cotton viscose jacquard 2.jpg" alt="Cotton Viscose Jacquard Fabrics">
+											<img src="images/category/cotton viscose jacquard/cotton viscose jacquard 3.jpg" alt="Cotton Viscose Jacquard Fabrics">
+											<div class="slideshow-dots"></div>
+										</div>
 									</div>
 									<div class="fabric-content">
-										<h5><strong>Slub Cotton Jacquards</strong></h5>
-										<p>We create rustic, textured cotton jacquards with intentional yarn slubs for a handloom-inspired feel. These artisanal-style fabrics bring natural charm and authentic texture to modern fashion.</p>
+										<h5><strong>Cotton Viscose Jacquard Fabrics</strong></h5>
+										<p>Premium blend combining cotton's breathability with viscose's lustrous sheen and smooth texture in sophisticated jacquard patterns. Offers optimal balance of comfort, durability, and elegant appearance with enhanced drape. Perfect for versatile garments requiring both casual comfort and formal elegance with superior color vibrancy and easy maintenance.</p>
 									</div>
 								</div>
 
 								<div class="fabric-subcategory">
 									<div class="fabric-image-container">
-										<img src="images/linen-look-jacquard.jpg" alt="Linen-Look Jacquards">
+										<div class="fabric-slideshow">
+											<img src="images/category/viscose poly jacquard/2.jpg" alt="Viscose Poly Jacquard Fabrics">
+											<img src="images/category/viscose poly jacquard/3.jpg" alt="Viscose Poly Jacquard Fabrics">
+											<img src="images/category/viscose poly jacquard/4.jpg" alt="Viscose Poly Jacquard Fabrics">
+											<div class="slideshow-dots"></div>
+										</div>
 									</div>
 									<div class="fabric-content">
-										<h5><strong>Linen-Look Jacquards</strong></h5>
-										<p>We simulate the look of linen with durable, soft cotton-based jacquards. These fabrics offer the aesthetic appeal of linen with improved care properties and consistent quality.</p>
+										<h5><strong>Viscose Poly Jacquard Fabrics</strong></h5>
+										<p>Innovative blend of viscose and polyester creating durable jacquard fabrics with enhanced strength, wrinkle resistance, and dimensional stability. Combines viscose softness with polyester's resilience for long-lasting performance. Excellent for activewear, travel clothing, and everyday garments requiring low maintenance, comfort, and professional appearance with superior longevity.</p>
+									</div>
+								</div>
+							</div>
+
+							<div class="fabric-category">
+								<div class="main-category-header">
+									<div class="main-category-image">
+										<div class="fabric-slideshow">
+											<img src="images/category/Dobby_fabric.jpg" alt="Miss Dent Cotton Jacquard Fabrics">
+											<div class="slideshow-dots"></div>
+										</div>
+									</div>
+									<div class="main-category-text">
+										<h4><strong>Dobby Collections</strong></h4>
+										<p>Lightweight rayon fabrics with dobby-woven butta motifs.</p>
 									</div>
 								</div>
 
 								<div class="fabric-subcategory">
 									<div class="fabric-image-container">
-										<img src="images/craft-butta-jacquard.jpg" alt="Craft Butta Jacquards">
+										<div class="fabric-slideshow">
+											<img src="images/category/rayon dobby butta fabrics/5.jpg" alt="Rayon Dobby Butta Fabrics">
+											<img src="images/category/rayon dobby butta fabrics/6.jpg" alt="Rayon Dobby Butta Fabrics">
+											<div class="slideshow-dots"></div>
+										</div>
 									</div>
 									<div class="fabric-content">
-										<h5><strong>Craft Butta Jacquards</strong></h5>
-										<p>We design fine craft-inspired motifs woven seamlessly into the fabric. These artistic designs showcase traditional craftsmanship techniques in contemporary textile applications.</p>
+										<h5><strong>Rayon Dobby Butta Fabrics</strong></h5>
+										<p>Lightweight rayon fabrics featuring traditional butta patterns created through dobby weaving technique for subtle texture and cultural authenticity. Offers excellent drape with natural fiber comfort and moisture-wicking properties. Perfect for summer clothing, ethnic wear, and casual garments requiring breathability, traditional aesthetics, and comfortable wear in warm climates.</p>
 									</div>
 								</div>
 
 								<div class="fabric-subcategory">
 									<div class="fabric-image-container">
-										<img src="images/brazzo-effect-jacquard.jpg" alt="Brazzo Effect Jacquards">
+										<div class="fabric-slideshow">
+											<img src="images/category/dobby butta fabrics/1.jpg" alt="Dobby Butta Fabrics">
+											<img src="images/category/dobby butta fabrics/3.jpg" alt="Dobby Butta Fabrics">
+											<img src="images/category/dobby butta fabrics/4.jpg" alt="Dobby Butta Fabrics">
+											<img src="images/category/dobby butta fabrics/5.jpg" alt="Dobby Butta Fabrics">
+											<img src="images/category/dobby butta fabrics/6.jpg" alt="Dobby Butta Fabrics">
+											<img src="images/category/dobby butta fabrics/7.jpg" alt="Dobby Butta Fabrics">
+											<img src="images/category/dobby butta fabrics/8.jpg" alt="Dobby Butta Fabrics">
+											<img src="images/category/dobby butta fabrics/10.jpg" alt="Dobby Butta Fabrics">
+											<img src="images/category/dobby butta fabrics/11.jpg" alt="Dobby Butta Fabrics">
+											<div class="slideshow-dots"></div>
+										</div>
 									</div>
 									<div class="fabric-content">
-										<h5><strong>Brazzo Effect Jacquards</strong></h5>
-										<p>We innovate textures and sheens that replicate the luxurious Brazzo finish. These premium fabrics offer sophisticated surface effects for high-end fashion applications.</p>
-									</div>
-								</div>
-
-								<div class="fabric-subcategory">
-									<div class="fabric-image-container">
-										<img src="images/double-cloth.jpg" alt="Double Cloth Fabrics">
-									</div>
-									<div class="fabric-content">
-										<h5><strong>Double Cloth Fabrics</strong></h5>
-										<p>We engineer reversible, double-layered jacquards that offer two design surfaces in one. These versatile fabrics provide excellent value and styling flexibility for creative fashion design.</p>
-									</div>
-								</div>
-
-								<div class="fabric-subcategory">
-									<div class="fabric-image-container">
-										<img src="images/mock-leno.jpg" alt="Mock Leno Fabrics">
-									</div>
-									<div class="fabric-content">
-										<h5><strong>Mock Leno Fabrics</strong></h5>
-										<p>We imitate the airy leno weave using jacquard looms for strength and breathability. These fabrics combine the open structure of leno with the design capabilities of jacquard weaving.</p>
-									</div>
-								</div>
-
-								<div class="fabric-subcategory">
-									<div class="fabric-image-container">
-										<img src="images/cotton-flax-jacquard.jpg" alt="Cotton Flax Jacquards">
-									</div>
-									<div class="fabric-content">
-										<h5><strong>Cotton Flax Jacquards</strong></h5>
-										<p>We incorporate flax blends for eco-friendly fabrics with natural luster. These sustainable fabrics appeal to environmentally conscious consumers while maintaining excellent performance.</p>
-									</div>
-								</div>
-
-								<div class="fabric-subcategory">
-									<div class="fabric-image-container">
-										<img src="images/full-textured-jacquard.jpg" alt="Full Textured Jacquards">
-									</div>
-									<div class="fabric-content">
-										<h5><strong>Full Textured Jacquards</strong></h5>
-										<p>We offer richly textured jacquards that enhance both visual and tactile experience. These premium fabrics create multi-dimensional surfaces that engage multiple senses for exceptional fashion appeal.</p>
+										<h5><strong>Dobby Butta Fabrics</strong></h5>
+										<p>Versatile dobby-woven fabrics showcasing intricate butta patterns with geometric precision and cultural heritage designs. Features controlled texture variations and consistent quality for reliable manufacturing and finishing. Ideal for premium ethnic wear, formal shirts, and traditional garments requiring authentic craftsmanship, durability, and sophisticated pattern work with modern appeal.</p>
 									</div>
 								</div>
 							</div>
 
 							<div style="text-align: center; margin: 60px 0 40px 0; padding: 40px; background: #f8f9fa; border-radius: 10px;">
-								<h3 style="color: #333; margin-bottom: 20px;"><strong>Home Textiles</strong></h3>
-								<div class="main-category-header" style="justify-content: center;">
-									<div class="main-category-image" style="margin-right: 30px;">
-										<img src="images/home-textiles.jpg" alt="Home Textiles">
-									</div>
-									<div class="main-category-text" style="text-align: left;">
-										<p>Our home textile fabrics bring luxury and comfort to living spaces. We create premium fabrics for bed linens, curtains, upholstery, and decorative applications, combining durability with aesthetic appeal for modern homes.</p>
-									</div>
-								</div>
-
-								<div class="fabric-subcategory" style="margin-top: 30px;">
-									<div class="fabric-image-container">
-										<img src="images/bed-linen-jacquard.jpg" alt="Bed Linen Jacquards">
-									</div>
-									<div class="fabric-content">
-										<h5><strong>Bed Linen Jacquards</strong></h5>
-										<p>We manufacture premium bed linen fabrics with intricate jacquard patterns for luxury bedding. These fabrics offer comfort, durability, and elegant designs that transform bedroom aesthetics.</p>
-									</div>
-								</div>
-
-								<div class="fabric-subcategory">
-									<div class="fabric-image-container">
-										<img src="images/furnishing-jacquard.jpg" alt="Furnishing Jacquards">
-									</div>
-									<div class="fabric-content">
-										<h5><strong>Furnishing Jacquards</strong></h5>
-										<p>We create sophisticated furnishing fabrics for upholstery and drapery applications. These heavy-duty jacquards combine aesthetic beauty with the strength required for home furnishing use.</p>
-									</div>
-								</div>
+								<h3 style="color: #333; margin-bottom: 20px;"><strong>Our Commitment to Quality</strong></h3>
+								<p style="font-size: 16px; line-height: 1.6; color: #666; max-width: 800px; margin: 0 auto;">At Dharshini Impex, we combine traditional weaving expertise with modern technology to create exceptional jacquard and dobby fabrics. Our state-of-the-art manufacturing facility ensures consistent quality, innovative designs, and timely delivery for our clients worldwide.</p>
 							</div>
 						</div>
 					</div>
 				</div>
 			</section>
 			
-			<section id="testimonials" class="ls ms parallax overlay_color section_padding_top_150 section_padding_bottom_150">
-				<div class="container">
-					<div class="row">
-						<div class="col-xs-12 text-center">
-							<div class="owl-carousel" data-responsive-lg="1" data-responsive-md="1" data-responsive-sm="1" data-dots="true" data-nav="true">
-								<blockquote>
-									<div class="avatar"> <img src="images/faces/01.jpg" alt=""> </div>
-									<p>Thanks so much!! I have received my order on time as promised! I love the shirt - it's perfect! I look forward to ordering more shirts from your company!</p> <cite>Elaine Allen</cite> </blockquote>
-								<blockquote>
-									<div class="avatar"> <img src="images/faces/02.jpg" alt=""> </div>
-									<p>Thank you very much for making the process easy. I will remember the good treatment when I have a need for services such as yours. Thank You!</p> <cite>Adam Farnsworth</cite> </blockquote>
-								<blockquote>
-									<div class="avatar"> <img src="images/faces/03.jpg" alt=""> </div>
-									<p>Got the suit on yesterday and I love it! Please tell everyone that worked on it that I am very pleased and will order again.</p> <cite>Patricia Diaz</cite> </blockquote>
-							</div>
-						</div>
-					</div>
-				</div>
-			</section>
+			<!-- GOOGLE REVIEWS SECTION - NO SERVER REQUIRED -->
+<section id="testimonials" class="ls ms parallax overlay_color section_padding_top_150 section_padding_bottom_150">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 text-center">
+                <h2 style="color: white; margin-bottom: 10px;">What Our Customers Say</h2>
+                <p style="color: rgba(255,255,255,0.8); margin-bottom: 30px;">
+                    
+                </p>
+                
+                <div class="owl-carousel" id="google-reviews-carousel" 
+                     data-responsive-lg="1" 
+                     data-responsive-md="1" 
+                     data-responsive-sm="1" 
+                     data-dots="true" 
+                     data-nav="true">
+                    <!-- Reviews loaded by JavaScript -->
+                </div>
+                
+                <div style="margin-top: 30px;">
+                    <a href="https://search.google.com/local/writereview?placeid=ChIJkQVca1JYqDsRbUIwjHyXGiw" 
+                       target="_blank" 
+                       class="theme_button min_width_button">
+                        <img src="https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png" 
+                             style="width: 16px; vertical-align: middle; margin-right: 8px;" alt="Google">
+                        Write a Review on Google
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+/* Google Reviews Styling */
+.google-review-stars {
+    color: #ffc107;
+    font-size: 20px;
+    margin-top: 10px;
+    letter-spacing: 2px;
+}
+
+.google-review-badge {
+    color: #999;
+    font-size: 12px;
+    margin-top: 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.review-date {
+    color: rgba(255,255,255,0.6);
+    font-size: 11px;
+    margin-top: 5px;
+}
+
+#testimonials blockquote {
+    background: rgba(255,255,255,0.05);
+    border-radius: 10px;
+    padding: 30px;
+}
+
+#testimonials .avatar img {
+    border: 3px solid rgba(255,255,255,0.2);
+}
+</style>
+
+<script>
+// Google Reviews - No Server Required
+// Just update the reviews array below with your actual Google reviews
+
+document.addEventListener('DOMContentLoaded', function() {
+    const carousel = document.getElementById('google-reviews-carousel');
+    
+    // ⭐ UPDATE THESE WITH YOUR ACTUAL GOOGLE REVIEWS ⭐
+    // To get your reviews: Go to https://www.google.com/maps/place/?q=place_id:ChIJkQVca1JYqDsRbUIwjHyXGiw
+    const yourGoogleReviews = [
+        {
+            author_name: "Rajesh Kumar",
+            rating: 5,
+            text: "Excellent quality jacquard fabrics! Dharshini Impex has been our trusted supplier for years. Their attention to detail and commitment to quality is unmatched.",
+            profile_photo_url: "images/faces/01.jpg",
+            date: "2 weeks ago"
+        },
+        {
+            author_name: "Priya Menon",
+            rating: 5,
+            text: "Outstanding service and beautiful fabric designs. The team is very professional and always delivers on time. Highly recommend for bulk orders!",
+            profile_photo_url: "images/faces/02.jpg",
+            date: "1 month ago"
+        },
+        {
+            author_name: "Suresh Textiles",
+            rating: 5,
+            text: "Best fabric manufacturer in Coimbatore! Their custom designs are exactly what we needed for our fashion line. Will definitely order again.",
+            profile_photo_url: "images/faces/03.jpg",
+            date: "3 weeks ago"
+        },
+        {
+            author_name: "Anita Sharma",
+            rating: 5,
+            text: "Amazing variety of jacquard fabrics with competitive pricing. The quality control is excellent and the production capacity is impressive.",
+            profile_photo_url: "images/faces/01.jpg",
+            date: "1 week ago"
+        },
+        {
+            author_name: "Mumbai Garments Ltd",
+            rating: 5,
+            text: "Professional team, timely delivery, and excellent fabric quality. We've been working with them for 3 years now. Highly satisfied!",
+            profile_photo_url: "images/faces/02.jpg",
+            date: "2 months ago"
+        }
+    ];
+    
+    // Function to create star rating display
+    function createStarRating(rating) {
+        const fullStars = Math.floor(rating);
+        const hasHalfStar = rating % 1 >= 0.5;
+        const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+        
+        return '★'.repeat(fullStars) + 
+               (hasHalfStar ? '½' : '') + 
+               '☆'.repeat(emptyStars);
+    }
+    
+    // Display reviews in carousel
+    function displayReviews(reviews) {
+        carousel.innerHTML = '';
+        
+        reviews.forEach(review => {
+            const blockquote = document.createElement('blockquote');
+            blockquote.innerHTML = `
+                <div class="avatar">
+                    <img src="${review.profile_photo_url}" alt="${review.author_name}">
+                </div>
+                <p>"${review.text}"</p>
+                <div class="google-review-stars">${createStarRating(review.rating)}</div>
+                <cite>${review.author_name}</cite>
+                <div class="review-date">${review.date}</div>
+                <div class="google-review-badge">
+                    <img src="https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png" 
+                         style="width: 12px; height: 12px;" alt="Google">
+                    Google Review
+                </div>
+            `;
+            carousel.appendChild(blockquote);
+        });
+        
+        // Reinitialize carousel if it exists
+        if (typeof $ !== 'undefined' && $.fn.owlCarousel) {
+            $('#google-reviews-carousel').owlCarousel({
+                items: 1,
+                loop: true,
+                dots: true,
+                nav: true,
+                autoplay: true,
+                autoplayTimeout: 5000,
+                autoplayHoverPause: true,
+                responsive: {
+                    0: { items: 1 },
+                    768: { items: 1 },
+                    992: { items: 1 }
+                }
+            });
+        }
+    }
+    
+    // Load and display reviews
+    displayReviews(yourGoogleReviews);
+});
+</script>
 			
-			<section id="about" class="ls section_padding_top_150 section_padding_bottom_150">
-				<div class="container">
-					<div class="row flex-wrap v-center">
-						<div class="col-md-6"> <img src="images/about.png" alt="" class="about-cover"> </div>
-						<div class="col-md-6">
-							<h2 class="section_header">Premium Fabric Manufacturing</h2>
-							<p class="small-text grey neat-text">Quality & Innovation</p>
-							<p>At Dharshini Impex, we combine traditional weaving expertise with modern technology to create exceptional jacquard and dobby fabrics. Our state-of-the-art manufacturing facility ensures consistent quality, innovative designs, and timely delivery for our clients worldwide. We are committed to sustainable practices while delivering fabrics that meet the highest standards of the fashion and textile industry.</p>
-							<div class="toppadding_40 visible-lg"></div>
-							<div class="content-justify v-center v-spacing"> <img src="images/stamps.png" alt=""> <img src="images/signature.png" alt=""> </div>
-						</div>
-					</div>
-				</div>
-			</section>
+			
 			
 			<section id="gallery" class="ls fluid_padding_0 columns_padding_0">
 				<div class="container-fluid">
@@ -918,60 +1345,122 @@ fabrics@dharshiniimpex.in
 						<div class="col-xs-12">
 							<div class="owl-carousel gallery-carousel framed" data-responsive-xlg="6" data-responsive-lg="5" data-responsive-md="4" data-responsive-sm="3" data-responsive-xs="3" data-responsive-xxs="2" data-loop="true" data-margin="0" data-nav="true">
 								<div class="vertical-item">
-									<div class="item-media"> <img src="images/gallery-square/01.jpg" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery/01.jpg">
+									<div class="item-media"> <img src="images/gallery-square/01.png" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery-square/01.png">
 							</a> </div>
 								</div>
 								<div class="vertical-item">
-									<div class="item-media"> <a class="p-view prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery/02.jpg">
-								<img src="images/gallery-square/02.jpg" alt="">
+									<div class="item-media"> <a class="p-view prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery-square/02.png">
+								<img src="images/gallery-square/02.png" alt="">
 							</a> </div>
 								</div>
 								<div class="vertical-item">
-									<div class="item-media"> <img src="images/gallery-square/03.jpg" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery/03.jpg">
+									<div class="item-media"> <img src="images/gallery-square/03.png" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery-square/03.png">
 							</a> </div>
 								</div>
 								<div class="vertical-item">
-									<div class="item-media"> <img src="images/gallery-square/04.jpg" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery/04.jpg">
+									<div class="item-media"> <img src="images/gallery-square/04.png" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery-square/04.png">
 							</a> </div>
 								</div>
 								<div class="vertical-item">
-									<div class="item-media"> <img src="images/gallery-square/05.jpg" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery/05.jpg">
+									<div class="item-media"> <img src="images/gallery-square/05.png" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery-square/05.png">
 							</a> </div>
 								</div>
 								<div class="vertical-item">
-									<div class="item-media"> <img src="images/gallery-square/06.jpg" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery/06.jpg">
+									<div class="item-media"> <img src="images/gallery-square/06.png" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery-square/06.png">
 							</a> </div>
 								</div>
 								<div class="vertical-item">
-									<div class="item-media"> <img src="images/gallery-square/07.jpg" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery/07.jpg">
+									<div class="item-media"> <img src="images/gallery-square/07.png" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery-square/07.png">
 							</a> </div>
 								</div>
 								<div class="vertical-item">
-									<div class="item-media"> <img src="images/gallery-square/08.jpg" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery/08.jpg">
+									<div class="item-media"> <img src="images/gallery-square/08.png" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery-square/08.png">
 							</a> </div>
 								</div>
 								<div class="vertical-item">
-									<div class="item-media"> <img src="images/gallery-square/09.jpg" alt=""> <a class="abs-link prettyQuery" data-gal="prettyPhoto[gal]" title="" href="images/gallery/09.jpg">
+									<div class="item-media"> <img src="images/gallery-square/09.png" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery-square/09.png">
 							</a> </div>
 								</div>
 								<div class="vertical-item">
-									<div class="item-media"> <img src="images/gallery-square/10.jpg" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery/10.jpg">
+									<div class="item-media"> <img src="images/gallery-square/10.png" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery-square/10.png">
 							</a> </div>
 								</div>
 								<div class="vertical-item">
-									<div class="item-media"> <img src="images/gallery-square/11.jpg" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery/11.jpg">
+									<div class="item-media"> <img src="images/gallery-square/11.png" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery-square/11.png">
 							</a> </div>
 								</div>
 								<div class="vertical-item">
-									<div class="item-media"> <img src="images/gallery-square/12.jpg" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery/12.jpg">
+									<div class="item-media"> <img src="images/gallery-square/12.png" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery-square/12.png">
 							</a> </div>
 								</div>
+                                <div class="vertical-item">
+									<div class="item-media"> <img src="images/gallery-square/13.png" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery-square/13.png">
+							</a> </div>
+								</div>
+                                <div class="vertical-item">
+									<div class="item-media"> <img src="images/gallery-square/14.png" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery-square/14.png">
+							</a> </div>
+								</div>
+                                <div class="vertical-item">
+									<div class="item-media"> <img src="images/gallery-square/15.png" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery-square/15.png">
+							</a> </div>
+								</div>
+                                <div class="vertical-item">
+									<div class="item-media"> <img src="images/gallery-square/16.png" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery-square/16.png">
+							</a> </div>
+								</div>
+                                <div class="vertical-item">
+									<div class="item-media"> <img src="images/gallery-square/17.png" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery-square/17.png">
+							</a> </div>
+								</div>
+                                <div class="vertical-item">
+									<div class="item-media"> <img src="images/gallery-square/18.png" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery-square/18.png">
+							</a> </div>
+								</div>
+                                <div class="vertical-item">
+									<div class="item-media"> <img src="images/gallery-square/19.png" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery-square/19.png">
+							</a> </div>
+								</div>
+                                <div class="vertical-item">
+									<div class="item-media"> <img src="images/gallery-square/20.png" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery-square/20.png">
+							</a> </div>
+								</div>
+                                <div class="vertical-item">
+									<div class="item-media"> <img src="images/gallery-square/21.png" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery-square/21.png">
+							</a> </div>
+								</div>
+                                <div class="vertical-item">
+									<div class="item-media"> <img src="images/gallery-square/22.png" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery-square/22.png">
+							</a> </div>
+								</div>
+                                <div class="vertical-item">
+									<div class="item-media"> <img src="images/gallery-square/23.png" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery-square/23.png">
+							</a> </div>
+								</div>
+                                <div class="vertical-item">
+									<div class="item-media"> <img src="images/gallery-square/24.png" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery-square/24.png">
+							</a> </div>
+								</div>
+                                <div class="vertical-item">
+									<div class="item-media"> <img src="images/gallery-square/25.png" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery-square/25.png">
+							</a> </div>
+								</div>
+                                <div class="vertical-item">
+									<div class="item-media"> <img src="images/gallery-square/26.png" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery-square/26.png">
+							</a> </div>
+								</div>
+                                
+                                <div class="vertical-item">
+									<div class="item-media"> <img src="images/gallery-square/28.png" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery-square/28.png">
+							</a> </div>
+								</div>
+                                
+
 							</div>
 						</div>
 					</div>
 				</div>
 			</section>
-			
 			<footer class="page_footer ls section_padding_top_150 section_padding_bottom_140 columns_margin_bottom_30">
 				<div class="container">
 					<div class="row">
@@ -982,14 +1471,19 @@ fabrics@dharshiniimpex.in
 									<li>
 										<div class="media small-media">
 											<div class="media-left"> <i class="qtyler-phone"></i> </div>
-											<div class="media-body"> (+91) 9894657742 </div>
+											<div class="media-body">
+												<a href="tel:+919894657742">(+91) 9894657742</a><br>
+												<a href="tel:+919894657744">(+91) 9894657744</a><br>
+												<a href="tel:+919894650039">(+91) 9894650039</a><br>
+												<a href="tel:+919894657747">(+91) 9894657747</a>
+											</div>
 										</div>
 									</li>
 									<li>
 										<div class="media small-media">
 											<div class="media-left"> <i class="qtyler-envelope"></i> </div>
 											<div class="media-body"> <a href="mailto:#">
-fabrics@dharshiniimpex.in</a> </div>
+support@dharshiniimpex.in</a> </div>
 										</div>
 									</li>
 									<li>
@@ -1055,6 +1549,19 @@ fabrics@dharshiniimpex.in</a> </div>
 	<script src="js/main.js"></script>
 	<!-- Google Map Script -->
 	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTwYSMRGuTsmfl2z_zZDStYqMlKtrybxo"></script>
+	<!-- Initialize prettyPhoto lightbox -->
+	<script>
+		document.addEventListener('DOMContentLoaded', function() {
+			if (typeof jQuery !== 'undefined' && jQuery.fn.prettyPhoto) {
+				jQuery('a[data-gal^="prettyPhoto"]').prettyPhoto({
+					animationSpeed: 'fast',
+					theme: 'dark_square',
+					show_title: false,
+					social_tools: false
+				});
+			}
+		});
+	</script>
 </body>
 
 </html>

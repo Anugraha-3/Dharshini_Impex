@@ -184,6 +184,35 @@ html {
 .page_header {
     animation: fadeInUp 0.8s ease-out 0.3s both;
 }
+
+/* Fix Our Vision section spacing */
+#about .col-md-6:first-child {
+    padding-right: 50px;
+}
+
+#about .col-md-6:last-child {
+    padding-left: 50px;
+}
+
+/* Fix About Us section image spacing */
+.alignright {
+    margin-left: 40px !important;
+    margin-bottom: 30px !important;
+}
+
+@media (max-width: 768px) {
+    #about .col-md-6:first-child,
+    #about .col-md-6:last-child {
+        padding-left: 15px;
+        padding-right: 15px;
+        margin-bottom: 30px;
+    }
+    
+    .alignright {
+        margin-left: 20px !important;
+        margin-bottom: 20px !important;
+    }
+}
 </style>
 
 <script>
@@ -380,7 +409,7 @@ document.addEventListener('DOMContentLoaded', function() {
         { title: "Coimbatore", url: "contact4.html", scrollText: "coimbatore", content: "coimbatore location address tamil nadu india office" },
         { title: "Location", url: "contact4.html", scrollText: "location", content: "location address coimbatore tamil nadu office contact" },
         { title: "Phone", url: "contact4.html", scrollText: "9894657742", content: "phone contact 9894657742 call telephone mobile" },
-        { title: "Email", url: "contact4.html", scrollText: "fabrics@dharshiniimpex", content: "email contact fabrics dharshiniimpex.in mail address" }
+        { title: "Email", url: "contact4.html", scrollText: "support@dharshiniimpex", content: "email contact fabrics dharshiniimpex.in mail address" }
     ];
 
     // Handle search forms
@@ -664,7 +693,7 @@ document.addEventListener('DOMContentLoaded', function() {
 					</span> <span>
 						<i class="qtyler-envelope rightpadding_5"></i>
 						
-fabrics@dharshiniimpex.in
+support@dharshiniimpex.in
 					</span> <span>
 						<i class="qtyler-map-marker rightpadding_5"></i>
 						Coimbatore - 641062
@@ -989,7 +1018,7 @@ fabrics@dharshiniimpex.in
     <div class="container">
         <div class="row">
             <div class="col-xs-12"> 
-                <img src="images/about.jpg" class="alignright" alt="">
+                <img src="images/about1.jpg" class="alignright" alt="">
                 <h2 class="section_header topmargin_0">About Us</h2>
                 <p class="small-text grey neat-text">Crafting Excellence in Textile Manufacturing</p>
 
@@ -1032,30 +1061,183 @@ fabrics@dharshiniimpex.in
     </div>
 </section>
 
-			<section id="testimonials" class="ls ms parallax overlay_color section_padding_top_150 section_padding_bottom_150">
-				<div class="container">
-					<div class="row">
-						<div class="col-xs-12 text-center">
-							<div class="owl-carousel" data-responsive-lg="1" data-responsive-md="1" data-responsive-sm="1" data-dots="true" data-nav="true">
-								<blockquote>
-									<div class="avatar"> <img src="images/faces/01.jpg" alt=""> </div>
-									<p>Thanks so much!! I have received my order on time as promised! I love the shirt - it's perfect! I look forward to ordering more shirts from your company!</p> <cite>Elaine Allen</cite> </blockquote>
-								<blockquote>
-									<div class="avatar"> <img src="images/faces/02.jpg" alt=""> </div>
-									<p>Thank you very much for making the process easy. I will remember the good treatment when I have a need for services such as yours. Thank You!</p> <cite>Adam Farnsworth</cite> </blockquote>
-								<blockquote>
-									<div class="avatar"> <img src="images/faces/03.jpg" alt=""> </div>
-									<p>Got the suit on yesterday and I love it! Please tell everyone that worked on it that I am very pleased and will order again.</p> <cite>Patricia Diaz</cite> </blockquote>
-							</div>
-						</div>
-					</div>
-				</div>
-			</section>
+			<!-- GOOGLE REVIEWS SECTION - NO SERVER REQUIRED -->
+<section id="testimonials" class="ls ms parallax overlay_color section_padding_top_150 section_padding_bottom_150">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 text-center">
+                <h2 style="color: white; margin-bottom: 10px;">What Our Customers Say</h2>
+                <p style="color: rgba(255,255,255,0.8); margin-bottom: 30px;">
+                    
+                </p>
+                
+                <div class="owl-carousel" id="google-reviews-carousel" 
+                     data-responsive-lg="1" 
+                     data-responsive-md="1" 
+                     data-responsive-sm="1" 
+                     data-dots="true" 
+                     data-nav="true">
+                    <!-- Reviews loaded by JavaScript -->
+                </div>
+                
+                <div style="margin-top: 30px;">
+                    <a href="https://search.google.com/local/writereview?placeid=ChIJkQVca1JYqDsRbUIwjHyXGiw" 
+                       target="_blank" 
+                       class="theme_button min_width_button">
+                        <img src="https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png" 
+                             style="width: 16px; vertical-align: middle; margin-right: 8px;" alt="Google">
+                        Write a Review on Google
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+/* Google Reviews Styling */
+.google-review-stars {
+    color: #ffc107;
+    font-size: 20px;
+    margin-top: 10px;
+    letter-spacing: 2px;
+}
+
+.google-review-badge {
+    color: #999;
+    font-size: 12px;
+    margin-top: 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.review-date {
+    color: rgba(255,255,255,0.6);
+    font-size: 11px;
+    margin-top: 5px;
+}
+
+#testimonials blockquote {
+    background: rgba(255,255,255,0.05);
+    border-radius: 10px;
+    padding: 30px;
+}
+
+#testimonials .avatar img {
+    border: 3px solid rgba(255,255,255,0.2);
+}
+</style>
+
+<script>
+// Google Reviews - No Server Required
+// Just update the reviews array below with your actual Google reviews
+
+document.addEventListener('DOMContentLoaded', function() {
+    const carousel = document.getElementById('google-reviews-carousel');
+    
+    // ⭐ UPDATE THESE WITH YOUR ACTUAL GOOGLE REVIEWS ⭐
+    // To get your reviews: Go to https://www.google.com/maps/place/?q=place_id:ChIJkQVca1JYqDsRbUIwjHyXGiw
+    const yourGoogleReviews = [
+        {
+            author_name: "Rajesh Kumar",
+            rating: 5,
+            text: "Excellent quality jacquard fabrics! Dharshini Impex has been our trusted supplier for years. Their attention to detail and commitment to quality is unmatched.",
+            profile_photo_url: "images/faces/01.jpg",
+            date: "2 weeks ago"
+        },
+        {
+            author_name: "Priya Menon",
+            rating: 5,
+            text: "Outstanding service and beautiful fabric designs. The team is very professional and always delivers on time. Highly recommend for bulk orders!",
+            profile_photo_url: "images/faces/02.jpg",
+            date: "1 month ago"
+        },
+        {
+            author_name: "Suresh Textiles",
+            rating: 5,
+            text: "Best fabric manufacturer in Coimbatore! Their custom designs are exactly what we needed for our fashion line. Will definitely order again.",
+            profile_photo_url: "images/faces/03.jpg",
+            date: "3 weeks ago"
+        },
+        {
+            author_name: "Anita Sharma",
+            rating: 5,
+            text: "Amazing variety of jacquard fabrics with competitive pricing. The quality control is excellent and the production capacity is impressive.",
+            profile_photo_url: "images/faces/01.jpg",
+            date: "1 week ago"
+        },
+        {
+            author_name: "Mumbai Garments Ltd",
+            rating: 5,
+            text: "Professional team, timely delivery, and excellent fabric quality. We've been working with them for 3 years now. Highly satisfied!",
+            profile_photo_url: "images/faces/02.jpg",
+            date: "2 months ago"
+        }
+    ];
+    
+    // Function to create star rating display
+    function createStarRating(rating) {
+        const fullStars = Math.floor(rating);
+        const hasHalfStar = rating % 1 >= 0.5;
+        const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+        
+        return '★'.repeat(fullStars) + 
+               (hasHalfStar ? '½' : '') + 
+               '☆'.repeat(emptyStars);
+    }
+    
+    // Display reviews in carousel
+    function displayReviews(reviews) {
+        carousel.innerHTML = '';
+        
+        reviews.forEach(review => {
+            const blockquote = document.createElement('blockquote');
+            blockquote.innerHTML = `
+                <div class="avatar">
+                    <img src="${review.profile_photo_url}" alt="${review.author_name}">
+                </div>
+                <p>"${review.text}"</p>
+                <div class="google-review-stars">${createStarRating(review.rating)}</div>
+                <cite>${review.author_name}</cite>
+                <div class="review-date">${review.date}</div>
+                <div class="google-review-badge">
+                    <img src="https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png" 
+                         style="width: 12px; height: 12px;" alt="Google">
+                    Google Review
+                </div>
+            `;
+            carousel.appendChild(blockquote);
+        });
+        
+        // Reinitialize carousel if it exists
+        if (typeof $ !== 'undefined' && $.fn.owlCarousel) {
+            $('#google-reviews-carousel').owlCarousel({
+                items: 1,
+                loop: true,
+                dots: true,
+                nav: true,
+                autoplay: true,
+                autoplayTimeout: 5000,
+                autoplayHoverPause: true,
+                responsive: {
+                    0: { items: 1 },
+                    768: { items: 1 },
+                    992: { items: 1 }
+                }
+            });
+        }
+    }
+    
+    // Load and display reviews
+    displayReviews(yourGoogleReviews);
+});
+</script>
 			<section id="about" class="ls section_padding_top_150 section_padding_bottom_150">
     <div class="container">
         <div class="row flex-wrap v-center">
             <div class="col-md-6">
-                <img src="images/about.png" alt="" class="about-cover">
+                <img src="images/about.png" alt="" class="about-cover" style="max-width: 80%; height: auto;">
             </div>
             <div class="col-md-6">
                 <h2 class="section_header">Our Vision</h2>
@@ -1113,59 +1295,123 @@ fabrics@dharshiniimpex.in
 						<div class="col-xs-12">
 							<div class="owl-carousel gallery-carousel framed" data-responsive-xlg="6" data-responsive-lg="5" data-responsive-md="4" data-responsive-sm="3" data-responsive-xs="3" data-responsive-xxs="2" data-loop="true" data-margin="0" data-nav="true">
 								<div class="vertical-item">
-									<div class="item-media"> <img src="images/gallery-square/01.jpg" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery/01.jpg">
+									<div class="item-media"> <img src="images/gallery-square/01.png" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery-square/01.png">
 							</a> </div>
 								</div>
 								<div class="vertical-item">
-									<div class="item-media"> <a class="p-view prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery/02.jpg">
-								<img src="images/gallery-square/02.jpg" alt="">
+									<div class="item-media"> <a class="p-view prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery-square/02.png">
+								<img src="images/gallery-square/02.png" alt="">
 							</a> </div>
 								</div>
 								<div class="vertical-item">
-									<div class="item-media"> <img src="images/gallery-square/03.jpg" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery/03.jpg">
+									<div class="item-media"> <img src="images/gallery-square/03.png" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery-square/03.png">
 							</a> </div>
 								</div>
 								<div class="vertical-item">
-									<div class="item-media"> <img src="images/gallery-square/04.jpg" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery/04.jpg">
+									<div class="item-media"> <img src="images/gallery-square/04.png" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery-square/04.png">
 							</a> </div>
 								</div>
 								<div class="vertical-item">
-									<div class="item-media"> <img src="images/gallery-square/05.jpg" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery/05.jpg">
+									<div class="item-media"> <img src="images/gallery-square/05.png" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery-square/05.png">
 							</a> </div>
 								</div>
 								<div class="vertical-item">
-									<div class="item-media"> <img src="images/gallery-square/06.jpg" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery/06.jpg">
+									<div class="item-media"> <img src="images/gallery-square/06.png" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery-square/06.png">
 							</a> </div>
 								</div>
 								<div class="vertical-item">
-									<div class="item-media"> <img src="images/gallery-square/07.jpg" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery/07.jpg">
+									<div class="item-media"> <img src="images/gallery-square/07.png" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery-square/07.png">
 							</a> </div>
 								</div>
 								<div class="vertical-item">
-									<div class="item-media"> <img src="images/gallery-square/08.jpg" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery/08.jpg">
+									<div class="item-media"> <img src="images/gallery-square/08.png" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery-square/08.png">
 							</a> </div>
 								</div>
 								<div class="vertical-item">
-									<div class="item-media"> <img src="images/gallery-square/09.jpg" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery/09.jpg">
+									<div class="item-media"> <img src="images/gallery-square/09.png" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery-square/09.png">
 							</a> </div>
 								</div>
 								<div class="vertical-item">
-									<div class="item-media"> <img src="images/gallery-square/10.jpg" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery/10.jpg">
+									<div class="item-media"> <img src="images/gallery-square/10.png" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery-square/10.png">
 							</a> </div>
 								</div>
 								<div class="vertical-item">
-									<div class="item-media"> <img src="images/gallery-square/11.jpg" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery/11.jpg">
+									<div class="item-media"> <img src="images/gallery-square/11.png" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery-square/11.png">
 							</a> </div>
 								</div>
 								<div class="vertical-item">
-									<div class="item-media"> <img src="images/gallery-square/12.jpg" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery/12.jpg">
+									<div class="item-media"> <img src="images/gallery-square/12.png" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery-square/12.png">
 							</a> </div>
 								</div>
+                                <div class="vertical-item">
+									<div class="item-media"> <img src="images/gallery-square/13.png" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery-square/13.png">
+							</a> </div>
+								</div>
+                                <div class="vertical-item">
+									<div class="item-media"> <img src="images/gallery-square/14.png" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery-square/14.png">
+							</a> </div>
+								</div>
+                                <div class="vertical-item">
+									<div class="item-media"> <img src="images/gallery-square/15.png" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery-square/15.png">
+							</a> </div>
+								</div>
+                                <div class="vertical-item">
+									<div class="item-media"> <img src="images/gallery-square/16.png" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery-square/16.png">
+							</a> </div>
+								</div>
+                                <div class="vertical-item">
+									<div class="item-media"> <img src="images/gallery-square/17.png" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery-square/17.png">
+							</a> </div>
+								</div>
+                                <div class="vertical-item">
+									<div class="item-media"> <img src="images/gallery-square/18.png" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery-square/18.png">
+							</a> </div>
+								</div>
+                                <div class="vertical-item">
+									<div class="item-media"> <img src="images/gallery-square/19.png" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery-square/19.png">
+							</a> </div>
+								</div>
+                                <div class="vertical-item">
+									<div class="item-media"> <img src="images/gallery-square/20.png" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery-square/20.png">
+							</a> </div>
+								</div>
+                                <div class="vertical-item">
+									<div class="item-media"> <img src="images/gallery-square/21.png" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery-square/21.png">
+							</a> </div>
+								</div>
+                                <div class="vertical-item">
+									<div class="item-media"> <img src="images/gallery-square/22.png" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery-square/22.png">
+							</a> </div>
+								</div>
+                                <div class="vertical-item">
+									<div class="item-media"> <img src="images/gallery-square/23.png" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery-square/23.png">
+							</a> </div>
+								</div>
+                                <div class="vertical-item">
+									<div class="item-media"> <img src="images/gallery-square/24.png" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery-square/24.png">
+							</a> </div>
+								</div>
+                                <div class="vertical-item">
+									<div class="item-media"> <img src="images/gallery-square/25.png" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery-square/25.png">
+							</a> </div>
+								</div>
+                                <div class="vertical-item">
+									<div class="item-media"> <img src="images/gallery-square/26.png" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery-square/26.png">
+							</a> </div>
+								</div>
+                                
+                                <div class="vertical-item">
+									<div class="item-media"> <img src="images/gallery-square/28.png" alt=""> <a class="abs-link prettyPhoto" data-gal="prettyPhoto[gal]" title="" href="images/gallery-square/28.png">
+							</a> </div>
+								</div>
+                                
+
 							</div>
 						</div>
 					</div>
 				</div>
 			</section>
+			
 			<!-- <section id="footer-fullwidth" class="ls columns_margin_0 fluid_padding_0 columns_padding_0">
 	<div class="container-fluid">
 		<div class="row">
@@ -1190,13 +1436,18 @@ fabrics@dharshiniimpex.in
 									<li>
 										<div class="media small-media">
 											<div class="media-left"> <i class="qtyler-phone"></i> </div>
-											<div class="media-body"> (+91) 9894657742 </div>
+											<div class="media-body">
+												<a href="tel:+919894657742">(+91) 9894657742</a><br>
+												<a href="tel:+919894657744">(+91) 9894657744</a><br>
+												<a href="tel:+919894650039">(+91) 9894650039</a><br>
+												<a href="tel:+919894657747">(+91) 9894657747</a>
+											</div>
 										</div>
 									</li>
 									<li>
 										<div class="media small-media">
 											<div class="media-left"> <i class="qtyler-envelope"></i> </div>
-											<div class="media-body"> <a href="mailto:#">fabrics@dharshiniimpex.in</a> </div>
+											<div class="media-body"> <a href="mailto:#">support@dharshiniimpex.in</a> </div>
 										</div>
 									</li>
 									<li>
@@ -1257,6 +1508,15 @@ fabrics@dharshiniimpex.in
 	<!-- eof #canvas -->
 	<script src="js/compressed.js"></script>
 	<script src="js/main.js"></script>
+	<script>
+	$(window).on('load', function() {
+		setTimeout(function() {
+			if (typeof $.fn.prettyPhoto !== 'undefined') {
+				$("a[data-gal^='prettyPhoto'], a.prettyPhoto").prettyPhoto();
+			}
+		}, 500);
+	});
+	</script>
 	<!-- Google Map Script -->
 	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTwYSMRGuTsmfl2z_zZDStYqMlKtrybxo"></script>
 </body>

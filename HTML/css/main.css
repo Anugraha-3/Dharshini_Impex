@@ -11733,8 +11733,9 @@ body.active-side-header.slide-right .page_header_side {
 	bottom: 0;
 	left: 0;
 	right: 0;
-	background-size: cover;
+	background-size: contain;
 	background-position: center;
+	background-repeat: no-repeat;
 }
 
 .slide-image-wrap img {
