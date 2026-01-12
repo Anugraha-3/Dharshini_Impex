@@ -768,21 +768,7 @@ document.addEventListener('DOMContentLoaded', function() {
 								<!-- eof main nav -->
 								<!-- header toggler --><span class="toggle_menu"><span></span></span>
 							</div>
-							<div class="header_right_buttons text-right">
-								<ul class="inline-dropdown inline-block">
-									
-									<li class="dropdown social-dropdown"> <a id="social" data-target="#" href="./" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false" class="theme_button small_button round_button bg_button margin_0">
-                                <i class="qtyler-share" aria-hidden="true"></i>
-                            </a>
-<div class="dropdown-menu"> 
-    <a class="social-icon socicon-facebook dark-icon" href="https://www.facebook.com/sharer/sharer.php?u=https://dharshiniimpex.in" target="_blank" title="Facebook"></a> 
-    <a class="social-icon socicon-googleplus dark-icon" href="https://plus.google.com/share?url=https://dharshiniimpex.in" target="_blank" title="Google Plus"></a> 
-    <a class="social-icon socicon-linkedin dark-icon" href="https://www.linkedin.com/sharing/share-offsite/?url=https://dharshiniimpex.in" target="_blank" title="Linkedin"></a>
-    <a class="social-icon socicon-twitter dark-icon" href="https://twitter.com/intent/tweet?url=https://dharshiniimpex.in&text=Check%20out%20Dharshini%20Impex%20-%20Premium%20Textile%20Manufacturing" target="_blank" title="Twitter"></a> 
-    <a class="social-icon socicon-instagram dark-icon" href="https://www.instagram.com/" target="_blank" title="Instagram"></a> 
-</div>									</li>
-								</ul>
-							</div>
+
 						</div>
 					</div>
 				</div>
@@ -821,6 +807,118 @@ document.addEventListener('DOMContentLoaded', function() {
 .entry-content p,
 p {
     text-align: justify !important;
+}
+
+/* Mobile responsive styles for department content */
+@media (max-width: 767px) {
+    .section_padding_top_150 {
+        padding-top: 80px !important;
+    }
+    .section_padding_bottom_150 {
+        padding-bottom: 80px !important;
+    }
+    
+    .isotope-item {
+        margin-bottom: 30px;
+    }
+    
+    .service-item {
+        padding: 20px;
+        text-align: center;
+    }
+    
+    .service-item .item-media img {
+        max-width: 100%;
+        height: auto;
+        margin-bottom: 20px;
+    }
+    
+    .service-item .entry-title {
+        font-size: 1.4em;
+        margin-bottom: 15px;
+    }
+    
+    .service-item .entry-content {
+        font-size: 14px;
+        line-height: 1.6;
+        text-align: justify !important;
+    }
+    
+    .isotope_container.row {
+        margin: 0;
+    }
+    
+    .isotope-item.col-xs-12 {
+        padding: 0 15px;
+    }
+}
+
+/* Tablet responsive styles */
+@media (min-width: 768px) and (max-width: 991px) {
+    .service-item {
+        padding: 25px;
+    }
+    
+    .service-item .entry-content {
+        font-size: 15px;
+    }
+    
+    .service-item .item-media img {
+        max-width: 100%;
+        height: auto;
+    }
+}
+
+/* Small mobile devices */
+@media (max-width: 480px) {
+    .section_padding_top_150 {
+        padding-top: 60px !important;
+    }
+    .section_padding_bottom_150 {
+        padding-bottom: 60px !important;
+    }
+    
+    .service-item {
+        padding: 15px;
+        margin-bottom: 20px;
+    }
+    
+    .service-item .entry-title {
+        font-size: 1.2em;
+    }
+    
+    .service-item .entry-content {
+        font-size: 13px;
+    }
+    
+    .isotope-item {
+        margin-bottom: 25px;
+    }
+    
+    h2 {
+        font-size: 1.8em;
+        margin-bottom: 15px;
+    }
+    
+    .lead {
+        font-size: 16px;
+    }
+}
+
+/* Ensure equal height cards on desktop */
+@media (min-width: 768px) {
+    .service-item {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+    
+    .service-item .item-content {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
 }
 </style>
 

@@ -189,7 +189,128 @@ img {
 }
 
 /* Keep original button styling */
+
+/* Mobile-specific slide images and font adjustments */
+@media (max-width: 768px) {
+    /* Replace slide images for mobile */
+    .intro_section .slides li:nth-child(1) .slide-image-wrap {
+        background-image: url('images/slide1.jpg') !important;
+        background-size: cover !important;
+        background-position: center !important;
+    }
+    
+    .intro_section .slides li:nth-child(2) .slide-image-wrap {
+        background-image: url('images/slide2.jpg') !important;
+        background-size: cover !important;
+        background-position: center !important;
+    }
+    
+    .intro_section .slides li:nth-child(3) .slide-image-wrap {
+        background-image: url('images/slide3.jpg') !important;
+        background-size: cover !important;
+        background-position: center !important;
+    }
+    
+    .intro_section .slides li .slide-image-wrap img {
+        opacity: 0 !important;
+    }
+    
+    /* Fix text positioning and alignment for mobile */
+    .intro_section .slide_description_wrapper {
+        padding-left: 20px !important;
+        padding-right: 20px !important;
+        text-align: center !important;
+    }
+    
+    .intro_section .slide_description {
+        margin-left: 0 !important;
+        transform: translateX(0) !important;
+    }
+    
+    /* Adjust font sizes for mobile in slide section */
+    .intro_section .hero-text {
+        font-size: 1.8rem !important;
+        font-weight: 400 !important;
+        letter-spacing: 1px !important;
+        margin-left: 0 !important;
+    }
+    
+    .intro_section .small-text {
+        font-size: 0.75rem !important;
+        font-weight: 300 !important;
+        letter-spacing: 0.5px !important;
+        line-height: 1.3 !important;
+    }
+    
+    .intro_section .light_bg_color {
+        font-size: 0.65rem !important;
+        padding: 6px 10px !important;
+        font-weight: 400 !important;
+        letter-spacing: 0.5px !important;
+    }
+    
+    .intro_section .slide_buttons .theme_button {
+        font-size: 0.75rem !important;
+        padding: 8px 16px !important;
+        font-weight: 400 !important;
+        letter-spacing: 0.5px !important;
+    }
+    
+    /* Fix carousel navigation arrows for mobile */
+    .flexslider .flex-direction-nav a {
+        display: block !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        width: 50px !important;
+        height: 50px !important;
+        background: rgba(0,0,0,0.5) !important;
+        border-radius: 50% !important;
+        z-index: 999 !important;
+    }
+    
+    .flexslider .flex-direction-nav .flex-prev {
+        left: 15px !important;
+    }
+    
+    .flexslider .flex-direction-nav .flex-next {
+        right: 15px !important;
+    }
+    
+    .flexslider .flex-direction-nav a:before {
+        color: white !important;
+        font-size: 20px !important;
+    }
+    
+    /* Hide vision image and center content on mobile */
+    #about .col-md-6:first-child {
+        display: none !important;
+    }
+    
+    #about .col-md-6:last-child {
+        padding-left: 20px !important;
+        padding-right: 20px !important;
+        text-align: center !important;
+    }
+}
 </style>
+
+<script>
+// Mobile carousel autoplay script
+document.addEventListener('DOMContentLoaded', function() {
+    if (window.innerWidth <= 768) {
+        const flexslider = document.querySelector('.flexslider');
+        if (flexslider && typeof jQuery !== 'undefined') {
+            jQuery(flexslider).flexslider({
+                slideshow: true,
+                slideshowSpeed: 3000,
+                animationSpeed: 600,
+                directionNav: true,
+                controlNav: false
+            });
+        }
+    }
+});
+</script>
 
 <script>
 // Add this JavaScript for scroll animations and page load
@@ -937,17 +1058,6 @@ document.addEventListener('DOMContentLoaded', function() {
 							<div class="header_right_buttons text-right">
 								<ul class="inline-dropdown inline-block">
 									
-									
-									<li class="dropdown social-dropdown"> <a id="social" data-target="#" href="./" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false" class="theme_button small_button round_button bg_button margin_0">
-                                <i class="qtyler-share" aria-hidden="true"></i>
-                            </a>
-<div class="dropdown-menu"> 
-    <a class="social-icon socicon-facebook dark-icon" href="https://www.facebook.com/sharer/sharer.php?u=https://dharshiniimpex.in" target="_blank" title="Facebook"></a> 
-    <a class="social-icon socicon-googleplus dark-icon" href="https://plus.google.com/share?url=https://dharshiniimpex.in" target="_blank" title="Google Plus"></a> 
-    <a class="social-icon socicon-linkedin dark-icon" href="https://www.linkedin.com/sharing/share-offsite/?url=https://dharshiniimpex.in" target="_blank" title="Linkedin"></a>
-    <a class="social-icon socicon-twitter dark-icon" href="https://twitter.com/intent/tweet?url=https://dharshiniimpex.in&text=Check%20out%20Dharshini%20Impex%20-%20Premium%20Textile%20Manufacturing" target="_blank" title="Twitter"></a> 
-    <a class="social-icon socicon-instagram dark-icon" href="https://www.instagram.com/" target="_blank" title="Instagram"></a> 
-</div>									</li>
 								</ul>
 							</div>
 						</div>

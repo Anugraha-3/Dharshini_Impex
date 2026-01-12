@@ -213,6 +213,49 @@ html {
         margin-bottom: 20px !important;
     }
 }
+
+/* Image centering and responsive styles */
+.img-responsive {
+    max-width: 100%;
+    height: auto;
+}
+
+.center-block {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.text-center {
+    text-align: center;
+}
+
+/* Ensure all images in about sections are centered */
+#about img,
+.about-cover,
+.content-justify img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 768px) {
+    #about .col-md-6 {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+    
+    .about-cover {
+        margin-bottom: 30px;
+    }
+    
+    .content-justify {
+        text-align: center;
+        margin-top: 20px;
+    }
+}
 </style>
 
 <script>
@@ -1048,21 +1091,7 @@ support@dharshiniimpex.in
 								<!-- eof main nav -->
 								<!-- header toggler --><span class="toggle_menu"><span></span></span>
 							</div>
-							<div class="header_right_buttons text-right">
-								<ul class="inline-dropdown inline-block">
-									
-									<li class="dropdown social-dropdown"> <a id="social" data-target="#" href="./" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false" class="theme_button small_button round_button bg_button margin_0">
-                                <i class="qtyler-share" aria-hidden="true"></i>
-                            </a>
-<div class="dropdown-menu"> 
-    <a class="social-icon socicon-facebook dark-icon" href="https://www.facebook.com/sharer/sharer.php?u=https://dharshiniimpex.in" target="_blank" title="Facebook"></a> 
-    <a class="social-icon socicon-googleplus dark-icon" href="https://plus.google.com/share?url=https://dharshiniimpex.in" target="_blank" title="Google Plus"></a> 
-    <a class="social-icon socicon-linkedin dark-icon" href="https://www.linkedin.com/sharing/share-offsite/?url=https://dharshiniimpex.in" target="_blank" title="Linkedin"></a>
-    <a class="social-icon socicon-twitter dark-icon" href="https://twitter.com/intent/tweet?url=https://dharshiniimpex.in&text=Check%20out%20Dharshini%20Impex%20-%20Premium%20Textile%20Manufacturing" target="_blank" title="Twitter"></a> 
-    <a class="social-icon socicon-instagram dark-icon" href="https://www.instagram.com/" target="_blank" title="Instagram"></a> 
-</div>									</li>
-								</ul>
-							</div>
+
 						</div>
 					</div>
 				</div>
@@ -1087,7 +1116,9 @@ support@dharshiniimpex.in
     <div class="container">
         <div class="row">
             <div class="col-xs-12"> 
-                <img src="images/about1.jpg" class="alignright" alt="">
+                <div class="text-center">
+                    <img src="images/about1.jpg" class="img-responsive center-block" alt="" style="max-width: 100%; height: auto; margin: 0 auto 30px auto;">
+                </div>
                 <h2 class="section_header topmargin_0">About Us</h2>
                 <p class="small-text grey neat-text">Crafting Excellence in Textile Manufacturing</p>
 
@@ -1305,8 +1336,8 @@ document.addEventListener('DOMContentLoaded', function() {
 			<section id="about" class="ls section_padding_top_150 section_padding_bottom_150">
     <div class="container">
         <div class="row flex-wrap v-center">
-            <div class="col-md-6">
-                <img src="images/about.png" alt="" class="about-cover" style="max-width: 80%; height: auto;">
+            <div class="col-md-6 text-center">
+                <img src="images/about.png" alt="" class="about-cover img-responsive center-block" style="max-width: 100%; height: auto; margin: 0 auto;">
             </div>
             <div class="col-md-6">
                 <h2 class="section_header">Our Vision</h2>
@@ -1334,7 +1365,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <p class="justify-text">To become a global leader in jacquard fabric manufacturing, consistently exceeding customer expectations through innovative designs, uncompromised quality, and sustainable practices — all while fostering a culture of excellence, creativity, and responsibility.</p>
 
 <h3> Our Values</h3>
-<ul class="list2 grey">
+<ul class="list2 grey" style="text-align: left;">
     <li><strong>Integrity in Every Thread:</strong> Honesty, transparency, and ethics in every interaction.</li>
     <li><strong>Innovation as a Habit:</strong> Staying ahead with fresh designs and evolving techniques.</li>
     <li><strong>Customer-Centricity:</strong> Custom solutions, dependable timelines, and long-term partnerships.</li>
@@ -1349,9 +1380,8 @@ document.addEventListener('DOMContentLoaded', function() {
 <p class="justify-text">To scale production capabilities to 10 lakh meters per month of jacquard and dobby fabrics across both greige and finished categories, and emerge as a top-tier global fabric exporter from India.</p>
 
 <div class="toppadding_40 visible-lg"></div>
-<div class="content-justify v-center v-spacing">
-    <img src="images/stamps.png" alt="">
-    
+<div class="content-justify v-center v-spacing text-center">
+    <img src="images/stamps.png" alt="" class="img-responsive center-block" style="max-width: 100%; height: auto; margin: 0 auto;">
 </div>
             </div>
         </div>

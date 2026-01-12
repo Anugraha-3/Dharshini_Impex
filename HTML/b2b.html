@@ -989,21 +989,7 @@ document.addEventListener('DOMContentLoaded', function() {
 								<!-- eof main nav -->
 								<!-- header toggler --><span class="toggle_menu"><span></span></span>
 							</div>
-							<div class="header_right_buttons text-right">
-								<ul class="inline-dropdown inline-block">
-									
-									<li class="dropdown social-dropdown"> <a id="social" data-target="#" href="./" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false" class="theme_button small_button round_button bg_button margin_0">
-                                <i class="qtyler-share" aria-hidden="true"></i>
-                            </a>
-<div class="dropdown-menu"> 
-    <a class="social-icon socicon-facebook dark-icon" href="https://www.facebook.com/sharer/sharer.php?u=https://dharshiniimpex.in" target="_blank" title="Facebook"></a> 
-    <a class="social-icon socicon-googleplus dark-icon" href="https://plus.google.com/share?url=https://dharshiniimpex.in" target="_blank" title="Google Plus"></a> 
-    <a class="social-icon socicon-linkedin dark-icon" href="https://www.linkedin.com/sharing/share-offsite/?url=https://dharshiniimpex.in" target="_blank" title="Linkedin"></a>
-    <a class="social-icon socicon-twitter dark-icon" href="https://twitter.com/intent/tweet?url=https://dharshiniimpex.in&text=Check%20out%20Dharshini%20Impex%20-%20Premium%20Textile%20Manufacturing" target="_blank" title="Twitter"></a> 
-    <a class="social-icon socicon-instagram dark-icon" href="https://www.instagram.com/" target="_blank" title="Instagram"></a> 
-</div>									</li>
-								</ul>
-							</div>
+
 						</div>
 					</div>
 				</div>
@@ -1028,6 +1014,45 @@ document.addEventListener('DOMContentLoaded', function() {
 				<div class="container">
 					<div class="row">
 						<div class="col-xs-12">
+							<style>
+							/* Mobile responsive styles for stamps grid */
+							@media (max-width: 768px) {
+							    .isotope-item.col-xs-4.col-sm-3 {
+							        width: 50% !important;
+							        padding: 0 3px !important;
+							        margin-bottom: 8px !important;
+							    }
+							    
+							    .stamp-container img {
+							        max-width: 100%;
+							        height: auto;
+							    }
+							    
+							    .section_padding_top_150 {
+							        padding-top: 80px !important;
+							    }
+							    
+							    .section_padding_bottom_150 {
+							        padding-bottom: 80px !important;
+							    }
+							}
+							
+							@media (max-width: 480px) {
+							    .isotope-item.col-xs-4.col-sm-3 {
+							        width: 33.33% !important;
+							        padding: 0 2px !important;
+							        margin-bottom: 6px !important;
+							    }
+							    
+							    .section_padding_top_150 {
+							        padding-top: 60px !important;
+							    }
+							    
+							    .section_padding_bottom_150 {
+							        padding-bottom: 60px !important;
+							    }
+							}
+							</style>
 							<div class="isotope_container isotope row masonry-layout images-grid columns_margin_bottom_20">
 								<div class="isotope-item col-xs-4 col-sm-3" style="padding: 0 5px; margin-bottom: 10px;"> 
     <a href="#" class="with_shadow stamp-container">
@@ -1083,12 +1108,60 @@ document.addEventListener('DOMContentLoaded', function() {
                 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap');
 
                 .neat-text {
-                  font-family: 'Poppins', sans-serif;   /* modern, neat font */
-                  font-size: 16px;                      /* adjust size */
-                  font-weight: 500;                     /* medium weight */
-                  letter-spacing: 2px !important;       /* reduce extra space between letters */
-                  line-height: 1.4;                     /* nice vertical spacing */
-                  margin: 0;                            /* remove unnecessary margin */
+                  font-family: 'Poppins', sans-serif;
+                  font-size: 16px;
+                  font-weight: 500;
+                  letter-spacing: 2px !important;
+                  line-height: 1.4;
+                  margin: 0;
+                }
+
+                /* Mobile responsive styles */
+                @media (max-width: 768px) {
+                    .section_header {
+                        font-size: 24px !important;
+                        text-align: center;
+                        margin-bottom: 15px;
+                    }
+                    
+                    .neat-text {
+                        font-size: 14px;
+                        text-align: center;
+                        margin-bottom: 20px;
+                    }
+                    
+                    .col-xs-12.col-md-6 {
+                        margin-bottom: 30px;
+                    }
+                    
+                    .isotope_container {
+                        margin-top: 20px;
+                    }
+                    
+                    .isotope-item {
+                        margin-bottom: 15px;
+                    }
+                    
+                    .isotope-item img {
+                        max-width: 100%;
+                        height: auto;
+                    }
+                }
+                
+                @media (max-width: 480px) {
+                    .section_header {
+                        font-size: 20px !important;
+                    }
+                    
+                    .neat-text {
+                        font-size: 12px;
+                        letter-spacing: 1px !important;
+                    }
+                    
+                    .isotope-item.col-xs-6 {
+                        width: 50%;
+                        padding: 0 5px;
+                    }
                 }
                 </style>
 
@@ -1117,6 +1190,33 @@ document.addEventListener('DOMContentLoaded', function() {
 </section>
 
 			<section id="gallery" class="ls fluid_padding_0 columns_padding_0">
+				<style>
+				/* Mobile responsive styles for gallery carousel */
+				@media (max-width: 768px) {
+				    .owl-carousel .vertical-item {
+				        margin: 0 2px;
+				    }
+				    
+				    .vertical-item img {
+				        max-width: 100%;
+				        height: auto;
+				    }
+				    
+				    .owl-nav {
+				        display: none !important;
+				    }
+				}
+				
+				@media (max-width: 480px) {
+				    .gallery-carousel {
+				        margin: 0 -5px;
+				    }
+				    
+				    .owl-carousel .vertical-item {
+				        margin: 0 1px;
+				    }
+				}
+				</style>
 				<div class="container-fluid">
 					<div class="row">
 						<div class="col-xs-12">

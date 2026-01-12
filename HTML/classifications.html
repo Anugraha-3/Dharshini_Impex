@@ -291,25 +291,170 @@ html {
     text-align: justify;
 }
 
-/* Responsive design */
+/* Enhanced Mobile Responsive Design */
 @media (max-width: 768px) {
+    /* Force all subcategories to have image on top, content below */
     .fabric-subcategory,
-    .fabric-subcategory:nth-child(even) {
-        flex-direction: column;
+    .fabric-subcategory:nth-child(even),
+    .fabric-subcategory:nth-child(odd) {
+        flex-direction: column !important;
         text-align: center;
+        padding: 20px 15px;
+        margin: 20px 0;
     }
     
     .fabric-image-container {
+        flex: none;
         margin: 0 0 20px 0;
+        width: 100%;
+        max-width: 280px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    .fabric-content {
+        padding: 0;
+        text-align: center;
     }
     
     .main-category-header {
         flex-direction: column;
         text-align: center;
+        margin: 30px 0;
     }
     
     .main-category-image {
-        margin: 0 0 20px 0;
+        flex: none;
+        margin: 0 auto 20px auto;
+        max-width: 200px;
+    }
+    
+    .main-category-text {
+        text-align: center;
+    }
+    
+    /* Mobile typography adjustments */
+    .fabric-content h5 {
+        font-size: 16px;
+        margin-bottom: 10px;
+    }
+    
+    .fabric-content p {
+        font-size: 14px;
+        line-height: 1.5;
+        text-align: center;
+    }
+    
+    .main-category-text h4 {
+        font-size: 20px;
+    }
+    
+    .main-category-text p {
+        font-size: 14px;
+        text-align: center;
+    }
+    
+    /* Container padding for mobile */
+    .container {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+    
+    /* Section padding adjustments */
+    .section_padding_top_150 {
+        padding-top: 60px !important;
+    }
+    
+    .section_padding_bottom_150 {
+        padding-bottom: 60px !important;
+    }
+    
+    /* Fabric category spacing */
+    .fabric-category {
+        margin-bottom: 40px;
+        padding: 20px 0;
+    }
+    
+    /* Slideshow adjustments for mobile */
+    .fabric-slideshow {
+        height: 200px;
+    }
+    
+    .slideshow-dots {
+        bottom: 8px;
+    }
+    
+    .slideshow-dot {
+        width: 6px;
+        height: 6px;
+    }
+    
+    /* Header mobile optimizations */
+    .page_header {
+        padding: 10px 0;
+    }
+    
+    .header_left_logo img {
+        max-height: 40px;
+    }
+    
+    /* Top line mobile adjustments */
+    .page_topline .inline-content {
+        font-size: 12px;
+    }
+    
+    .page_topline .inline-content span {
+        display: block;
+        margin: 2px 0;
+    }
+    
+    /* Breadcrumb mobile */
+    .page_breadcrumbs {
+        padding: 30px 0;
+    }
+    
+    .breadcrumb {
+        font-size: 12px;
+    }
+}
+
+/* Extra small mobile devices */
+@media (max-width: 480px) {
+    .fabric-image-container {
+        max-width: 250px;
+    }
+    
+    .main-category-image {
+        max-width: 180px;
+    }
+    
+    .fabric-slideshow {
+        height: 180px;
+    }
+    
+    .fabric-content h5 {
+        font-size: 15px;
+    }
+    
+    .fabric-content p {
+        font-size: 13px;
+    }
+    
+    .section_padding_top_150 {
+        padding-top: 40px !important;
+    }
+    
+    .section_padding_bottom_150 {
+        padding-bottom: 40px !important;
+    }
+    
+    .page_topline .col-md-8,
+    .page_topline .col-md-4 {
+        text-align: center !important;
+    }
+    
+    .search-dropdown {
+        margin-top: 10px;
     }
 }
 
@@ -1083,18 +1228,7 @@ support@dharshiniimpex.in
 								<!-- header toggler --><span class="toggle_menu"><span></span></span>
 							</div>
 							<div class="header_right_buttons text-right">
-								<ul class="inline-dropdown inline-block">
-									<li class="dropdown social-dropdown"> <a id="social" data-target="#" href="./" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false" class="theme_button small_button round_button bg_button margin_0">
-                                <i class="qtyler-share" aria-hidden="true"></i>
-                            </a>
-<div class="dropdown-menu"> 
-    <a class="social-icon socicon-facebook dark-icon" href="https://www.facebook.com/sharer/sharer.php?u=https://dharshiniimpex.in" target="_blank" title="Facebook"></a> 
-    <a class="social-icon socicon-googleplus dark-icon" href="https://plus.google.com/share?url=https://dharshiniimpex.in" target="_blank" title="Google Plus"></a> 
-    <a class="social-icon socicon-linkedin dark-icon" href="https://www.linkedin.com/sharing/share-offsite/?url=https://dharshiniimpex.in" target="_blank" title="Linkedin"></a>
-    <a class="social-icon socicon-twitter dark-icon" href="https://twitter.com/intent/tweet?url=https://dharshiniimpex.in&text=Check%20out%20Dharshini%20Impex%20-%20Premium%20Textile%20Manufacturing" target="_blank" title="Twitter"></a> 
-    <a class="social-icon socicon-instagram dark-icon" href="https://www.instagram.com/" target="_blank" title="Instagram"></a> 
-</div>									</li>
-								</ul>
+								<!-- Share button removed for mobile optimization -->
 							</div>
 						</div>
 					</div>
