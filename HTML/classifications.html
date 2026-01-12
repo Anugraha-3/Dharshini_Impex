@@ -563,9 +563,422 @@ window.addEventListener('load', function() {
 </head>
 
 <body>
-	<!--[if lt IE 9]>
-		<div class="bg-danger text-center">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/" class="highlight">upgrade your browser</a> to improve your experience.</div>
-	<![endif]-->
+	<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Search data with keywords for scrolling
+    const searchData = [
+        // Homepage & Main Navigation
+        { title: "Home", url: "index.html", scrollText: "", content: "home homepage main page dharshini impex textile manufacturing" },
+        { title: "Company Overview", url: "overview.html", scrollText: "company overview", content: "company overview business profile about company history established 1995" },
+        { title: "About Us", url: "about.html", scrollText: "about us", content: "about company information business details history background" },
+        { title: "Contact Us", url: "contact4.html", scrollText: "contact", content: "contact phone email address coimbatore location office" },
+        { title: "Contact Information", url: "contact4.html", scrollText: "contact information", content: "phone 9894657742 email fabrics dharshiniimpex coimbatore tamil nadu" },
+
+        // Leadership & Team
+        { title: "Leadership", url: "team.html", scrollText: "leadership", content: "leadership management team executives directors board" },
+        { title: "Team", url: "team.html", scrollText: "team", content: "team leadership management executive staff" },
+        { title: "S. Dhanaraj", url: "team.html", scrollText: "dhanaraj", content: "dhanaraj founder managing director ceo leader" },
+        { title: "Founder", url: "team.html", scrollText: "founder", content: "founder dhanaraj managing director ceo leader" },
+        { title: "Managing Director", url: "team.html", scrollText: "managing director", content: "managing director dhanaraj founder ceo leader" },
+        { title: "Dharshini Dhanaraj", url: "team.html", scrollText: "Dharshini Dhanaraj", content: "dharshini dhanaraj director strategy operations" },
+        { title: "Gokul Govindarajan", url: "team.html", scrollText: "gokul", content: "gokul govindarajan director finance chartered accountant" },
+        { title: "Yamini Dhanaraj", url: "team.html", scrollText: "yamini", content: "yamini dhanaraj director social initiatives welfare" },
+
+        // Company Journey & History
+        { title: "Journey", url: "about.html", scrollText: "journey", content: "journey milestones history timeline company growth evolution" },
+        { title: "History", url: "about.html", scrollText: "history", content: "history journey company background established 1995 milestones" },
+        { title: "Milestones", url: "about.html", scrollText: "milestones", content: "milestones journey history company growth achievements timeline" },
+
+        // Vision, Mission, Values
+        { title: "Vision", url: "about.html", scrollText: "vision", content: "vision mission company goals objectives future plans" },
+        { title: "Mission", url: "about.html", scrollText: "mission", content: "mission vision company purpose goals objectives values" },
+        { title: "Values", url: "about.html", scrollText: "values", content: "values culture mission vision company principles ethics" },
+
+        // Services & Departments
+        { title: "Services", url: "services.html", scrollText: "services", content: "services core departments manufacturing operations" },
+        { title: "Departments", url: "services.html", scrollText: "departments", content: "core departments services manufacturing operations divisions" },
+        { title: "Manufacturing", url: "services.html", scrollText: "manufacturing", content: "manufacturing production weaving textile operations departments" },
+        { title: "Designing", url: "services.html", scrollText: "designing", content: "designing design team patterns creative development" },
+        { title: "Design Team", url: "services.html", scrollText: "design team", content: "design team designing patterns creative development 100 designs daily" },
+        { title: "Sampling", url: "services.html", scrollText: "sampling", content: "sampling samples product development testing prototypes" },
+        { title: "Production Planning", url: "services.html", scrollText: "production planning", content: "production planning manufacturing scheduling operations workflow" },
+        { title: "Quality Control", url: "services.html", scrollText: "quality control", content: "quality control check inspection testing standards" },
+        { title: "Quality Check", url: "services.html", scrollText: "quality check", content: "quality check control inspection testing standards defect free" },
+        { title: "Raw Material Planning", url: "services.html", scrollText: "raw material", content: "raw material planning sourcing yarn supply chain" },
+        { title: "Processing", url: "services.html", scrollText: "processing", content: "processing dyeing finishing textile treatment operations" },
+        { title: "Dyeing", url: "services.html", scrollText: "dyeing", content: "dyeing processing finishing color treatment textile" },
+        { title: "Finishing", url: "services.html", scrollText: "finishing", content: "finishing processing dyeing textile treatment final" },
+        { title: "Packing", url: "services.html", scrollText: "packing", content: "packing packaging inspection delivery dispatch shipping" },
+        { title: "Marketing", url: "services.html", scrollText: "marketing", content: "marketing sales business development client relationships" },
+        { title: "Sales", url: "services.html", scrollText: "sales", content: "sales marketing business development client relationships" },
+        { title: "Accounts", url: "services.html", scrollText: "accounts", content: "accounts finance billing payroll compliance financial" },
+
+        // Technologies & Equipment
+        { title: "Technologies", url: "equipment.html", scrollText: "technologies", content: "technologies equipment machinery weaving jacquard dobby looms" },
+        { title: "Equipment", url: "equipment.html", scrollText: "equipment", content: "equipment machinery technologies weaving looms jacquard dobby" },
+
+        // Fabric Categories & Classifications
+        { title: "Categories", url: "classifications.html", scrollText: "categories", content: "categories classifications fabric types cotton jacquard dobby viscose" },
+        { title: "Classifications", url: "classifications.html", scrollText: "classifications", content: "classifications categories fabric types cotton jacquard dobby viscose" },
+        { title: "Fabric Categories", url: "classifications.html", scrollText: "fabric categories", content: "fabric categories classifications types cotton jacquard dobby viscose" },
+
+        // Cotton Jacquards
+        { title: "Cotton Jacquards", url: "classifications.html", scrollText: "cotton jacquards", content: "cotton jacquards premium woven fabrics 100% cotton" },
+        { title: "Cotton Yarn Dyed Jacquard", url: "classifications.html", scrollText: "cotton yarn dyed", content: "cotton yarn dyed jacquard vibrant colorfast patterns geometric designs ethnic wear formal shirts" },
+        { title: "Reversible Craft Butta Jacquard", url: "classifications.html", scrollText: "reversible craft butta", content: "reversible craft butta jacquard double-sided traditional motifs contrasting colors" },
+        { title: "3D Effect Fabrics", url: "classifications.html", scrollText: "3d effect", content: "3d effect fabrics three-dimensional textures raised patterns luxury upholstery designer clothing" },
+        { title: "Cotton Textured Fabric", url: "classifications.html", scrollText: "cotton textured", content: "cotton textured fabric diverse textural variations surface patterns casual wear home textiles" },
+        { title: "Cotton Polyester Pattern Jacquard", url: "classifications.html", scrollText: "cotton polyester pattern", content: "cotton polyester pattern jacquard blend enhanced strength wrinkle resistance workwear uniforms" },
+        { title: "Cotton Satin Butta Jacquard", url: "classifications.html", scrollText: "cotton satin butta", content: "cotton satin butta jacquard luxurious satin weave elegant motifs lustrous surface formal wear" },
+        { title: "Cotton Warp Craft Butta Fabric", url: "classifications.html", scrollText: "cotton warp craft", content: "cotton warp craft butta fabric artisanal traditional patterns heritage craftsmanship ethnic wear" },
+        { title: "Cotton Craft Cut Butta Jacquard", url: "classifications.html", scrollText: "cotton craft cut", content: "cotton craft cut butta jacquard precision-cut patterns dimensional surface effects designer clothing" },
+        { title: "Cotton Slub Jacquard", url: "classifications.html", scrollText: "cotton slub", content: "cotton slub jacquard natural slub texture sophisticated weaving casual shirts kurtas" },
+
+        // Suiting Fabrics
+        { title: "Suiting Fabrics", url: "classifications.html", scrollText: "suiting fabrics", content: "suiting fabrics coordinated cotton suit sets apparel design" },
+        { title: "Cotton Two-Piece Suit Sets", url: "classifications.html", scrollText: "cotton two-piece suit", content: "cotton two-piece suit sets coordinated fabric matching patterns business suits formal wear" },
+        { title: "Cotton Suit Sets Color Customization", url: "classifications.html", scrollText: "suit color customization", content: "cotton suit sets color customization bespoke corporate uniforms designer collections" },
+
+        // Specialized Jacquards
+        { title: "Specialized Jacquards", url: "classifications.html", scrollText: "specialized jacquards", content: "specialized jacquards unique innovative designs specialized weaving techniques" },
+        { title: "Mock Slub Jacquard", url: "classifications.html", scrollText: "mock slub", content: "mock slub jacquard innovative weaving mimics natural slub texture controlled manufacturing" },
+        { title: "Miss Dent Cotton Jacquard", url: "classifications.html", scrollText: "miss dent cotton", content: "miss dent cotton jacquard specialized technique distinctive dent patterns designer clothing" },
+
+        // Viscose Collections
+        { title: "Viscose Collections", url: "classifications.html", scrollText: "viscose collections", content: "viscose collections soft flowy fabrics elegant jacquard designs" },
+        { title: "Viscose Jacquard Fabrics", url: "classifications.html", scrollText: "viscose jacquard", content: "viscose jacquard fabrics luxurious elegant patterns exceptional drape silky smooth texture" },
+        { title: "Viscose Jacquard for Men", url: "classifications.html", scrollText: "viscose men", content: "viscose jacquard fabrics men masculine patterns structured weaves formal casual wear" },
+        { title: "Viscose Jacquard for Women", url: "classifications.html", scrollText: "viscose women", content: "viscose jacquard fabrics women feminine patterns delicate motifs graceful designs" },
+        { title: "Viscose Jacquard Butta Fabric", url: "classifications.html", scrollText: "viscose butta", content: "viscose jacquard butta fabric traditional patterns exceptional drape cultural authenticity" },
+        { title: "Cotton Viscose Jacquard", url: "classifications.html", scrollText: "cotton viscose", content: "cotton viscose jacquard premium blend breathability lustrous sheen smooth texture" },
+        { title: "Viscose Poly Jacquard", url: "classifications.html", scrollText: "viscose poly", content: "viscose poly jacquard innovative blend enhanced strength wrinkle resistance dimensional stability" },
+
+        // Dobby Collections
+        { title: "Dobby Collections", url: "classifications.html", scrollText: "dobby collections", content: "dobby collections lightweight rayon fabrics dobby-woven butta motifs" },
+        { title: "Rayon Dobby Butta Fabrics", url: "classifications.html", scrollText: "rayon dobby butta", content: "rayon dobby butta fabrics lightweight traditional patterns dobby weaving summer clothing" },
+        { title: "Dobby Butta Fabrics", url: "classifications.html", scrollText: "dobby butta", content: "dobby butta fabrics versatile dobby-woven intricate patterns geometric precision cultural heritage" },
+
+        // Fabric Types & Materials
+        { title: "Cotton Fabrics", url: "classifications.html", scrollText: "cotton fabrics", content: "cotton fabrics 100% cotton premium woven jacquard dobby breathable natural" },
+        { title: "Viscose Fabrics", url: "classifications.html", scrollText: "viscose fabrics", content: "viscose fabrics rayon soft flowy elegant drape silky smooth texture" },
+        { title: "Blend Fabrics", url: "classifications.html", scrollText: "blend fabrics", content: "blend fabrics cotton polyester cotton viscose enhanced properties durability" },
+        { title: "Jacquard Fabrics", url: "classifications.html", scrollText: "jacquard fabrics", content: "jacquard fabrics intricate woven patterns sophisticated designs premium quality" },
+        { title: "Dobby Fabrics", url: "classifications.html", scrollText: "dobby fabrics", content: "dobby fabrics geometric patterns traditional weaving lightweight texture" },
+        { title: "Butta Patterns", url: "classifications.html", scrollText: "butta patterns", content: "butta patterns traditional motifs cultural heritage ethnic designs authentic craftsmanship" },
+        { title: "Textured Fabrics", url: "classifications.html", scrollText: "textured fabrics", content: "textured fabrics surface variations dimensional effects tactile appeal modern styling" },
+        { title: "Satin Fabrics", url: "classifications.html", scrollText: "satin fabrics", content: "satin fabrics lustrous surface elegant sheen formal wear luxury appeal" },
+        { title: "Slub Fabrics", url: "classifications.html", scrollText: "slub fabrics", content: "slub fabrics natural texture irregular yarn thickness organic appeal casual wear" },
+
+        // Applications & Uses
+        { title: "Apparel Fabrics", url: "classifications.html", scrollText: "apparel fabrics", content: "apparel fabrics clothing garments fashion wear textile manufacturing" },
+        { title: "Home Textiles", url: "classifications.html", scrollText: "home textiles", content: "home textiles furnishing upholstery interior decoration household fabrics" },
+        { title: "Ethnic Wear", url: "classifications.html", scrollText: "ethnic wear", content: "ethnic wear traditional clothing cultural garments heritage fashion" },
+        { title: "Formal Wear", url: "classifications.html", scrollText: "formal wear", content: "formal wear business clothing professional attire suits shirts" },
+        { title: "Casual Wear", url: "classifications.html", scrollText: "casual wear", content: "casual wear everyday clothing comfortable garments lifestyle fashion" },
+        { title: "Designer Clothing", url: "classifications.html", scrollText: "designer clothing", content: "designer clothing luxury fashion high-end garments premium textiles" },
+        { title: "Uniforms", url: "classifications.html", scrollText: "uniforms", content: "uniforms workwear corporate clothing professional attire" },
+
+        // Manufacturing & Quality
+        { title: "Premium Quality", url: "classifications.html", scrollText: "premium quality", content: "premium quality exceptional standards superior materials advanced manufacturing" },
+        { title: "Custom Designs", url: "classifications.html", scrollText: "custom designs", content: "custom designs bespoke patterns personalized fabrics tailored solutions" },
+        { title: "Color Customization", url: "classifications.html", scrollText: "color customization", content: "color customization bespoke colors brand matching professional color services" },
+        { title: "Quality Control", url: "classifications.html", scrollText: "quality control", content: "quality control inspection testing standards defect-free manufacturing excellence" },
+        { title: "Manufacturing Excellence", url: "classifications.html", scrollText: "manufacturing excellence", content: "manufacturing excellence advanced technology traditional expertise consistent quality" },
+        { title: "Equipment", url: "equipment.html", scrollText: "equipment", content: "equipment technologies machinery looms weaving systems" },
+        { title: "Looms", url: "equipment.html", scrollText: "looms", content: "looms machinery weaving equipment technologies manufacturing" },
+        { title: "Vamatex", url: "equipment.html", scrollText: "vamatex", content: "vamatex rapier looms machinery equipment weaving jacquard" },
+        { title: "Sulzer", url: "equipment.html", scrollText: "sulzer", content: "sulzer projectile looms machinery equipment weaving heavy duty" },
+        { title: "Toyota", url: "equipment.html", scrollText: "toyota", content: "toyota airjet looms machinery equipment weaving lightweight" },
+        { title: "Staubli", url: "equipment.html", scrollText: "staubli", content: "staubli jacquard systems digital control weaving patterns" },
+        { title: "Rapier Looms", url: "equipment.html", scrollText: "rapier looms", content: "rapier looms vamatex machinery weaving jacquard dobby" },
+        { title: "Projectile Looms", url: "equipment.html", scrollText: "projectile looms", content: "projectile looms sulzer machinery weaving heavy duty structured" },
+        { title: "Airjet Looms", url: "equipment.html", scrollText: "airjet looms", content: "airjet looms toyota machinery weaving lightweight speed efficiency" },
+        { title: "Jacquard Systems", url: "equipment.html", scrollText: "jacquard systems", content: "jacquard systems staubli digital control complex patterns weaving" },
+
+        // Fabric Types & Products
+        { title: "Categories", url: "classifications.html", scrollText: "categories", content: "categories fabric types classifications products varieties" },
+        { title: "Classifications", url: "classifications.html", scrollText: "classifications", content: "classifications categories fabric types products varieties" },
+        { title: "Fabric Types", url: "classifications.html", scrollText: "fabric types", content: "fabric types categories classifications products varieties" },
+        { title: "Jacquard Fabrics", url: "classifications.html", scrollText: "jacquard fabrics", content: "jacquard fabrics weaving patterns textile premium quality intricate" },
+        { title: "Dobby Fabrics", url: "classifications.html", scrollText: "dobby fabrics", content: "dobby fabrics weaving patterns textile structured geometric" },
+        { title: "Cotton Fabrics", url: "classifications.html", scrollText: "cotton fabrics", content: "cotton fabrics natural fiber textile breathable durable" },
+        { title: "Viscose Fabrics", url: "classifications.html", scrollText: "viscose fabrics", content: "viscose fabrics synthetic fiber textile soft elegant drape" },
+        { title: "Apparel Fabrics", url: "classifications.html", scrollText: "apparel fabrics", content: "apparel fabrics clothing textile garment fashion wear" },
+        { title: "Ethnic Wear", url: "classifications.html", scrollText: "ethnic wear", content: "ethnic wear traditional clothing fabrics cultural garments" },
+        { title: "Formal Wear", url: "classifications.html", scrollText: "formal wear", content: "formal wear business clothing fabrics professional attire" },
+        { title: "Home Textiles", url: "classifications.html", scrollText: "home textiles", content: "home textiles furnishing fabrics household interior decor" },
+        { title: "Bed Linen", url: "classifications.html", scrollText: "bed linen", content: "bed linen home textiles bedroom fabrics sheets bedding" },
+        { title: "Satin Jacquards", url: "classifications.html", scrollText: "satin jacquards", content: "satin jacquards glossy finish smooth premium fashion luxury" },
+        { title: "Self Jacquards", url: "classifications.html", scrollText: "self jacquards", content: "self jacquards tone on tone texture subtle elegant designs" },
+        { title: "Butta Jacquards", url: "classifications.html", scrollText: "butta jacquards", content: "butta jacquards motif patterns traditional festive ornamental" },
+        { title: "Pattern Dyed", url: "classifications.html", scrollText: "pattern dyed", content: "pattern dyed fabrics colored designs vibrant detailed patterning" },
+        { title: "Textured Jacquards", url: "classifications.html", scrollText: "textured jacquards", content: "textured jacquards depth feel tactile surface modern twist" },
+        { title: "3D Effect", url: "classifications.html", scrollText: "3d effect", content: "3D effect jacquards raised tactile dimensional surface aesthetics" },
+        { title: "Slub Cotton", url: "classifications.html", scrollText: "slub cotton", content: "slub cotton jacquards rustic textured handloom inspired natural" },
+        { title: "Linen Look", url: "classifications.html", scrollText: "linen look", content: "linen look jacquards natural appearance durable soft cotton" },
+        { title: "Double Cloth", url: "classifications.html", scrollText: "double cloth", content: "double cloth fabrics reversible two layer dual surface design" },
+        { title: "Mock Leno", url: "classifications.html", scrollText: "mock leno", content: "mock leno fabrics airy weave breathable strength jacquard" },
+        { title: "Cotton Flax", url: "classifications.html", scrollText: "cotton flax", content: "cotton flax jacquards eco friendly natural luster sustainable" },
+
+        // B2B & Business
+        { title: "B2B", url: "b2b.html", scrollText: "b2b", content: "b2b business buyers wholesale corporate clients manufacturers" },
+        { title: "Business Buyers", url: "b2b.html", scrollText: "business buyers", content: "business buyers b2b wholesale corporate clients manufacturers" },
+        { title: "Wholesale", url: "b2b.html", scrollText: "wholesale", content: "wholesale bulk business buyers b2b manufacturing large orders" },
+        { title: "Garment Manufacturers", url: "b2b.html", scrollText: "garment manufacturers", content: "garment manufacturers fashion labels clothing brands textile buyers" },
+        { title: "Fashion Labels", url: "b2b.html", scrollText: "fashion labels", content: "fashion labels brands garment manufacturers clothing textile" },
+        { title: "Distributors", url: "b2b.html", scrollText: "distributors", content: "distributors wholesale business partners fabric suppliers" },
+
+        // Production & Capacity
+        { title: "Production", url: "overview.html", scrollText: "production", content: "production manufacturing capacity 2 lakh meters monthly output" },
+        { title: "Production Capacity", url: "overview.html", scrollText: "production capacity", content: "production capacity 2 lakh meters monthly manufacturing output scale" },
+        { title: "2 Lakh Meters", url: "overview.html", scrollText: "2 lakh meters", content: "2 lakh meters monthly production capacity manufacturing output" },
+        { title: "100 Designs Daily", url: "overview.html", scrollText: "100 designs", content: "100 designs daily creative team patterns innovation variety" },
+
+        // Location & Contact
+        { title: "Coimbatore", url: "contact4.html", scrollText: "coimbatore", content: "coimbatore location address tamil nadu india office" },
+        { title: "Location", url: "contact4.html", scrollText: "location", content: "location address coimbatore tamil nadu office contact" },
+        { title: "Phone", url: "contact4.html", scrollText: "9894657742", content: "phone contact 9894657742 call telephone mobile" },
+        { title: "Email", url: "contact4.html", scrollText: "support@dharshiniimpex", content: "email contact fabrics dharshiniimpex.in mail address" }
+    ];
+
+    // Handle search forms
+    const searchForms = document.querySelectorAll('.searchform, form[action="./"], form');
+    
+    searchForms.forEach(form => {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const searchInput = this.querySelector('input[name="search"], input[type="search"], input[type="text"]');
+            const query = searchInput ? searchInput.value.trim().toLowerCase() : '';
+            
+            if (query) {
+                performSearch(query);
+            }
+            return false;
+        });
+    });
+
+    // Handle search buttons and any submit buttons
+    const allButtons = document.querySelectorAll('button, input[type="submit"]');
+    allButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            const form = this.closest('form');
+            if (form) {
+                e.preventDefault();
+                const searchInput = form.querySelector('input[name="search"], input[type="search"], input[type="text"]');
+                const query = searchInput ? searchInput.value.trim().toLowerCase() : '';
+                
+                if (query) {
+                    performSearch(query);
+                }
+                return false;
+            }
+        });
+    });
+
+    // Also handle direct input enter key
+    const allInputs = document.querySelectorAll('input[name="search"], input[type="search"], input[type="text"]');
+    allInputs.forEach(input => {
+        input.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                const query = this.value.trim().toLowerCase();
+                if (query) {
+                    performSearch(query);
+                }
+            }
+        });
+    });
+
+    function performSearch(query) {
+        console.log('Searching for:', query);
+        
+        // First try to find in search data
+        const results = searchData.filter(item => 
+            item.title.toLowerCase().includes(query) || 
+            item.content.toLowerCase().includes(query)
+        );
+
+        if (results.length > 0) {
+            const result = results[0];
+            console.log('Found in search data:', result);
+            
+            // Check if we're already on the target page
+            const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+            const targetPage = result.url;
+            
+            if (currentPage === targetPage && result.scrollText) {
+                // Same page - just scroll
+                scrollToText(result.scrollText);
+            } else if (result.scrollText) {
+                // Different page - navigate with hash
+                window.location.href = result.url + '#search-' + encodeURIComponent(result.scrollText);
+            } else {
+                window.location.href = result.url;
+            }
+        } else {
+            // If not found in search data, try to scroll to it on current page
+            console.log('Not in search data, trying to scroll on current page');
+            scrollToText(query);
+        }
+    }
+
+    // Check for scroll parameter or hash on page load
+    function checkForScrollParameter() {
+        let scrollText = null;
+
+        // Check for 'scrollTo' parameter in URL
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has('scrollTo')) {
+            scrollText = urlParams.get('scrollTo');
+            // Clean up URL by removing 'scrollTo' parameter
+            urlParams.delete('scrollTo');
+            const newUrl = window.location.pathname + '?' + urlParams.toString();
+            window.history.replaceState({}, document.title, newUrl);
+        }
+
+        // If no 'scrollTo' parameter, check for hash
+        if (!scrollText && window.location.hash) {
+            const hash = window.location.hash.substring(1);
+            if (hash.startsWith('search-')) {
+                scrollText = decodeURIComponent(hash.replace('search-', ''));
+            }
+        }
+
+        if (scrollText) {
+            console.log('Found scroll parameter:', scrollText);
+            // Wait for page to fully load then scroll
+            setTimeout(() => {
+                scrollToText(scrollText);
+            }, 100);
+        }
+    }
+	 checkForScrollParameter();
+
+    // Clean scroll function with expand animation
+    function scrollToText(searchText) {
+        console.log('Starting scroll search for:', searchText);
+        const searchLower = searchText.toLowerCase();
+        let targetElements = [];
+
+        // Get ALL elements on the page
+        const allElements = Array.from(document.querySelectorAll('*'));
+        
+        // Search through ALL elements
+        allElements.forEach(element => {
+            // Skip script, style, and hidden elements
+            if (element.tagName === 'SCRIPT' || 
+                element.tagName === 'STYLE' || 
+                element.style.display === 'none' ||
+                element.style.visibility === 'hidden') {
+                return;
+            }
+            
+            const elementText = (element.textContent || element.innerText || '').toLowerCase();
+            const elementHTML = element.innerHTML.toLowerCase();
+            const elementId = (element.id || '').toLowerCase();
+            const elementClass = (element.className || '').toLowerCase();
+            
+            // Check for matches in text, HTML, ID, or class
+            if (elementText.includes(searchLower) || 
+                elementHTML.includes(searchLower) ||
+                elementId.includes(searchLower) ||
+                elementClass.includes(searchLower)) {
+                
+                targetElements.push({
+                    element: element,
+                    textLength: elementText.length,
+                    matchType: elementText.includes(searchLower) ? 'text' : 
+                              elementId.includes(searchLower) ? 'id' : 
+                              elementClass.includes(searchLower) ? 'class' : 'html'
+                });
+            }
+        });
+
+        console.log('Found potential elements:', targetElements.length);
+
+        if (targetElements.length > 0) {
+            // Sort by preference: text matches first, then shortest text (most specific)
+            targetElements.sort((a, b) => {
+                if (a.matchType === 'text' && b.matchType !== 'text') return -1;
+                if (b.matchType === 'text' && a.matchType !== 'text') return 1;
+                return a.textLength - b.textLength;
+            });
+
+            const targetElement = targetElements[0].element;
+            console.log('Selected element for scrolling:', targetElement);
+
+            // Apply subtle expand animation
+            applyExpandAnimation(targetElement);
+
+            // Scroll to element
+            targetElement.scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'center',
+                inline: 'center'
+            });
+
+            // Backup scroll method
+            setTimeout(() => {
+                const rect = targetElement.getBoundingClientRect();
+                const scrollTop = window.pageYOffset + rect.top - (window.innerHeight / 2);
+                window.scrollTo({
+                    top: scrollTop,
+                    behavior: 'smooth'
+                });
+            }, 100);
+
+            console.log('Successfully scrolled to:', searchText);
+            return true;
+        } else {
+            console.log('Could not find any matching elements for:', searchText);
+            return false;
+        }
+    }
+
+    // Clean expand animation function
+    function applyExpandAnimation(element) {
+        // Store original transform
+        const originalTransform = element.style.transform || '';
+        const originalTransition = element.style.transition || '';
+        
+        // Apply smooth transition
+        element.style.transition = 'transform 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+        
+        // Start with slightly smaller scale
+        element.style.transform = originalTransform + ' scale(0.95)';
+        
+        // Expand up animation
+        setTimeout(() => {
+            element.style.transform = originalTransform + ' scale(1.05)';
+        }, 50);
+        
+        // Return to normal with a slight bounce
+        setTimeout(() => {
+            element.style.transform = originalTransform + ' scale(1)';
+        }, 300);
+        
+        // Clean up styles after animation
+        setTimeout(() => {
+            element.style.transition = originalTransition;
+            element.style.transform = originalTransform;
+        }, 900);
+    }
+
+    // Add a manual search function that can be called from console
+    window.manualSearch = function(text) {
+        console.log('Manual search triggered for:', text);
+        return scrollToText(text);
+    };
+
+    // Initialize scroll checking
+    checkForScrollParameter();
+
+    // Add some debug logging
+    console.log('Search script loaded and ready!');
+    console.log('Available search data entries:', searchData.length);
+    console.log('To manually test scrolling, use: manualSearch("your text here")');
+});
+</script>
 	<div class="preloader">
 		<div class="preloader_image"></div>
 	</div>

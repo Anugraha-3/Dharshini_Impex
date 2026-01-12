@@ -310,6 +310,80 @@
 	</div>
 	
 	<script>
+	// Search Data for site-wide search functionality
+	const searchData = [
+		// Company Information
+		{ title: "Dharshini Impex", url: "index.html", scrollText: "dharshini impex", content: "dharshini impex textile manufacturing premium fabrics jacquard dobby cotton viscose" },
+		{ title: "About Us", url: "about.html", scrollText: "about us", content: "about us company history textile manufacturing expertise premium fabrics" },
+		{ title: "Overview", url: "overview.html", scrollText: "overview", content: "overview company profile textile manufacturing capabilities premium quality" },
+		{ title: "Leadership", url: "team.html", scrollText: "leadership", content: "leadership team management expertise textile industry experience" },
+		{ title: "Contact", url: "contact4.html", scrollText: "contact", content: "contact us phone email address coimbatore tamil nadu" },
+
+		// Jacquard Fabric Collections
+		{ title: "Jacquard Fabrics", url: "classifications.html", scrollText: "jacquard fabrics", content: "jacquard fabrics premium woven patterns intricate designs luxury textiles" },
+		{ title: "Cotton Jacquard", url: "classifications.html", scrollText: "cotton jacquard", content: "cotton jacquard 100% cotton premium woven breathable natural fiber luxury" },
+		{ title: "Viscose Jacquard", url: "classifications.html", scrollText: "viscose jacquard", content: "viscose jacquard rayon soft elegant drape silky smooth premium quality" },
+		{ title: "Satin Jacquard", url: "classifications.html", scrollText: "satin jacquard", content: "satin jacquard lustrous surface elegant sheen formal wear luxury appeal" },
+		{ title: "Self Jacquard", url: "classifications.html", scrollText: "self jacquard", content: "self jacquard tone-on-tone subtle patterns elegant sophisticated designs" },
+		{ title: "Butta Jacquard", url: "classifications.html", scrollText: "butta jacquard", content: "butta jacquard traditional motifs cultural heritage ethnic designs festive wear" },
+		{ title: "Textured Jacquard", url: "classifications.html", scrollText: "textured jacquard", content: "textured jacquard dimensional effects tactile surface modern contemporary styling" },
+		{ title: "Pattern Dyed Jacquard", url: "classifications.html", scrollText: "pattern dyed jacquard", content: "pattern dyed jacquard colored designs vibrant patterns detailed craftsmanship" },
+		{ title: "3D Effect Jacquard", url: "classifications.html", scrollText: "3d effect jacquard", content: "3D effect jacquard dimensional patterns visual depth modern innovation" },
+
+		// Dobby Fabric Collections
+		{ title: "Dobby Collections", url: "classifications.html", scrollText: "dobby collections", content: "dobby collections lightweight rayon fabrics dobby-woven butta motifs" },
+		{ title: "Rayon Dobby Butta Fabrics", url: "classifications.html", scrollText: "rayon dobby butta", content: "rayon dobby butta fabrics lightweight traditional patterns dobby weaving summer clothing" },
+		{ title: "Dobby Butta Fabrics", url: "classifications.html", scrollText: "dobby butta", content: "dobby butta fabrics versatile dobby-woven intricate patterns geometric precision cultural heritage" },
+
+		// Fabric Types & Materials
+		{ title: "Cotton Fabrics", url: "classifications.html", scrollText: "cotton fabrics", content: "cotton fabrics 100% cotton premium woven jacquard dobby breathable natural" },
+		{ title: "Viscose Fabrics", url: "classifications.html", scrollText: "viscose fabrics", content: "viscose fabrics rayon soft flowy elegant drape silky smooth texture" },
+		{ title: "Blend Fabrics", url: "classifications.html", scrollText: "blend fabrics", content: "blend fabrics cotton polyester cotton viscose enhanced properties durability" },
+		{ title: "Dobby Fabrics", url: "classifications.html", scrollText: "dobby fabrics", content: "dobby fabrics geometric patterns traditional weaving lightweight texture" },
+		{ title: "Butta Patterns", url: "classifications.html", scrollText: "butta patterns", content: "butta patterns traditional motifs cultural heritage ethnic designs authentic craftsmanship" },
+		{ title: "Textured Fabrics", url: "classifications.html", scrollText: "textured fabrics", content: "textured fabrics surface variations dimensional effects tactile appeal modern styling" },
+		{ title: "Satin Fabrics", url: "classifications.html", scrollText: "satin fabrics", content: "satin fabrics lustrous surface elegant sheen formal wear luxury appeal" },
+		{ title: "Slub Fabrics", url: "classifications.html", scrollText: "slub fabrics", content: "slub fabrics natural texture irregular yarn thickness organic appeal casual wear" },
+
+		// Applications & Uses
+		{ title: "Apparel Fabrics", url: "classifications.html", scrollText: "apparel fabrics", content: "apparel fabrics clothing garments fashion wear textile manufacturing" },
+		{ title: "Home Textiles", url: "classifications.html", scrollText: "home textiles", content: "home textiles furnishing upholstery interior decoration household fabrics" },
+		{ title: "Ethnic Wear", url: "classifications.html", scrollText: "ethnic wear", content: "ethnic wear traditional clothing cultural garments heritage fashion" },
+		{ title: "Formal Wear", url: "classifications.html", scrollText: "formal wear", content: "formal wear business clothing professional attire suits shirts" },
+		{ title: "Casual Wear", url: "classifications.html", scrollText: "casual wear", content: "casual wear everyday clothing comfortable garments lifestyle fashion" },
+		{ title: "Designer Clothing", url: "classifications.html", scrollText: "designer clothing", content: "designer clothing luxury fashion high-end garments premium textiles" },
+		{ title: "Uniforms", url: "classifications.html", scrollText: "uniforms", content: "uniforms workwear corporate clothing professional attire" },
+
+		// Manufacturing & Quality
+		{ title: "Premium Quality", url: "classifications.html", scrollText: "premium quality", content: "premium quality exceptional standards superior materials advanced manufacturing" },
+		{ title: "Custom Designs", url: "classifications.html", scrollText: "custom designs", content: "custom designs bespoke patterns personalized fabrics tailored solutions" },
+		{ title: "Color Customization", url: "classifications.html", scrollText: "color customization", content: "color customization bespoke colors brand matching professional color services" },
+		{ title: "Quality Control", url: "classifications.html", scrollText: "quality control", content: "quality control inspection testing standards defect-free manufacturing excellence" },
+		{ title: "Manufacturing Excellence", url: "classifications.html", scrollText: "manufacturing excellence", content: "manufacturing excellence advanced technology traditional expertise consistent quality" },
+		{ title: "Equipment", url: "equipment.html", scrollText: "equipment", content: "equipment technologies machinery looms weaving systems" },
+		{ title: "Looms", url: "equipment.html", scrollText: "looms", content: "looms machinery weaving equipment technologies manufacturing" },
+		{ title: "Vamatex", url: "equipment.html", scrollText: "vamatex", content: "vamatex rapier looms machinery equipment weaving jacquard" },
+		{ title: "Sulzer", url: "equipment.html", scrollText: "sulzer", content: "sulzer projectile looms machinery equipment weaving heavy duty" },
+		{ title: "Toyota", url: "equipment.html", scrollText: "toyota", content: "toyota airjet looms machinery equipment weaving lightweight" },
+		{ title: "Staubli", url: "equipment.html", scrollText: "staubli", content: "staubli jacquard systems digital control weaving patterns" },
+		{ title: "Rapier Looms", url: "equipment.html", scrollText: "rapier looms", content: "rapier looms vamatex machinery weaving jacquard dobby" },
+		{ title: "Projectile Looms", url: "equipment.html", scrollText: "projectile looms", content: "projectile looms sulzer machinery weaving heavy duty structured" },
+		{ title: "Airjet Looms", url: "equipment.html", scrollText: "airjet looms", content: "airjet looms toyota machinery weaving lightweight speed efficiency" },
+		{ title: "Jacquard Systems", url: "equipment.html", scrollText: "jacquard systems", content: "jacquard systems staubli digital control complex patterns weaving" },
+
+		// Categories & Classifications
+		{ title: "Categories", url: "classifications.html", scrollText: "categories", content: "categories fabric types classifications products varieties" },
+		{ title: "Classifications", url: "classifications.html", scrollText: "classifications", content: "classifications categories fabric types products varieties" },
+		{ title: "Fabric Types", url: "classifications.html", scrollText: "fabric types", content: "fabric types categories classifications products varieties" },
+		{ title: "Bed Linen", url: "classifications.html", scrollText: "bed linen", content: "bed linen home textiles bedroom fabrics sheets bedding" },
+		{ title: "Satin Jacquards", url: "classifications.html", scrollText: "satin jacquards", content: "satin jacquards glossy finish smooth premium fashion luxury" },
+		{ title: "Self Jacquards", url: "classifications.html", scrollText: "self jacquards", content: "self jacquards tone on tone texture subtle elegant designs" },
+		{ title: "Butta Jacquards", url: "classifications.html", scrollText: "butta jacquards", content: "butta jacquards motif patterns traditional festive ornamental" },
+		{ title: "Pattern Dyed", url: "classifications.html", scrollText: "pattern dyed", content: "pattern dyed fabrics colored designs vibrant detailed patterning" },
+		{ title: "Textured Jacquards", url: "classifications.html", scrollText: "textured jacquards", content: "textured jacquards depth feel tactile surface modern twist" },
+		{ title: "3D Effect", url: "classifications.html", scrollText: "3d effect", content: "3D effect jacquard dimensional patterns visual depth innovation" }
+	];
+
 	function sendToWhatsApp() {
 		var name = document.getElementById('name').value.trim();
 		var phone = document.getElementById('phone').value.trim();
